@@ -1,23 +1,40 @@
 import React from "react";
-import "./App.scss";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Header from "layout/Header";
+import routes from "./routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Switch>
+        <Route path="/signup" component={routes.home} />
+        <Route path="/login" component={routes.home} />
+        <Route path="/join" component={routes.home} />
+        <Route path="/sessions/create" component={routes.home} />
+        <Route
+          path="/sessions/:sessionId/edit/:questionId"
+          component={routes.home}
+        />
+        <Route path="/sessions/:sessionId/edit" component={routes.home} />
+        <Route
+          path="/sessions/:sessionId/start/:questionId"
+          component={routes.home}
+        />
+        <Route path="/sessions/:sessionId/start" component={routes.home} />
+        <Route
+          path="/sessions/:sessionId/preview/:questionId"
+          component={routes.home}
+        />
+        <Route path="/sessions/:sessionId/preview" component={routes.home} />
+
+        <Route path="/sessions/:sessionId" component={routes.session} />
+        <Route path="/sessions" component={routes.sessions} />
+        <Route path="/:sessionId/:questionId" component={routes.home} />
+        <Route path="/:sessionId" component={routes.home} />
+        <Route path="/" component={routes.home} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
