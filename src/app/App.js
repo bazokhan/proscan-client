@@ -10,11 +10,11 @@ function App() {
       <Switch>
         <Route path="/signup" component={routes.home} />
         <Route path="/login" component={routes.home} />
-        <Route path="/join" component={routes.home} />
-        <Route path="/sessions/create" component={routes.home} />
+        <Route path="/join" component={routes.join} />
+        <Route path="/sessions/create" component={routes.create} />
         <Route path="/sessions/:sessionId" component={routes.session} />
         <Route path="/sessions" component={routes.sessions} />
-        <Route path="/:sessionId/:questionId" component={routes.home} />
+        <Route path="/:sessionId" component={routes.joined} />
         <Route path="/" component={routes.home} />
       </Switch>
     </BrowserRouter>
