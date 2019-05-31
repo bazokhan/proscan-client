@@ -1,8 +1,8 @@
 import loadable from "helpers/loadable";
 
 export default {
-  home: loadable("pages/home"),
-  sessions: loadable("pages/sessions"),
-  session: loadable("pages/session"),
-  editSession: loadable("pages/session/edit")
+  home: loadable(import("../pages/home")),
+  sessions: loadable(import("../pages/sessions")),
+  session: loadable(import("../pages/session")),
+  editSession: loadable(import("../pages/session/edit"))
 };

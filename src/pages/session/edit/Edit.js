@@ -1,43 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
 
-const session = { name: "Session1", id: "123" };
-const questions = fakeData;
-
 const Edit = ({ match }) => {
   const sessionId = match.params.sessionId;
-  const [editMode, setEditMode] = useState(false);
-  const [sessionName, setSessionName] = useState(session.name);
-  const [sessionQuestions, setSessionQuestions] = useState(questions);
+  const [session, setSession] = useState(null);
+  const [editMode, setEditMode] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setSession({ name: "Session1", id: "123", questions: fakeData });
+    }, 700);
+  }, []);
 
   const toggleEditMode = () => setEditMode(!editMode);
 
   const handleQuestionBodyChange = (newBody, questionIndex) => {
-    const question = sessionQuestions[questionIndex];
+    const question = session.questions[questionIndex];
     const newQuestion = { ...question, body: newBody };
-    setSessionQuestions(
-      sessionQuestions.map((question, index) => {
+    setSession({
+      ...session,
+      questions: session.questions.map((question, index) => {
         return index === questionIndex ? newQuestion : question;
       })
-    );
+    });
   };
 
   const handleQuestionLabelChange = (newLabel, questionIndex) => {
-    const question = sessionQuestions[questionIndex];
+    const question = session.questions[questionIndex];
     const newQuestion = { ...question, label: newLabel };
-    setSessionQuestions(
-      sessionQuestions.map((question, index) => {
+    setSession({
+      ...session,
+      questions: session.questions.map((question, index) => {
         return index === questionIndex ? newQuestion : question;
       })
-    );
+    });
   };
 
   const handleChoiceBodyChange = (newBody, choiceIndex, questionIndex) => {
-    console.log({ sessionQuestions });
-    const question = sessionQuestions[questionIndex];
+    const question = session.questions[questionIndex];
     const choice = question.choices[choiceIndex];
     const newChoice = { ...choice, body: newBody };
     const newQuestion = {
@@ -46,23 +49,28 @@ const Edit = ({ match }) => {
         return i === choiceIndex ? newChoice : choice;
       })
     };
-    setSessionQuestions(
-      sessionQuestions.map((question, i) => {
+    setSession({
+      ...session,
+      questions: session.questions.map((question, i) => {
         return i === questionIndex ? newQuestion : question;
       })
-    );
+    });
   };
 
   const handleAddNewQuestion = () => {
-    setSessionQuestions([
-      ...sessionQuestions,
-      { id: `q${Math.random()}`, body: "", choices: [] }
-    ]);
+    setSession({
+      ...session,
+      questions: [
+        ...session.questions,
+        { id: `q${Math.random()}`, body: "", choices: [] }
+      ]
+    });
   };
 
   const handleAddNewChoice = questionIndex => {
-    setSessionQuestions(
-      sessionQuestions.map((question, i) => {
+    setSession({
+      ...session,
+      questions: session.questions.map((question, i) => {
         return i === questionIndex
           ? {
               ...question,
@@ -73,38 +81,39 @@ const Edit = ({ match }) => {
             }
           : question;
       })
-    );
+    });
   };
 
   const handleDeleteChoice = (choiceIndex, questionIndex) => {
-    const question = sessionQuestions[questionIndex];
+    const question = session.questions[questionIndex];
     const newQuestion = {
       ...question,
       choices: question.choices.filter((choice, i) => {
         return i !== choiceIndex;
       })
     };
-    setSessionQuestions(
-      sessionQuestions.map((question, i) => {
+    setSession({
+      ...session,
+      questions: session.questions.map((question, i) => {
         return i === questionIndex ? newQuestion : question;
       })
-    );
+    });
   };
-
+  if (!session) return <div>Loading...</div>;
   return (
     <div>
       <div>Sessions ID: {sessionId}</div>
-      <div>Name: {sessionName}</div>
+      <div>Name: {session.name}</div>
       {editMode && (
         <input
           type="text"
           onChange={e => {
-            setSessionName(e.target.value);
+            setSession({ ...session, name: e.target.value });
           }}
-          value={sessionName}
+          value={session.name}
         />
       )}
-      {sessionQuestions.map((question, questionIndex) => (
+      {session.questions.map((question, questionIndex) => (
         <Question
           label={
             question.label === undefined
@@ -141,14 +150,6 @@ const Edit = ({ match }) => {
             </Choice>
           ))}
           {editMode && (
-            // TODO: Warning: A component is changing an uncontrolled input of type text to be controlled.
-            // in input (at Choice.js:9)
-            // in div (at Choice.js:5)
-            // in Choice (at Edit.js:56)
-            // in div (at Question.js:12)
-            // in Question (at Edit.js:29)
-            // in div (at Edit.js:16)
-            // in Edit (created by LoadableComponent)
             <button onClick={() => handleAddNewChoice(questionIndex)}>
               Add New Choice
             </button>
@@ -159,7 +160,11 @@ const Edit = ({ match }) => {
         <button onClick={handleAddNewQuestion}>Add New Question</button>
       )}
       <button onClick={toggleEditMode}>{editMode ? "Done" : "Edit"}</button>
-      {!editMode && <button onClick={() => {}}>Save Session</button>}
+      {!editMode && (
+        <Link to={`/sessions/${session.id}`}>
+          <button>Save Session</button>
+        </Link>
+      )}
       <Link to={`/sessions/${session.id}/preview`}>Preview This Session</Link>
       <Link to={`/sessions/${session.id}/start`}>Start This Session</Link>
       <Link to={`/sessions`}>Back To My Sessions</Link>

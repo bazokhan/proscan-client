@@ -1,30 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import fakeData from "helpers/fakeData";
-import Choice from "components/Choice";
-import Question from "components/Question";
+import { Route, Switch } from "react-router-dom";
+import routes from "./routes";
 
-const session = { name: "Session1", id: "123" };
-const sessionQuestions = fakeData;
-
-const Sessions = ({ match }) => {
-  const sessionId = match.params.sessionId;
+const Session = () => {
   return (
     <div>
-      <div>Sessions ID: {sessionId}</div>
-      <div>{session.name}</div>
-      {sessionQuestions.map((question, questionIndex) => (
-        <Question label={`Question ${questionIndex + 1} : `} key={question.id} question={question}>
-          {question.choices.map((choice, choiceIndex) => (
-            <Choice label={`${choiceIndex + 1} - `} key={choice.id} choice={choice} />
-          ))}
-        </Question>
-      ))}
-      <Link to={`/sessions/${session.id}/edit`}>Edit This Session</Link>
-      <Link to={`/sessions/${session.id}/preview`}>Preview This Session</Link>
-      <Link to={`/sessions/${session.id}/start`}>Start This Session</Link>
-      <Link to={`/sessions`}>Back To My Sessions</Link>
+      <Switch>
+        <Route path="/sessions/:sessionId/edit" component={routes.edit} />
+        <Route path="/sessions/:sessionId/preview" component={routes.preview} />
+        <Route path="/sessions/:sessionId/start" component={routes.start} />
+        <Route path="/sessions/:sessionId/" component={routes.details} />
+      </Switch>
     </div>
   );
 };
-export default Sessions;
+export default Session;

@@ -33,9 +33,9 @@ Loading.defaultProps = {
   retry: () => {}
 };
 
-const loadable = (componentPath, render) => {
+const loadable = (component, render) => {
   const loadableConfig = {
-    loader: () => import(`../${componentPath}`),
+    loader: () => component,
     loading: Loading,
     delay: 300,
     timeout: 10000

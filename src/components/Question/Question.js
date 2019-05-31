@@ -35,12 +35,21 @@ Question.propTypes = {
   label: PropTypes.string,
   question: PropTypes.object.isRequired,
   editMode: PropTypes.bool,
-  handleLabelChange: PropTypes.func.isRequired
+  handleLabelChange: PropTypes.func,
+  handleBodyChange: PropTypes.func
 };
 
 Question.defaultProps = {
   label: "*",
-  editMode: false
+  editMode: false,
+  handleLabelChange: () =>
+    console.log(
+      "You Have Not Set A handleLabelChange Function For The Question Inputs"
+    ),
+  handleBodyChange: () =>
+    console.log(
+      "You Have Not Set A handleBodyChange Function For The Question Inputs"
+    )
 };
 
 export default Question;

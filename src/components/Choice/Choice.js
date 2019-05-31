@@ -20,11 +20,15 @@ Choice.propTypes = {
   label: PropTypes.string.isRequired,
   choice: PropTypes.object.isRequired,
   editMode: PropTypes.bool,
-  handleBodyChange: PropTypes.func.isRequired
+  handleBodyChange: PropTypes.func
 };
 
 Choice.defaultProps = {
-  editMode: false
+  editMode: false,
+  handleBodyChange: () =>
+    console.log(
+      "You Have Not Set A handleBodyChange Function For The Choice Inputs"
+    )
 };
 
 export default Choice;
