@@ -1,13 +1,34 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Choice from "components/Choice";
 import Question from "components/Question";
 
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+// import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+// import Grid from "@material-ui/core/Grid";
+// import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { useStyles } from "app/Theme";
+import Container from "@material-ui/core/Container";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Paper from "@material-ui/core/Paper";
+
 const Create = () => {
+  const classes = useStyles();
   const [session, setSession] = useState({ name: "", questions: [] });
   const [editMode, setEditMode] = useState(true);
 
-  const toggleEditMode = () => setEditMode(!editMode);
+  const toggleEditMode = e => {
+    e.preventDefault();
+    setEditMode(!editMode);
+  };
 
   const handleQuestionBodyChange = (newBody, questionIndex) => {
     const question = session.questions[questionIndex];
@@ -49,7 +70,8 @@ const Create = () => {
     });
   };
 
-  const handleAddNewQuestion = () => {
+  const handleAddNewQuestion = e => {
+    e.preventDefault();
     setSession({
       ...session,
       questions: [
@@ -93,68 +115,133 @@ const Create = () => {
   };
   if (!session) return <div>Loading...</div>;
   return (
-    <div>
-      <div>Create New Session</div>
-      <div>Name: {session.name}</div>
-      {editMode && (
-        <input
-          type="text"
-          onChange={e => {
-            setSession({ ...session, name: e.target.value });
-          }}
-          value={session.name}
-        />
-      )}
-      {session.questions.map((question, questionIndex) => (
-        <Question
-          label={
-            question.label === undefined
-              ? `Question ${questionIndex + 1} : `
-              : question.label
-          }
-          question={question}
-          key={question.id}
-          editMode={editMode}
-          handleBodyChange={newBody =>
-            handleQuestionBodyChange(newBody, questionIndex)
-          }
-          handleLabelChange={newLabel =>
-            handleQuestionLabelChange(newLabel, questionIndex)
-          }
-        >
-          {question.choices.map((choice, choiceIndex) => (
-            <Choice
-              label={`${choiceIndex + 1} - `}
-              choice={choice}
-              key={choice.id}
-              editMode={editMode}
-              handleBodyChange={newBody =>
-                handleChoiceBodyChange(newBody, choiceIndex, questionIndex)
-              }
-            >
-              {editMode && (
-                <button
-                  onClick={() => handleDeleteChoice(choiceIndex, questionIndex)}
-                >
-                  X
-                </button>
-              )}
-            </Choice>
+    <Container component="main" maxWidth="xs">
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Create New Session
+        </Typography>
+        <form className={classes.form} noValidate>
+          <div>Name: {session.name}</div>
+          {editMode && (
+            // <input
+            //   type="text"
+            //   onChange={e => {
+            //     setSession({ ...session, name: e.target.value });
+            //   }}
+            //   value={session.name}
+            // />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id={`sessonName`}
+              label="Name"
+              name={`sessonName`}
+              onChange={e => {
+                setSession({ ...session, name: e.target.value });
+              }}
+              value={session.name}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                )
+              }}
+            />
+          )}
+          {session.questions.map((question, questionIndex) => (
+            <Paper key={question.id} className={classes.paperCard}>
+              <Question
+                label={
+                  question.label === undefined
+                    ? `Question ${questionIndex + 1} : `
+                    : question.label
+                }
+                question={question}
+                editMode={editMode}
+                handleBodyChange={newBody =>
+                  handleQuestionBodyChange(newBody, questionIndex)
+                }
+                handleLabelChange={newLabel =>
+                  handleQuestionLabelChange(newLabel, questionIndex)
+                }
+              >
+                {question.choices.map((choice, choiceIndex) => (
+                  <Choice
+                    label={`${choiceIndex + 1} - `}
+                    choice={choice}
+                    key={choice.id}
+                    editMode={editMode}
+                    handleBodyChange={newBody =>
+                      handleChoiceBodyChange(
+                        newBody,
+                        choiceIndex,
+                        questionIndex
+                      )
+                    }
+                    handleDeleteChoice={() =>
+                      handleDeleteChoice(choiceIndex, questionIndex)
+                    }
+                  />
+                ))}
+                {editMode && (
+                  <Button
+                    onClick={e => {
+                      e.preventDefault();
+                      handleAddNewChoice(questionIndex);
+                    }}
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Add New Choice
+                  </Button>
+                )}
+              </Question>
+            </Paper>
           ))}
           {editMode && (
-            <button onClick={() => handleAddNewChoice(questionIndex)}>
-              Add New Choice
-            </button>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={handleAddNewQuestion}
+            >
+              Add New Question
+            </Button>
           )}
-        </Question>
-      ))}
-      {editMode && (
-        <button onClick={handleAddNewQuestion}>Add New Question</button>
-      )}
-      <button onClick={toggleEditMode}>{editMode ? "Done" : "Edit"}</button>
-      {!editMode && <button>Save Session</button>}
-      <Link to={`/sessions`}>Back To My Sessions</Link>
-    </div>
+          <Button
+            onClick={toggleEditMode}
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            {editMode ? "Done" : "Edit"}
+          </Button>
+          {!editMode && (
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Save Session
+            </Button>
+          )}
+        </form>
+        <Link to={`/sessions`} component={RouterLink}>
+          Back To My Sessions
+        </Link>
+      </div>
+    </Container>
   );
 };
 export default Create;

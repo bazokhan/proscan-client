@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import TextField from "@material-ui/core/TextField";
 
 const Question = ({
   label,
@@ -10,23 +11,45 @@ const Question = ({
   handleBodyChange
 }) => (
   <div>
-    <div>Label: {label}</div>
+    {!editMode && <div>Label: {label}</div>}
     {editMode && (
-      <input
-        type="text"
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id={`labelof${question.id}`}
+        label="Label"
         name={`labelof${question.id}`}
         onChange={e => handleLabelChange(e.target.value)}
         value={label}
       />
+      //   <input
+      //     type="text"
+      //     name={`labelof${question.id}`}
+      //     onChange={e => handleLabelChange(e.target.value)}
+      //     value={label}
+      //   />
     )}
-    <div>Body: {question.body}</div>
+    {!editMode && <div>Body: {question.body}</div>}
     {editMode && (
-      <input
-        type="text"
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id={`bodyof${question.id}`}
+        label="Body"
         name={`bodyof${question.id}`}
         onChange={e => handleBodyChange(e.target.value)}
         value={question.body}
       />
+      //   <input
+      //     type="text"
+      //     name={`bodyof${question.id}`}
+      //     onChange={e => handleBodyChange(e.target.value)}
+      //     value={question.body}
+      //   />
     )}
     {children}
   </div>
