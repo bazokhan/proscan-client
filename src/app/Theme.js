@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     alignItems: "center"
   },
+  fab: {
+    marginTop: theme.spacing(1),
+  },
   paperCard: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),

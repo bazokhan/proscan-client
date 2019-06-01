@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Container from "@material-ui/core/Container";
+import { useStyles } from "app/Theme";
 
 const Edit = ({ match }) => {
+  const classes = useStyles();
   const sessionId = match.params.sessionId;
   const [session, setSession] = useState(null);
   const [editMode, setEditMode] = useState(true);
@@ -99,76 +103,80 @@ const Edit = ({ match }) => {
       })
     });
   };
-  if (!session) return <div>Loading...</div>;
+  if (!session)
+    return (
+      <Container component="main" maxWidth="md">
+        <div className={classes.paper}>
+          <CircularProgress />
+        </div>
+      </Container>
+    );
   return (
-    <div>
-      <div>Sessions ID: {sessionId}</div>
-      <div>Name: {session.name}</div>
-      {editMode && (
-        <input
-          type="text"
-          onChange={e => {
-            setSession({ ...session, name: e.target.value });
-          }}
-          value={session.name}
-        />
-      )}
-      {session.questions.map((question, questionIndex) => (
-        <Question
-          label={
-            question.label === undefined
-              ? `Question ${questionIndex + 1} : `
-              : question.label
-          }
-          question={question}
-          key={question.id}
-          editMode={editMode}
-          handleBodyChange={newBody =>
-            handleQuestionBodyChange(newBody, questionIndex)
-          }
-          handleLabelChange={newLabel =>
-            handleQuestionLabelChange(newLabel, questionIndex)
-          }
-        >
-          {question.choices.map((choice, choiceIndex) => (
-            <Choice
-              label={`${choiceIndex + 1} - `}
-              choice={choice}
-              key={choice.id}
-              editMode={editMode}
-              handleBodyChange={newBody =>
-                handleChoiceBodyChange(newBody, choiceIndex, questionIndex)
-              }
-            >
-              {editMode && (
-                <button
-                  onClick={() => handleDeleteChoice(choiceIndex, questionIndex)}
-                >
-                  X
-                </button>
-              )}
-            </Choice>
-          ))}
-          {editMode && (
-            <button onClick={() => handleAddNewChoice(questionIndex)}>
-              Add New Choice
-            </button>
-          )}
-        </Question>
-      ))}
-      {editMode && (
-        <button onClick={handleAddNewQuestion}>Add New Question</button>
-      )}
-      <button onClick={toggleEditMode}>{editMode ? "Done" : "Edit"}</button>
-      {!editMode && (
-        <Link to={`/sessions/${session.id}`}>
-          <button>Save Session</button>
-        </Link>
-      )}
-      <Link to={`/sessions/${session.id}/preview`}>Preview This Session</Link>
-      <Link to={`/sessions/${session.id}/start`}>Start This Session</Link>
-      <Link to={`/sessions`}>Back To My Sessions</Link>
-    </div>
+    <Container component="main" maxWidth="md">
+      <div className={classes.paper}>
+        <div>Sessions ID: {sessionId}</div>
+        <div>Name: {session.name}</div>
+        {editMode && (
+          <input
+            type="text"
+            onChange={e => {
+              setSession({ ...session, name: e.target.value });
+            }}
+            value={session.name}
+          />
+        )}
+        {session.questions.map((question, questionIndex) => (
+          <Question
+            label={
+              question.label === undefined
+                ? `Question ${questionIndex + 1} : `
+                : question.label
+            }
+            question={question}
+            key={question.id}
+            editMode={editMode}
+            handleBodyChange={newBody =>
+              handleQuestionBodyChange(newBody, questionIndex)
+            }
+            handleLabelChange={newLabel =>
+              handleQuestionLabelChange(newLabel, questionIndex)
+            }
+          >
+            {question.choices.map((choice, choiceIndex) => (
+              <Choice
+                label={`${choiceIndex + 1} - `}
+                choice={choice}
+                key={choice.id}
+                editMode={editMode}
+                handleBodyChange={newBody =>
+                  handleChoiceBodyChange(newBody, choiceIndex, questionIndex)
+                }
+                handleDeleteChoice={() =>
+                  handleDeleteChoice(choiceIndex, questionIndex)
+                }
+              />
+            ))}
+            {editMode && (
+              <button onClick={() => handleAddNewChoice(questionIndex)}>
+                Add New Choice
+              </button>
+            )}
+          </Question>
+        ))}
+        {editMode && (
+          <button onClick={handleAddNewQuestion}>Add New Question</button>
+        )}
+        <button onClick={toggleEditMode}>{editMode ? "Done" : "Edit"}</button>
+        {!editMode && (
+          <Link to={`/sessions/${session.id}`}>
+            <button>Save Session</button>
+          </Link>
+        )}
+        <Link to={`/sessions/${session.id}/preview`}>Preview This Session</Link>
+        <Link to={`/sessions/${session.id}/start`}>Start This Session</Link>
+        <Link to={`/sessions`}>Back To My Sessions</Link>
+      </div>
+    </Container>
   );
 };
 export default Edit;

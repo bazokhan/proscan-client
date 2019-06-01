@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
 const Question = ({
   label,
@@ -11,7 +12,7 @@ const Question = ({
   handleBodyChange
 }) => (
   <div>
-    {!editMode && <div>Label: {label}</div>}
+    {!editMode && <Typography variant="h6">{label}</Typography>}
     {editMode && (
       <TextField
         variant="outlined"
@@ -31,7 +32,7 @@ const Question = ({
       //     value={label}
       //   />
     )}
-    {!editMode && <div>Body: {question.body}</div>}
+    {!editMode && <Typography variant="subtitle1">{question.body}</Typography>}
     {editMode && (
       <TextField
         variant="outlined"
@@ -39,7 +40,7 @@ const Question = ({
         required
         fullWidth
         id={`bodyof${question.id}`}
-        label="Body"
+        label="Question Text"
         name={`bodyof${question.id}`}
         onChange={e => handleBodyChange(e.target.value)}
         value={question.body}

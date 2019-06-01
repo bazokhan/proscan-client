@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Start = ({ match, index }) => {
   const sessionId = match.params.sessionId;
@@ -30,8 +31,8 @@ const Start = ({ match, index }) => {
     }
   };
 
-  if (!session) return <div>Loading...</div>;
-  if (!question) return <div>Loading...</div>;
+  if (!session) return <CircularProgress />;
+  if (!question) return <CircularProgress />;
 
   return (
     <div>
