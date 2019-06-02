@@ -7,16 +7,22 @@ const useStyles = makeStyles(theme => ({
     }
   },
   appBar: {
-    position: 'relative',
+    position: "relative"
   },
-  paper: {
+  main: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
   },
+  // paper: {
+  //   marginTop: theme.spacing(8),
+  //   display: "flex",
+  //   flexDirection: "column",
+  //   alignItems: "center"
+  // },
   fab: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   paperCard: {
     marginTop: theme.spacing(3),

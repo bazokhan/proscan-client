@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, Link as RouterLink } from "react-router-dom";
+import Main from "layout/Main";
+import Link from "@material-ui/core/Link";
 
 const sessions = [
   { name: "Session1", id: "123", publicId: "hello", active: true },
@@ -43,7 +45,7 @@ const Join = () => {
   }, [timeoutFunction]);
 
   return (
-    <div>
+    <Main>
       {session && <Redirect to={`/${session.id}`} />}
       <form onSubmit={handleSubmit}>
         <label>Enter Session ID</label>
@@ -56,8 +58,10 @@ const Join = () => {
       {!isLoading && !session && !!requestsSent && (
         <div>Could Not Find This Session</div>
       )}
-      <Link to={`/`}>Home</Link>
-    </div>
+      <Link to={`/`} component={RouterLink}>
+        Home
+      </Link>
+    </Main>
   );
 };
 export default Join;

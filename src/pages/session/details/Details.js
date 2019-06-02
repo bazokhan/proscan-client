@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Main from "layout/Main";
+import Link from "@material-ui/core/Link";
 
 const Details = ({ match }) => {
   const sessionId = match.params.sessionId;
@@ -19,7 +21,7 @@ const Details = ({ match }) => {
   if (!session) return <CircularProgress />;
 
   return (
-    <div>
+    <Main>
       <div>Sessions ID: {sessionId}</div>
       <div>{session.name}</div>
       {session.questions.map((question, questionIndex) => (
@@ -37,11 +39,19 @@ const Details = ({ match }) => {
           ))}
         </Question>
       ))}
-      <Link to={`/sessions/${session.id}/edit`}>Edit This Session</Link>
-      <Link to={`/sessions/${session.id}/preview`}>Preview This Session</Link>
-      <Link to={`/sessions/${session.id}/start`}>Start This Session</Link>
-      <Link to={`/sessions`}>Back To My Sessions</Link>
-    </div>
+      <Link to={`/sessions/${session.id}/edit`} component={RouterLink}>
+        Edit This Session
+      </Link>
+      <Link to={`/sessions/${session.id}/preview`} component={RouterLink}>
+        Preview This Session
+      </Link>
+      <Link to={`/sessions/${session.id}/start`} component={RouterLink}>
+        Start This Session
+      </Link>
+      <Link to={`/sessions`} component={RouterLink}>
+        Back To My Sessions
+      </Link>
+    </Main>
   );
 };
 export default Details;

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
+import Main from "layout/Main";
+import Link from "@material-ui/core/Link";
 
 const Joined = ({ match, index }) => {
   const sessionId = match.params.sessionId;
@@ -35,7 +37,7 @@ const Joined = ({ match, index }) => {
   if (!question) return <div>Loading...</div>;
 
   return (
-    <div>
+    <Main>
       <div>Sessions ID: {sessionId}</div>
       <div>{session.name}</div>
       <Question
@@ -60,8 +62,10 @@ const Joined = ({ match, index }) => {
           </React.Fragment>
         );
       })}
-      <Link to={`/join`}>Exit This Session</Link>
-    </div>
+      <Link to={`/join`} component={RouterLink}>
+        Exit This Session
+      </Link>
+    </Main>
   );
 };
 

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Main from "layout/Main";
+import Link from "@material-ui/core/Link";
 
 const Start = ({ match, index }) => {
   const sessionId = match.params.sessionId;
@@ -31,11 +33,21 @@ const Start = ({ match, index }) => {
     }
   };
 
-  if (!session) return <CircularProgress />;
-  if (!question) return <CircularProgress />;
+  if (!session)
+    return (
+      <Main>
+        <CircularProgress />
+      </Main>
+    );
+  if (!question)
+    return (
+      <Main>
+        <CircularProgress />
+      </Main>
+    );
 
   return (
-    <div>
+    <Main>
       <div>Sessions ID: {sessionId}</div>
       <div>{session.name}</div>
       <Question
@@ -53,8 +65,10 @@ const Start = ({ match, index }) => {
           />
         ))}
       </Question>
-      <Link to={`/sessions/${session.id}`}>Stop This Session</Link>
-    </div>
+      <Link to={`/sessions/${session.id}`} component={RouterLink}>
+        Stop This Session
+      </Link>
+    </Main>
   );
 };
 

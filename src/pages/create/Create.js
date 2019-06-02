@@ -15,11 +15,12 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "app/Theme";
-import Container from "@material-ui/core/Container";
+// import Container from "@material-ui/core/Container";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Paper from "@material-ui/core/Paper";
 // import Grid from "@material-ui/core/Grid";
+import Main from "layout/Main";
 
 const Create = () => {
   const classes = useStyles();
@@ -116,19 +117,20 @@ const Create = () => {
   };
   if (!session) return <div>Loading...</div>;
   return (
-    <Container component="main" maxWidth="md">
-      <div className={classes.paper}>
+    // <Container component="main" maxWidth="md">
+    //   <div className={classes.paper}>
+    <Main>
       {/* <Grid container spacing={1}>
         <Grid item xs={1}> */}
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-        {/* </Grid> */}
-        {/* <Grid item xs={11}> */}
-          <Typography component="h1" variant="h6">
-            Create New Session
-          </Typography>
-        {/* </Grid>
+      <Avatar className={classes.avatar}>
+        <LockOutlinedIcon />
+      </Avatar>
+      {/* </Grid> */}
+      {/* <Grid item xs={11}> */}
+      <Typography component="h1" variant="h6">
+        Create New Session
+      </Typography>
+      {/* </Grid>
       </Grid> */}
       <form className={classes.form} noValidate>
         <Typography component="h2" variant="subtitle1">
@@ -256,8 +258,9 @@ const Create = () => {
           </Grid>
         </Grid>
       </form>
-      </div>
-    </Container>
+      {/* </div>
+    </Container> */}
+    </Main>
   );
 };
 export default Create;
