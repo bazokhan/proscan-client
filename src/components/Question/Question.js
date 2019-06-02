@@ -1,7 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import Section from "layout/Section";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Fab from "@material-ui/core/Fab";
 
 const Question = ({
   label,
@@ -11,49 +14,47 @@ const Question = ({
   handleLabelChange,
   handleBodyChange
 }) => (
-  <div>
-    {!editMode && <Typography variant="h6">{label}</Typography>}
-    {editMode && (
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        id={`labelof${question.id}`}
-        label="Label"
-        name={`labelof${question.id}`}
-        onChange={e => handleLabelChange(e.target.value)}
-        value={label}
-      />
-      //   <input
-      //     type="text"
-      //     name={`labelof${question.id}`}
-      //     onChange={e => handleLabelChange(e.target.value)}
-      //     value={label}
-      //   />
-    )}
-    {!editMode && <Typography variant="subtitle1">{question.body}</Typography>}
-    {editMode && (
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        id={`bodyof${question.id}`}
-        label="Question Text"
-        name={`bodyof${question.id}`}
-        onChange={e => handleBodyChange(e.target.value)}
-        value={question.body}
-      />
-      //   <input
-      //     type="text"
-      //     name={`bodyof${question.id}`}
-      //     onChange={e => handleBodyChange(e.target.value)}
-      //     value={question.body}
-      //   />
-    )}
+  <Fragment>
+    <Section flex="column flex-start" borderBottom>
+      <Section flex="row space-between">
+        <Typography variant="h6">{label}</Typography>
+        <Fab size="small">
+          <DeleteIcon />
+        </Fab>
+      </Section>
+      {/* {!editMode && <Typography variant="h6">{label}</Typography>} */}
+      {/* {editMode && (
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id={`labelof${question.id}`}
+          label="Label"
+          name={`labelof${question.id}`}
+          onChange={e => handleLabelChange(e.target.value)}
+          value={label}
+        />
+      )} */}
+      {!editMode && (
+        <Typography variant="subtitle1">{question.body}</Typography>
+      )}
+      {editMode && (
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id={`bodyof${question.id}`}
+          label="Question Text"
+          name={`bodyof${question.id}`}
+          onChange={e => handleBodyChange(e.target.value)}
+          value={question.body}
+        />
+      )}
+    </Section>
     {children}
-  </div>
+  </Fragment>
 );
 Question.propTypes = {
   label: PropTypes.string,

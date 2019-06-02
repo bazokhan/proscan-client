@@ -5,22 +5,17 @@ import Question from "components/Question";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-// import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-// import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import CreateIcon from "@material-ui/icons/Create";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "app/Theme";
-// import Container from "@material-ui/core/Container";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Paper from "@material-ui/core/Paper";
-// import Grid from "@material-ui/core/Grid";
 import Main from "layout/Main";
+import Section from "layout/Section";
 
 const Create = () => {
   const classes = useStyles();
@@ -117,33 +112,20 @@ const Create = () => {
   };
   if (!session) return <div>Loading...</div>;
   return (
-    // <Container component="main" maxWidth="md">
-    //   <div className={classes.paper}>
     <Main>
-      {/* <Grid container spacing={1}>
-        <Grid item xs={1}> */}
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      {/* </Grid> */}
-      {/* <Grid item xs={11}> */}
-      <Typography component="h1" variant="h6">
-        Create New Session
-      </Typography>
-      {/* </Grid>
-      </Grid> */}
+      <Section flex="column center">
+        <Avatar className={classes.avatar}>
+          <CreateIcon />
+        </Avatar>
+        <Typography component="h1" variant="h6">
+          Create New Session
+        </Typography>
+      </Section>
       <form className={classes.form} noValidate>
         <Typography component="h2" variant="subtitle1">
           Session Title: {session.name}
         </Typography>
         {editMode && (
-          // <input
-          //   type="text"
-          //   onChange={e => {
-          //     setSession({ ...session, name: e.target.value });
-          //   }}
-          //   value={session.name}
-          // />
           <TextField
             variant="outlined"
             margin="normal"
@@ -159,7 +141,7 @@ const Create = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AccountCircle />
+                  <CreateIcon />
                 </InputAdornment>
               )
             }}
@@ -258,8 +240,6 @@ const Create = () => {
           </Grid>
         </Grid>
       </form>
-      {/* </div>
-    </Container> */}
     </Main>
   );
 };
