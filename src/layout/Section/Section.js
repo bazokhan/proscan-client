@@ -8,7 +8,6 @@ const snakeToCamel = string => {
     .map(word => word.split("-"))
     .reduce((acc, next) => [...acc, ...next])
     .reduce((acc, next) => {
-      //   console.log({ acc, next });
       return acc + next.charAt(0).toUpperCase() + next.slice(1);
     });
   console.log({ className });
@@ -19,7 +18,13 @@ const Section = ({ classes, flex, borderBottom, children }) => {
   const styles = useStyles({ classes });
   const flexStyle = snakeToCamel(flex);
   return (
-    <div className={`${styles.section} ${styles[flexStyle]} ${borderBottom ? styles.borderBottom : ''}`}>{children}</div>
+    <div
+      className={`${styles.section} ${styles[flexStyle]} ${
+        borderBottom ? styles.borderBottom : ""
+      }`}
+    >
+      {children}
+    </div>
   );
 };
 

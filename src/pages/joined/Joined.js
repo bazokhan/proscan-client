@@ -6,6 +6,7 @@ import Choice from "components/Choice";
 import Question from "components/Question";
 import Main from "layout/Main";
 import Link from "@material-ui/core/Link";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const Joined = ({ match, index }) => {
   const sessionId = match.params.sessionId;
@@ -33,8 +34,18 @@ const Joined = ({ match, index }) => {
     }
   }, [session, questionIndex]);
 
-  if (!session) return <div>Loading...</div>;
-  if (!question) return <div>Loading...</div>;
+  if (!session)
+    return (
+      <Main>
+        <CircularProgress />
+      </Main>
+    );
+  if (!question)
+    return (
+      <Main>
+        <CircularProgress />
+      </Main>
+    );
 
   return (
     <Main>

@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Section from "layout/Section";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Fab from "@material-ui/core/Fab";
+import IconButton from "@material-ui/core/IconButton";
 
 const Question = ({
   label,
@@ -16,12 +16,15 @@ const Question = ({
 }) => (
   <Fragment>
     <Section flex="column flex-start" borderBottom>
-      <Section flex="row space-between">
-        <Typography variant="h6">{label}</Typography>
-        <Fab size="small">
-          <DeleteIcon />
-        </Fab>
-      </Section>
+      {!editMode && <Typography variant="h6">{label}</Typography>}
+      {editMode && (
+        <Section flex="row space-between">
+          <Typography variant="h6">{label}</Typography>
+          <IconButton size="small">
+            <DeleteIcon />
+          </IconButton>
+        </Section>
+      )}
       {/* {!editMode && <Typography variant="h6">{label}</Typography>} */}
       {/* {editMode && (
         <TextField
@@ -44,6 +47,7 @@ const Question = ({
           variant="outlined"
           margin="normal"
           required
+          multiline
           fullWidth
           id={`bodyof${question.id}`}
           label="Question Text"

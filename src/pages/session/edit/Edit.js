@@ -1,25 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
 import CircularProgress from "@material-ui/core/CircularProgress";
-// import Container from "@material-ui/core/Container";
-// import { useStyles } from "app/Theme";
 import Main from "layout/Main";
 import Link from "@material-ui/core/Link";
+import useSession from "hooks/useSession";
 
 const Edit = ({ match }) => {
-  // const classes = useStyles();
-  const sessionId = match.params.sessionId;
-  const [session, setSession] = useState(null);
   const [editMode, setEditMode] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setSession({ name: "Session1", id: "123", questions: fakeData });
-    }, 700);
-  }, []);
+  const [session, setSession] = useSession(match.params.sessionId);
 
   const toggleEditMode = () => setEditMode(!editMode);
 
@@ -107,19 +98,13 @@ const Edit = ({ match }) => {
   };
   if (!session)
     return (
-      // <Container component="main" maxWidth="md">
-      //   <div className={classes.paper}>
       <Main>
         <CircularProgress />
       </Main>
-      //   </div>
-      // </Container>
     );
   return (
-    // <Container component="main" maxWidth="md">
-    //   <div className={classes.paper}>
     <Main>
-      <div>Sessions ID: {sessionId}</div>
+      <div>Sessions ID: {session.id}</div>
       <div>Name: {session.name}</div>
       {editMode && (
         <input
@@ -187,8 +172,6 @@ const Edit = ({ match }) => {
         Back To My Sessions
       </Link>
     </Main>
-    //   {/* </div>
-    // </Container> */}
   );
 };
 export default Edit;

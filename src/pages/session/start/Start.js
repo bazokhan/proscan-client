@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
-import fakeData from "helpers/fakeData";
 import Choice from "components/Choice";
 import Question from "components/Question";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Main from "layout/Main";
 import Link from "@material-ui/core/Link";
+import useSession from "hooks/useSession";
 
 const Start = ({ match, index }) => {
-  const sessionId = match.params.sessionId;
-  const [session, setSession] = useState(null);
   const [question, setQuestion] = useState(null);
   const [questionIndex, setQuestionIndex] = useState(index);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setSession({ name: "Session1", id: "123", questions: fakeData });
-    }, 700);
-  }, []);
+  const [session] = useSession(match.params.id);
 
   useEffect(() => {
     if (session) {
@@ -48,7 +41,7 @@ const Start = ({ match, index }) => {
 
   return (
     <Main>
-      <div>Sessions ID: {sessionId}</div>
+      <div>Sessions ID: {session.id}</div>
       <div>{session.name}</div>
       <Question
         label={`Question ${questionIndex + 1} : `}

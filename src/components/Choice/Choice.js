@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import DeleteIcon from "@material-ui/icons/Delete";
+// import Grid from "@material-ui/core/Grid";
+import ClearIcon from "@material-ui/icons/Clear";
 import IconButton from "@material-ui/core/IconButton";
 import Section from "layout/Section";
 
@@ -15,14 +15,8 @@ const Choice = ({
   handleDeleteChoice
 }) => {
   return (
-    <Grid container spacing={2}>
-      {!editMode && (
-        <Section flex="row flex-start">
-          {label}
-          {choice.body}
-        </Section>
-      )}
-      {editMode && (
+    <Fragment>
+      {editMode ? (
         <Section flex="row space-between">
           <TextField
             variant="standard"
@@ -40,12 +34,17 @@ const Choice = ({
             aria-label="Delete"
             size="small"
           >
-            <DeleteIcon />
+            <ClearIcon />
           </IconButton>
+        </Section>
+      ) : (
+        <Section flex="row flex-start">
+          {label}
+          {choice.body}
         </Section>
       )}
       {children}
-    </Grid>
+    </Fragment>
   );
 };
 Choice.propTypes = {
