@@ -17,34 +17,39 @@ const useStyles = makeStyles(theme => {
       flexDirection: "column",
       alignItems: "center"
     },
-    section:{
+    section: {
       width: "100%",
       padding: theme.spacing(1)
     },
     rowFlexStart: {
       display: "flex",
       justifyContent: "flex-start",
-      alignItems: "center"
+      alignItems: "center",
+      flexWrap: "wrap"
     },
     rowFlexEnd: {
       display: "flex",
       justifyContent: "flex-end",
-      alignItems: "center"
+      alignItems: "center",
+      flexWrap: "wrap"
     },
     rowCenter: {
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      flexWrap: "wrap"
     },
     rowSpaceBetween: {
       display: "flex",
       justifyContent: "space-between",
-      alignItems: "center"
+      alignItems: "center",
+      flexWrap: "wrap"
     },
     rowSpaceAround: {
       display: "flex",
       justifyContent: "space-around",
-      alignItems: "center"
+      alignItems: "center",
+      flexWrap: "wrap"
     },
     columnFlexStart: {
       display: "flex",
@@ -86,12 +91,15 @@ const useStyles = makeStyles(theme => {
     paper: {
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(3),
-      padding: theme.spacing(2),
-      [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-        marginTop: theme.spacing(3),
-        marginBottom: theme.spacing(3),
-        padding: theme.spacing(3)
-      }
+      padding: theme.spacing(3)
+      // [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      //   marginTop: theme.spacing(3),
+      //   marginBottom: theme.spacing(3),
+      //   padding: theme.spacing(3)
+      // }
+    },
+    card: {
+      margin: theme.spacing(3)
     },
     avatar: {
       margin: theme.spacing(1),
@@ -101,7 +109,7 @@ const useStyles = makeStyles(theme => {
       marginTop: theme.spacing(6)
     },
     rightIcon: {
-      marginLeft: theme.spacing(1),
+      marginLeft: theme.spacing(1)
     },
     form: {
       width: "100%", // Fix IE 11 issue.
@@ -109,6 +117,10 @@ const useStyles = makeStyles(theme => {
     },
     submit: {
       marginTop: theme.spacing(10)
+    },
+    media: {
+      height: 0,
+      paddingTop: "56.25%" // 16:9
     }
   };
 });

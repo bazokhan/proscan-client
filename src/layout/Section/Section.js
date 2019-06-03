@@ -10,7 +10,6 @@ const snakeToCamel = string => {
     .reduce((acc, next) => {
       return acc + next.charAt(0).toUpperCase() + next.slice(1);
     });
-  console.log({ className });
   return className;
 };
 

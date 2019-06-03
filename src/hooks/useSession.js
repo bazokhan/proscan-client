@@ -10,7 +10,7 @@ const useSession = id => {
     }, 700);
   }, []);
 
-  return [session, setSession];
+  return [session];
 };
 
 export default useSession;

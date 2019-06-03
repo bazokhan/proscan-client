@@ -9,7 +9,6 @@ const ButtonGrid = ({ children }) => {
         const clonedChild = React.cloneElement(child, {
           fullWidth: true
         });
-        console.log({ child, clonedChild });
         return (
           <Grid item xs={child.props.gridwidth || 12}>
             {clonedChild}
