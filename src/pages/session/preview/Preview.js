@@ -1,14 +1,11 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 import Choice from "components/Choice";
 import Question from "components/Question";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Main from "layout/Main";
-import Link from "@material-ui/core/Link";
-import useSession from "hooks/useSession";
+import { useSession } from "hooks/useSession";
+import { Link, RouterLink, CircularProgress } from "layout/material-ui/core";
 
 const Preview = ({ match }) => {
-
   const [session] = useSession(match.params.sessionId);
 
   if (!session)
@@ -43,7 +40,9 @@ const Preview = ({ match }) => {
       <Link to={`/sessions/${session.id}/start`} component={RouterLink}>
         Start This Session
       </Link>
-      <Link to={`/sessions`} component={RouterLink}>Back To My Sessions</Link>
+      <Link to={`/sessions`} component={RouterLink}>
+        Back To My Sessions
+      </Link>
     </Main>
   );
 };

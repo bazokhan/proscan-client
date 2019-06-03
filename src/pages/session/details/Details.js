@@ -1,14 +1,24 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 import Choice from "components/Choice";
 import Question from "components/Question";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Main from "layout/Main";
-import Link from "@material-ui/core/Link";
-import useSession from "hooks/useSession";
+import {
+  Link,
+  RouterLink,
+  CircularProgress,
+  Button,
+  Typography,
+  Card,
+  CardContent
+} from "layout/material-ui/core";
+import { SendIcon } from "layout/material-ui/icons";
+import { useSession } from "hooks/useSession";
+import Section from "layout/Section";
+import { useStyles } from "app/Theme";
 
 const Details = ({ match }) => {
   const [session] = useSession(match.params.sessionId);
+  const classes = useStyles();
 
   if (!session)
     return (
@@ -19,35 +29,59 @@ const Details = ({ match }) => {
 
   return (
     <Main>
-      <div>Sessions ID: {session.id}</div>
-      <div>{session.name}</div>
+      <Section flex="column center">
+        <Typography component="h1" variant="h6">
+          {session.name}
+        </Typography>
+      </Section>
+      <Section flex="row space-between">
+        <Button variant="text">
+          <Link to={`/sessions/${session.id}/edit`} component={RouterLink}>
+            Edit
+          </Link>
+        </Button>
+        <Button variant="text">
+          <Link to={`/sessions/${session.id}/preview`} component={RouterLink}>
+            Preview
+          </Link>
+        </Button>
+        <Button variant="contained">
+          <Link
+            to={`/sessions/${session.id}/start`}
+            component={RouterLink}
+            className={classes.rowCenter}
+          >
+            Start &nbsp; <SendIcon />
+          </Link>
+        </Button>
+      </Section>
       {session.questions.map((question, questionIndex) => (
-        <Question
-          label={`Question ${questionIndex + 1} : `}
-          key={question.id}
-          question={question}
-        >
-          {question.choices.map((choice, choiceIndex) => (
-            <Choice
-              label={`${choiceIndex + 1} - `}
-              key={choice.id}
-              choice={choice}
-            />
-          ))}
-        </Question>
+        <div key={question.id} className={classes.form}>
+          <Card className={classes.card}>
+            <CardContent>
+              <Question
+                label={`Question ${questionIndex + 1} : `}
+                question={question}
+              >
+                {question.choices.map((choice, choiceIndex) => (
+                  <Choice
+                    label={`${choiceIndex + 1} - `}
+                    key={choice.id}
+                    choice={choice}
+                  />
+                ))}
+              </Question>
+            </CardContent>
+          </Card>
+        </div>
       ))}
-      <Link to={`/sessions/${session.id}/edit`} component={RouterLink}>
-        Edit This Session
-      </Link>
-      <Link to={`/sessions/${session.id}/preview`} component={RouterLink}>
-        Preview This Session
-      </Link>
-      <Link to={`/sessions/${session.id}/start`} component={RouterLink}>
-        Start This Session
-      </Link>
-      <Link to={`/sessions`} component={RouterLink}>
-        Back To My Sessions
-      </Link>
+      <Section flex="row center">
+        <Button variant="text">
+          <Link to={`/sessions/`} component={RouterLink}>
+            Back To My Sessions
+          </Link>
+        </Button>
+      </Section>
     </Main>
   );
 };

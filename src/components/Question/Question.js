@@ -1,10 +1,8 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import { TextField, Typography, IconButton } from "layout/material-ui/core";
+import { DeleteIcon } from "layout/material-ui/icons";
 import Section from "layout/Section";
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
 
 const Question = ({
   label,

@@ -1,46 +1,54 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useStyles } from "app/Theme";
-import Link from "@material-ui/core/Link";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import CreateIcon from "@material-ui/icons/Create";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
 import Main from "layout/Main";
 import PlaceholderImage from "images/placeholder.png";
-
 import Section from "layout/Section";
-
-const sessions = [
-  { name: "Session1", id: "123" },
-  { name: "Session2", id: "1234" },
-  { name: "Session3", id: "12345" },
-  { name: "Session1", id: "1236" },
-  { name: "Session2", id: "12347" },
-  { name: "Session3", id: "123455" }
-];
+import { useSessions } from "hooks/useSessions";
+import { ShareIcon, MoreVertIcon } from "layout/material-ui/icons";
+import {
+  Link,
+  RouterLink,
+  CircularProgress,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  CardActions,
+  IconButton,
+  Button,
+  Avatar,
+  Typography
+} from "layout/material-ui/core";
 
 const Sessions = () => {
   const classes = useStyles();
+  const [sessions] = useSessions();
+  if (!sessions.length)
+    return (
+      <Main>
+        <CircularProgress />
+      </Main>
+    );
   return (
     <Main>
       <Section flex="column center">
-        <Avatar className={classes.avatar}>
-          <CreateIcon />
-        </Avatar>
         <Typography component="h1" variant="h6">
           My Sessions
         </Typography>
       </Section>
-      <Section flex="row space-around">
+      <Section flex="column space-between">
+        <Section flex="row space-between">
+          <Button variant="text">
+            <Link to={`/`} component={RouterLink}>
+              Home
+            </Link>
+          </Button>
+          <Button variant="text">
+            <Link to={`/sessions/create`} component={RouterLink}>
+              Create New Session
+            </Link>
+          </Button>
+        </Section>
         {sessions.map(session => (
           <Card key={session.id} className={classes.card}>
             <CardHeader
@@ -79,9 +87,6 @@ const Sessions = () => {
           </Card>
         ))}
       </Section>
-      <Link to={`/sessions/create`} component={RouterLink}>
-        Create New Session
-      </Link>
     </Main>
   );
 };

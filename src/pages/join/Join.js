@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, Link as RouterLink } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Main from "layout/Main";
-import Link from "@material-ui/core/Link";
-
-const sessions = [
-  { name: "Session1", id: "123", publicId: "hello", active: true },
-  { name: "Session2", id: "1234", publicId: "hithere" },
-  { name: "Session3", id: "12345", publicId: "nope" }
-];
+import {
+  TextField,
+  Button,
+  CircularProgress,
+  Typography
+} from "layout/material-ui/core";
+import Section from "layout/Section";
+import ButtonGrid from "layout/ButtonGrid";
+import RouteButton from "layout/RouteButton";
+import { useSessions } from "hooks/useSessions";
+import { useStyles } from "app/Theme";
 
 const Join = () => {
+  const classes = useStyles();
+  const [sessions] = useSessions();
   const [timeoutFunction, setTimeoutFunction] = useState(null);
   const [session, setSession] = useState(null);
   const [publicId, setPublicId] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [requestsSent, setRequestsSent] = useState(0);
+
   const handleChange = e => {
     setPublicId(e.target.value);
   };
@@ -23,7 +30,6 @@ const Join = () => {
     setLoading(true);
     setTimeoutFunction(
       setTimeout(() => {
-        console.log("Sending");
         setRequestsSent(requestsSent + 1);
         setSession(
           sessions.find(
@@ -43,24 +49,53 @@ const Join = () => {
       clearTimeout(timeoutFunction);
     };
   }, [timeoutFunction]);
-
+  if (isLoading)
+    return (
+      <Main>
+        <CircularProgress />
+      </Main>
+    );
   return (
     <Main>
       {session && <Redirect to={`/${session.id}`} />}
-      <form onSubmit={handleSubmit}>
-        <label>Enter Session ID</label>
-        <input type="text" onChange={handleChange} />
-        <button type="submit" disabled={isLoading}>
-          Join
-        </button>
+      <Section flex="column center">
+        <Typography component="h1" variant="h6">
+          Join A Session
+        </Typography>
+      </Section>
+      <form onSubmit={handleSubmit} className={classes.form}>
+        {/* <label>Enter Session ID</label> */}
+
+        <TextField
+          fullWidth
+          variant="outlined"
+          size="large"
+          margin="normal"
+          required
+          label="Enter Session ID"
+          value={publicId || ""}
+          onChange={handleChange}
+        />
+        {!isLoading && !session && !!requestsSent && (
+          <Typography variant="subtitle1" color="error">
+            Could Not Find This Session
+          </Typography>
+        )}
+        <ButtonGrid spacing={2}>
+          <Button
+            variant="contained"
+            size="large"
+            fullWidth
+            type="submit"
+            disabled={isLoading}
+          >
+            Join
+          </Button>
+          <RouteButton to="/" size="large">
+            Home
+          </RouteButton>
+        </ButtonGrid>
       </form>
-      {isLoading && <div>Joining Session</div>}
-      {!isLoading && !session && !!requestsSent && (
-        <div>Could Not Find This Session</div>
-      )}
-      <Link to={`/`} component={RouterLink}>
-        Home
-      </Link>
     </Main>
   );
 };

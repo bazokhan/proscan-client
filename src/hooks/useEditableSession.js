@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import fakeData from "helpers/fakeData";
 import validate from "helpers/validate";
 
-const useSession = id => {
+const useEditableSession = id => {
   const [session, setSession] = useState(null);
   const [editMode, setEditMode] = useState(true);
   const [errors, setErrors] = useState([]);
@@ -123,4 +123,4 @@ const useSession = id => {
   ];
 };
 
-export default useSession;
+export { useEditableSession };

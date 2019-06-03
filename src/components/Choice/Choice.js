@@ -1,9 +1,7 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
-import TextField from "@material-ui/core/TextField";
-// import Grid from "@material-ui/core/Grid";
-import ClearIcon from "@material-ui/icons/Clear";
-import IconButton from "@material-ui/core/IconButton";
+import { ClearIcon } from "layout/material-ui/icons";
+import { IconButton, TextField } from "layout/material-ui/core";
 import Section from "layout/Section";
 
 const Choice = ({

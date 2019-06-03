@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link as RouterLink } from "react-router-dom";
 import Choice from "components/Choice";
 import Question from "components/Question";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Main from "layout/Main";
-import Link from "@material-ui/core/Link";
-import useSession from "hooks/useSession";
+import { useSession } from "hooks/useSession";
+import { Link, RouterLink, CircularProgress } from "layout/material-ui/core";
 
 const Start = ({ match, index }) => {
   const [question, setQuestion] = useState(null);

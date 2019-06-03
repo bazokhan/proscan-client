@@ -13,4 +13,4 @@ const useSession = id => {
   return [session];
 };
 
-export default useSession;
+export { useSession };

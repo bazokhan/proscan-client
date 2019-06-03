@@ -1,10 +1,17 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Main from "layout/Main";
-import useEditableSession from "hooks/useEditableSession";
+import { useEditableSession } from "hooks/useEditableSession";
 import SessionForm from "components/SessionForm";
-import { Link as RouterLink } from "react-router-dom";
-import Link from "@material-ui/core/Link";
+import {
+  Link,
+  RouterLink,
+  CircularProgress,
+  Typography,
+  Button,
+  Avatar
+} from "layout/material-ui/core";
+import { CreateIcon } from "layout/material-ui/icons";
+import Section from "layout/Section";
 
 const Edit = ({ match }) => {
   const [
@@ -24,6 +31,26 @@ const Edit = ({ match }) => {
     );
   return (
     <Main>
+      <Section flex="column center">
+        <Avatar>
+          <CreateIcon />
+        </Avatar>
+        <Typography component="h1" variant="h6">
+          Edit Session
+        </Typography>
+      </Section>
+      <Section flex="row space-between">
+        <Button variant="text">
+          <Link to={`/`} component={RouterLink}>
+            Home
+          </Link>
+        </Button>
+        <Button variant="text">
+          <Link to={`/sessions`} component={RouterLink}>
+            Back To My Sessions
+          </Link>
+        </Button>
+      </Section>
       <SessionForm
         title="Edit Session"
         session={session}
@@ -33,9 +60,6 @@ const Edit = ({ match }) => {
         errors={errors}
         handlers={handlers}
       />
-      <Link to={`/sessions`} component={RouterLink}>
-        Back To My Sessions
-      </Link>
     </Main>
   );
 };

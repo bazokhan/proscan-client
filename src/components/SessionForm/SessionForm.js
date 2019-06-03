@@ -1,21 +1,25 @@
 import React, { Fragment } from "react";
 import Choice from "components/Choice";
 import Question from "components/Question";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import CreateIcon from "@material-ui/icons/Create";
-import AddIcon from "@material-ui/icons/Add";
-import TitleIcon from "@material-ui/icons/Title";
-import DoneIcon from "@material-ui/icons/Done";
-import CloudDoneIcon from "@material-ui/icons/CloudDone";
-import Typography from "@material-ui/core/Typography";
 import { useStyles } from "app/Theme";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Paper from "@material-ui/core/Paper";
 import Section from "layout/Section";
 import ButtonGrid from "layout/ButtonGrid";
-import Fab from "@material-ui/core/Fab";
+import {
+  // CreateIcon,
+  AddIcon,
+  TitleIcon,
+  DoneIcon,
+  CloudDoneIcon
+} from "layout/material-ui/icons";
+import {
+  Typography,
+  Button,
+  // Avatar,
+  TextField,
+  InputAdornment,
+  Paper,
+  Fab
+} from "layout/material-ui/core";
 
 const SessionForm = ({
   title,
@@ -29,14 +33,6 @@ const SessionForm = ({
   const classes = useStyles();
   return (
     <Fragment>
-      <Section flex="column center">
-        <Avatar className={classes.avatar}>
-          <CreateIcon />
-        </Avatar>
-        <Typography component="h1" variant="h6">
-          {title}
-        </Typography>
-      </Section>
       <Section flex="column center">
         <form className={classes.form} noValidate>
           {editMode ? (
