@@ -49,12 +49,6 @@ const Join = () => {
       clearTimeout(timeoutFunction);
     };
   }, [timeoutFunction]);
-  if (isLoading)
-    return (
-      <Main>
-        <CircularProgress />
-      </Main>
-    );
   return (
     <Main>
       {session && <Redirect to={`/${session.id}`} />}
@@ -63,39 +57,41 @@ const Join = () => {
           Join A Session
         </Typography>
       </Section>
-      <form onSubmit={handleSubmit} className={classes.form}>
-        {/* <label>Enter Session ID</label> */}
-
-        <TextField
-          fullWidth
-          variant="outlined"
-          size="large"
-          margin="normal"
-          required
-          label="Enter Session ID"
-          value={publicId || ""}
-          onChange={handleChange}
-        />
-        {!isLoading && !session && !!requestsSent && (
-          <Typography variant="subtitle1" color="error">
-            Could Not Find This Session
-          </Typography>
-        )}
-        <ButtonGrid spacing={2}>
-          <Button
-            variant="contained"
-            size="large"
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <form onSubmit={handleSubmit} className={classes.form}>
+          <TextField
             fullWidth
-            type="submit"
-            disabled={isLoading}
-          >
-            Join
-          </Button>
-          <RouteButton to="/" size="large">
-            Home
-          </RouteButton>
-        </ButtonGrid>
-      </form>
+            variant="outlined"
+            size="large"
+            margin="normal"
+            required
+            label="Enter Session ID"
+            value={publicId || ""}
+            onChange={handleChange}
+          />
+          {!isLoading && !session && !!requestsSent && (
+            <Typography variant="subtitle1" color="error">
+              Could Not Find This Session
+            </Typography>
+          )}
+          <ButtonGrid spacing={2}>
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth
+              type="submit"
+              disabled={isLoading}
+            >
+              Join
+            </Button>
+            <RouteButton to="/" size="large">
+              Home
+            </RouteButton>
+          </ButtonGrid>
+        </form>
+      )}
     </Main>
   );
 };
