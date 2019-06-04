@@ -14,6 +14,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Fab from "@material-ui/core/Fab";
+import Grid from "@material-ui/core/Grid";
 
 export {
   CircularProgress,
@@ -31,5 +32,6 @@ export {
   InputAdornment,
   Paper,
   TextField,
-  Fab
+  Fab,
+  Grid
 };

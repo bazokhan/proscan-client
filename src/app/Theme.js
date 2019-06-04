@@ -14,12 +14,6 @@ const useStyles = makeStyles(theme => {
       // justifyContet: "spaceBetween",
       // flexGrow: 1
     },
-    main: {
-      marginTop: theme.spacing(3),
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
-    },
     section: {
       width: "100%",
       padding: theme.spacing(1)
@@ -103,6 +97,8 @@ const useStyles = makeStyles(theme => {
       //   width: "100%"
       // }
     },
+    // #1AAAE3
+    // #2AB679
     avatar: {
       margin: theme.spacing(1),
       backgroundColor: theme.palette.secondary.main
