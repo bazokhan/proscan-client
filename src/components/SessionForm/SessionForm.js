@@ -4,19 +4,11 @@ import Question from "components/Question";
 import { useStyles } from "app/Theme";
 import Section from "layout/Section";
 import ButtonGrid from "layout/ButtonGrid";
-import {
-  // CreateIcon,
-  AddIcon,
-  TitleIcon,
-  DoneIcon,
-  CloudDoneIcon
-} from "layout/material-ui/icons";
+import { AddIcon, DoneIcon, CloudDoneIcon } from "layout/material-ui/icons";
 import {
   Typography,
   Button,
-  // Avatar,
   TextField,
-  InputAdornment,
   Paper,
   Fab
 } from "layout/material-ui/core";
@@ -48,13 +40,6 @@ const SessionForm = ({
                 setSession({ ...session, name: e.target.value });
               }}
               value={session.name}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <TitleIcon />
-                  </InputAdornment>
-                )
-              }}
             />
           ) : (
             <Section flex="row space-between">
@@ -99,6 +84,9 @@ const SessionForm = ({
                 }
                 handleLabelChange={newLabel =>
                   handlers.handleQuestionLabelChange(newLabel, questionIndex)
+                }
+                handleUploadImages={images =>
+                  handlers.handleUploadImages(images, questionIndex)
                 }
               >
                 {question.choices.map((choice, choiceIndex) => (
@@ -163,6 +151,9 @@ const SessionForm = ({
                 color="default"
                 className={classes.submit}
                 disabled={errors.length > 0}
+                onClick={() => {
+                  console.log({ session });
+                }}
               >
                 Save Session
                 <CloudDoneIcon className={classes.rightIcon} />

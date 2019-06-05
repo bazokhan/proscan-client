@@ -33,6 +33,17 @@ const useEditableSession = id => {
     });
   };
 
+  const handleUploadImages = (images, questionIndex) => {
+    const question = session.questions[questionIndex];
+    const newQuestion = { ...question, images };
+    setSession({
+      ...session,
+      questions: session.questions.map((question, index) => {
+        return index === questionIndex ? newQuestion : question;
+      })
+    });
+  };
+
   const handleQuestionLabelChange = (newLabel, questionIndex) => {
     const question = session.questions[questionIndex];
     const newQuestion = { ...question, label: newLabel };
@@ -118,7 +129,8 @@ const useEditableSession = id => {
       handleChoiceBodyChange,
       handleAddNewQuestion,
       handleAddNewChoice,
-      handleDeleteChoice
+      handleDeleteChoice,
+      handleUploadImages
     }
   ];
 };

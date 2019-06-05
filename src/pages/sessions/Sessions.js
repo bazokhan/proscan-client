@@ -1,20 +1,15 @@
 import React from "react";
 import { useStyles } from "app/Theme";
 import Main from "layout/Main";
-import PlaceholderImage from "images/placeholder.png";
 import Section from "layout/Section";
 import { useSessions } from "hooks/useSessions";
-import { ShareIcon, MoreVertIcon } from "layout/material-ui/icons";
 import {
   Link,
   RouterLink,
   CircularProgress,
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
-  CardActions,
-  IconButton,
   Button,
   Avatar,
   Typography
@@ -51,39 +46,22 @@ const Sessions = () => {
         </Section>
         {sessions.map(session => (
           <Card key={session.id} className={classes.card}>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="Session" className={classes.avatar}>
-                  S
-                </Avatar>
-              }
-              action={
-                <IconButton>
-                  <MoreVertIcon />
-                </IconButton>
-              }
-              title={session.name}
-              subheader="September 14, 2016"
-            />
-            <RouterLink to={`/sessions/${session.id}`}>
-              <CardMedia
-                className={classes.media}
-                image={session.image || PlaceholderImage}
-                title="Placeholder"
+            <Link to={`/sessions/${session.id}`} component={RouterLink}>
+              <CardHeader
+                avatar={
+                  <Avatar aria-label="Session" className={classes.avatar}>
+                    M
+                  </Avatar>
+                }
+                title={session.name}
+                subheader="September 14, 2016"
               />
-            </RouterLink>
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                <Link to={`/sessions/${session.id}`} component={RouterLink}>
+              <CardContent>
+                <Typography variant="body2" color="textSecondary">
                   Go To Session
-                </Link>
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton>
-                <ShareIcon />
-              </IconButton>
-            </CardActions>
+                </Typography>
+              </CardContent>
+            </Link>
           </Card>
         ))}
       </Section>

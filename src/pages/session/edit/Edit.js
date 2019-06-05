@@ -41,13 +41,13 @@ const Edit = ({ match }) => {
       </Section>
       <Section flex="row space-between">
         <Button variant="text">
-          <Link to={`/`} component={RouterLink}>
-            Home
+          <Link to={`/sessions`} component={RouterLink}>
+            Back To My Sessions
           </Link>
         </Button>
         <Button variant="text">
-          <Link to={`/sessions`} component={RouterLink}>
-            Back To My Sessions
+          <Link to={`/sessions/${session.id}`} component={RouterLink}>
+            Return To Session Details
           </Link>
         </Button>
       </Section>
