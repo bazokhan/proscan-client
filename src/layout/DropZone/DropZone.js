@@ -135,6 +135,7 @@ const DropZone = ({ handleSubmit, images }) => {
                   disabled={!files.length}
                   onClick={() => {
                     handleSubmit(files);
+                    console.log({ files });
                     setEditMode(false);
                   }}
                 >
