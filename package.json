@@ -43,7 +43,6 @@
     ]
   },
   "devDependencies": {
-    "react-styleguidist": "^9.1.2",
     "babel-eslint": "^10.0.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
@@ -51,7 +50,9 @@
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
-    "prettier": "^1.15.3"
+    "husky": "^2.4.0",
+    "prettier": "^1.15.3",
+    "react-styleguidist": "^9.1.2"
   },
   "husky": {
     "hooks": {
