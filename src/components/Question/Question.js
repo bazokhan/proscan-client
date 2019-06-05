@@ -1,12 +1,12 @@
-import React, { useState, Fragment } from "react";
-import PropTypes from "prop-types";
-import { TextField, Typography, IconButton } from "layout/material-ui/core";
-import { DeleteIcon } from "layout/material-ui/icons";
-import Section from "layout/Section";
-import DropZone from "layout/DropZone";
-import ImagePreviews from "layout/ImagePreviews";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import React, { useState, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { TextField, Typography, IconButton } from 'layout/material-ui/core';
+import { DeleteIcon } from 'layout/material-ui/icons';
+import Section from 'layout/Section';
+import DropZone from 'layout/DropZone';
+import ImagePreviews from 'layout/ImagePreviews';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const Question = ({
   label,
@@ -84,19 +84,19 @@ Question.propTypes = {
 };
 
 Question.defaultProps = {
-  label: "*",
+  label: '*',
   editMode: false,
   handleLabelChange: () =>
     console.log(
-      "You Have Not Set A handleLabelChange Function For The Question Inputs"
+      'You Have Not Set A handleLabelChange Function For The Question Inputs'
     ),
   handleBodyChange: () =>
     console.log(
-      "You Have Not Set A handleBodyChange Function For The Question Inputs"
+      'You Have Not Set A handleBodyChange Function For The Question Inputs'
     ),
   handleUploadImages: images =>
     console.log(
-      "You Have Not Set A handleUploadImages Function For The Question Images"
+      'You Have Not Set A handleUploadImages Function For The Question Images'
     )
 };
 

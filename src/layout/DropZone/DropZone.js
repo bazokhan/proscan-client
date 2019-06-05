@@ -1,47 +1,45 @@
-import React, { useEffect, useState, Fragment } from "react";
-import PropTypes from "prop-types";
-import { useDropzone } from "react-dropzone";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Card, { CardMedia, CardActions } from "layout/Card";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/core/styles";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import { DeleteIcon, ClearIcon, DoneIcon } from "layout/material-ui/icons";
+import React, { useEffect, useState, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { useDropzone } from 'react-dropzone';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Card, { CardMedia, CardActions } from 'layout/Card';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { DeleteIcon, ClearIcon, DoneIcon } from 'layout/material-ui/icons';
 
-const useStyles = makeStyles(theme => {
-  return {
-    thumbContainer: {
-      marginBottom: theme.spacing(2)
-    },
-    thumb: {
-      height: theme.spacing(10) * 2,
-      display: "flex",
-      justifyContent: "center",
-      backgroundColor: "#EEE"
-    },
-    img: {
-      display: "block",
-      width: "auto",
-      height: "100%"
-    },
-    dropZone: {
-      padding: theme.spacing(3),
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#EEE",
-      cursor: "pointer",
-      marginBottom: theme.spacing(3)
-    },
-    dropZoneContainer: {
-      padding: theme.spacing(1)
-    }
-  };
-});
+const useStyles = makeStyles(theme => ({
+  thumbContainer: {
+    marginBottom: theme.spacing(2)
+  },
+  thumb: {
+    height: theme.spacing(10) * 2,
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '#EEE'
+  },
+  img: {
+    display: 'block',
+    width: 'auto',
+    height: '100%'
+  },
+  dropZone: {
+    padding: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#EEE',
+    cursor: 'pointer',
+    marginBottom: theme.spacing(3)
+  },
+  dropZoneContainer: {
+    padding: theme.spacing(1)
+  }
+}));
 
 const DropZone = ({ handleSubmit, images }) => {
   const classes = useStyles();
@@ -53,11 +51,11 @@ const DropZone = ({ handleSubmit, images }) => {
   };
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/*",
+    accept: 'image/*',
     onDrop: acceptedFiles => {
-      const filteredAcceptedFiles = acceptedFiles.filter(newFile => {
-        return files.every(oldFile => oldFile.name !== newFile.name);
-      });
+      const filteredAcceptedFiles = acceptedFiles.filter(newFile =>
+        files.every(oldFile => oldFile.name !== newFile.name)
+      );
       console.log({ acceptedFiles, filteredAcceptedFiles });
       setFiles([
         ...files,

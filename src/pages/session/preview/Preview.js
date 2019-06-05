@@ -1,9 +1,9 @@
-import React from "react";
-import Choice from "components/Choice";
-import Question from "components/Question";
-import Main from "layout/Main";
-import { useSession } from "hooks/useSession";
-import { Link, RouterLink, CircularProgress } from "layout/material-ui/core";
+import React from 'react';
+import Choice from 'components/Choice';
+import Question from 'components/Question';
+import Main from 'layout/Main';
+import { useSession } from 'hooks/useSession';
+import { Link, RouterLink, CircularProgress } from 'layout/material-ui/core';
 
 const Preview = ({ match }) => {
   const [session] = useSession(match.params.sessionId);
@@ -40,7 +40,7 @@ const Preview = ({ match }) => {
       <Link to={`/sessions/${session.id}/start`} component={RouterLink}>
         Start This Session
       </Link>
-      <Link to={`/sessions`} component={RouterLink}>
+      <Link to="/sessions" component={RouterLink}>
         Back To My Sessions
       </Link>
     </Main>

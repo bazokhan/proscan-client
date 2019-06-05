@@ -1,15 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useStyles } from "app/Theme";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useStyles } from 'app/Theme';
 
 const snakeToCamel = string => {
   const className = string
-    .split(" ")
-    .map(word => word.split("-"))
+    .split(' ')
+    .map(word => word.split('-'))
     .reduce((acc, next) => [...acc, ...next])
-    .reduce((acc, next) => {
-      return acc + next.charAt(0).toUpperCase() + next.slice(1);
-    });
+    .reduce((acc, next) => acc + next.charAt(0).toUpperCase() + next.slice(1));
   return className;
 };
 
@@ -19,7 +17,7 @@ const Section = ({ classes, flex, borderBottom, children }) => {
   return (
     <div
       className={`${styles.section} ${styles[flexStyle]} ${
-        borderBottom ? styles.borderBottom : ""
+        borderBottom ? styles.borderBottom : ''
       }`}
     >
       {children}
@@ -30,23 +28,23 @@ const Section = ({ classes, flex, borderBottom, children }) => {
 Section.propTypes = {
   classes: PropTypes.object,
   flex: PropTypes.oneOf([
-    "row flex-start",
-    "row flex-end",
-    "row center",
-    "row space-between",
-    "row space-around",
-    "column flex-start",
-    "column flex-end",
-    "column center",
-    "column space-between",
-    "column space-around"
+    'row flex-start',
+    'row flex-end',
+    'row center',
+    'row space-between',
+    'row space-around',
+    'column flex-start',
+    'column flex-end',
+    'column center',
+    'column space-between',
+    'column space-around'
   ]),
   borderBottom: PropTypes.bool
 };
 
 Section.defaultProps = {
   classes: {},
-  flex: "row flex-start",
+  flex: 'row flex-start',
   borderBottom: false
 };
 

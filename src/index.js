@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { ApolloProvider } from "react-apollo";
-import { HttpLink, ApolloClient, InMemoryCache } from "apollo-client-preset";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ApolloProvider } from 'react-apollo';
+import { HttpLink, ApolloClient, InMemoryCache } from 'apollo-client-preset';
 
-import App from "./app";
-import { serverUri } from "./app/constants";
-import * as serviceWorker from "./serviceWorker";
+import App from './app';
+import { serverUri } from './app/constants';
+import * as serviceWorker from './serviceWorker';
 
 const gqlServerLink = new HttpLink({ uri: serverUri });
 const client = new ApolloClient({
@@ -17,7 +17,7 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

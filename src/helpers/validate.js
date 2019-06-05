@@ -2,20 +2,20 @@ const validate = session => {
   const errors = [];
   if (!session.name) {
     errors.push({
-      field: "Session Name",
-      message: "A Session Must Have A Valid Name"
+      field: 'Session Name',
+      message: 'A Session Must Have A Valid Name'
     });
   }
   if (!session.questions.length) {
     errors.push({
-      field: "Session Questions",
-      message: "A Session Must Have At Least One Question"
+      field: 'Session Questions',
+      message: 'A Session Must Have At Least One Question'
     });
   }
   if (!session.questions.every(question => question.body)) {
     errors.push({
-      field: "Question Body",
-      message: "A Question Must Have A Valid Body"
+      field: 'Question Body',
+      message: 'A Question Must Have A Valid Body'
     });
   }
   if (
@@ -24,8 +24,8 @@ const validate = session => {
     )
   ) {
     errors.push({
-      field: "Question Choices",
-      message: "A Question Must Have At Least One Choice"
+      field: 'Question Choices',
+      message: 'A Question Must Have At Least One Choice'
     });
   }
   if (
@@ -35,8 +35,8 @@ const validate = session => {
     )
   ) {
     errors.push({
-      field: "Choice Body",
-      message: "A Choice Must Have A Valid Body"
+      field: 'Choice Body',
+      message: 'A Choice Must Have A Valid Body'
     });
   }
   return errors;

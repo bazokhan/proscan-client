@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 // import Choice from "components/Choice";
-import Question from "components/Question";
-import Main from "layout/Main";
+import Question from 'components/Question';
+import Main from 'layout/Main';
 import {
   // Link,
   // RouterLink,
@@ -12,16 +12,16 @@ import {
   CardHeader,
   Avatar,
   Typography
-} from "layout/material-ui/core";
-import RouteButton from "layout/RouteButton";
-import Section from "layout/Section";
-import { useSession } from "hooks/useSession";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-import { useStyles } from "app/Theme";
+} from 'layout/material-ui/core';
+import RouteButton from 'layout/RouteButton';
+import Section from 'layout/Section';
+import { useSession } from 'hooks/useSession';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import { useStyles } from 'app/Theme';
 
 const Joined = ({ match, index }) => {
   const classes = useStyles();
@@ -93,7 +93,7 @@ const Joined = ({ match, index }) => {
                   avatar={<Avatar>1</Avatar>}
                 />
                 <RadioGroup
-                  value={answers[question.id] || ""}
+                  value={answers[question.id] || ''}
                   onChange={e =>
                     handleChoiceChange(question.id, e.target.value)
                   }
@@ -112,15 +112,13 @@ const Joined = ({ match, index }) => {
           </Card>
         </Question>
       )}
-      {Object.keys(answers).map(key => {
-        return (
-          <React.Fragment key={key}>
-            <div>Question: {key}</div>
-            <div>Choice: {answers[key]}</div>
-          </React.Fragment>
-        );
-      })}
-      <RouteButton to={`/join`}>Exit This Session</RouteButton>
+      {Object.keys(answers).map(key => (
+        <React.Fragment key={key}>
+          <div>Question: {key}</div>
+          <div>Choice: {answers[key]}</div>
+        </React.Fragment>
+      ))}
+      <RouteButton to="/join">Exit This Session</RouteButton>
     </Main>
   );
 };

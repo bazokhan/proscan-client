@@ -1,6 +1,6 @@
-import React from "react";
-import Grid from "@material-ui/core/Grid";
-import { useStyles } from "app/Theme";
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import { useStyles } from 'app/Theme';
 
 const ButtonGrid = ({ children, withMargin = false }) => {
   const classes = useStyles();

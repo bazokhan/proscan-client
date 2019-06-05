@@ -1,7 +1,7 @@
-import React from "react";
-import Choice from "components/Choice";
-import Question from "components/Question";
-import Main from "layout/Main";
+import React from 'react';
+import Choice from 'components/Choice';
+import Question from 'components/Question';
+import Main from 'layout/Main';
 import {
   Link,
   RouterLink,
@@ -10,11 +10,11 @@ import {
   Typography,
   Card,
   CardContent
-} from "layout/material-ui/core";
-import { SendIcon } from "layout/material-ui/icons";
-import { useSession } from "hooks/useSession";
-import Section from "layout/Section";
-import { useStyles } from "app/Theme";
+} from 'layout/material-ui/core';
+import { SendIcon } from 'layout/material-ui/icons';
+import { useSession } from 'hooks/useSession';
+import Section from 'layout/Section';
+import { useStyles } from 'app/Theme';
 
 const Details = ({ match }) => {
   const [session] = useSession(match.params.sessionId);
@@ -77,7 +77,7 @@ const Details = ({ match }) => {
       ))}
       <Section flex="row center">
         <Button variant="text">
-          <Link to={`/sessions/`} component={RouterLink}>
+          <Link to="/sessions/" component={RouterLink}>
             Back To My Sessions
           </Link>
         </Button>

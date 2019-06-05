@@ -1,23 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => {
-  return {
-    thumb: {
-      height: theme.spacing(10) * 2,
-      display: "flex",
-      justifyContent: "center",
-      backgroundColor: "#EEE"
-    },
-    img: {
-      display: "block",
-      width: "auto",
-      height: "100%"
-    }
-  };
-});
+const useStyles = makeStyles(theme => ({
+  thumb: {
+    height: theme.spacing(10) * 2,
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '#EEE'
+  },
+  img: {
+    display: 'block',
+    width: 'auto',
+    height: '100%'
+  }
+}));
 
 const ImagePreviews = ({ handleSubmit, images }) => {
   const classes = useStyles();
@@ -32,9 +30,9 @@ const ImagePreviews = ({ handleSubmit, images }) => {
 
   return (
     <Grid container direction="column" align="stretch" item xs={12}>
-        <Grid item xs={12} container spacing={2}>
-          {thumbs}
-        </Grid>
+      <Grid item xs={12} container spacing={2}>
+        {thumbs}
+      </Grid>
     </Grid>
   );
 };

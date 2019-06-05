@@ -4,7 +4,8 @@ import {
   CardActions,
   CardMedia,
   CardActionArea
-} from "./Card";
+} from './Card';
+
 export { CardHeader, CardContent, CardActions, CardMedia, CardActionArea };
 
-export { default } from "./Card";
+export { default } from './Card';

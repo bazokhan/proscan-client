@@ -1,7 +1,7 @@
-import React from "react";
-import Main from "layout/Main";
-import { useEditableSession } from "hooks/useEditableSession";
-import SessionForm from "components/SessionForm";
+import React from 'react';
+import Main from 'layout/Main';
+import { useEditableSession } from 'hooks/useEditableSession';
+import SessionForm from 'components/SessionForm';
 import {
   Link,
   RouterLink,
@@ -9,9 +9,9 @@ import {
   Typography,
   Button,
   Avatar
-} from "layout/material-ui/core";
-import { CreateIcon } from "layout/material-ui/icons";
-import Section from "layout/Section";
+} from 'layout/material-ui/core';
+import { CreateIcon } from 'layout/material-ui/icons';
+import Section from 'layout/Section';
 
 const Edit = ({ match }) => {
   const [
@@ -41,7 +41,7 @@ const Edit = ({ match }) => {
       </Section>
       <Section flex="row space-between">
         <Button variant="text">
-          <Link to={`/sessions`} component={RouterLink}>
+          <Link to="/sessions" component={RouterLink}>
             Back To My Sessions
           </Link>
         </Button>

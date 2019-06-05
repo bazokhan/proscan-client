@@ -1,7 +1,7 @@
-import React from "react";
-import Main from "layout/Main";
-import { useEditableSession } from "hooks/useEditableSession";
-import SessionForm from "components/SessionForm";
+import React from 'react';
+import Main from 'layout/Main';
+import { useEditableSession } from 'hooks/useEditableSession';
+import SessionForm from 'components/SessionForm';
 import {
   Link,
   CircularProgress,
@@ -9,9 +9,9 @@ import {
   Button,
   Avatar,
   Typography
-} from "layout/material-ui/core";
-import { CreateIcon } from "layout/material-ui/icons";
-import Section from "layout/Section";
+} from 'layout/material-ui/core';
+import { CreateIcon } from 'layout/material-ui/icons';
+import Section from 'layout/Section';
 
 const Create = () => {
   const [
@@ -41,12 +41,12 @@ const Create = () => {
       </Section>
       <Section flex="row space-between">
         <Button variant="text">
-          <Link to={`/`} component={RouterLink}>
+          <Link to="/" component={RouterLink}>
             Home
           </Link>
         </Button>
         <Button variant="text">
-          <Link to={`/sessions`} component={RouterLink}>
+          <Link to="/sessions" component={RouterLink}>
             Back To My Sessions
           </Link>
         </Button>

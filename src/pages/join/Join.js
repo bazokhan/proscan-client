@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-import Main from "layout/Main";
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import Main from 'layout/Main';
 import {
   TextField,
   Button,
   CircularProgress,
   Typography
-} from "layout/material-ui/core";
-import Section from "layout/Section";
-import ButtonGrid from "layout/ButtonGrid";
-import RouteButton from "layout/RouteButton";
-import { useSessions } from "hooks/useSessions";
-import { useStyles } from "app/Theme";
+} from 'layout/material-ui/core';
+import Section from 'layout/Section';
+import ButtonGrid from 'layout/ButtonGrid';
+import RouteButton from 'layout/RouteButton';
+import { useSessions } from 'hooks/useSessions';
+import { useStyles } from 'app/Theme';
 
 const Join = () => {
   const classes = useStyles();
@@ -44,11 +44,12 @@ const Join = () => {
     setLoading(false);
   }, [requestsSent]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       clearTimeout(timeoutFunction);
-    };
-  }, [timeoutFunction]);
+    },
+    [timeoutFunction]
+  );
   return (
     <Main>
       {session && <Redirect to={`/${session.id}`} />}
@@ -68,7 +69,7 @@ const Join = () => {
             margin="normal"
             required
             label="Enter Session ID"
-            value={publicId || ""}
+            value={publicId || ''}
             onChange={handleChange}
           />
           {!isLoading && !session && !!requestsSent && (

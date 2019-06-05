@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import Choice from "components/Choice";
-import Question from "components/Question";
-import Main from "layout/Main";
-import { useSession } from "hooks/useSession";
-import { Link, RouterLink, CircularProgress } from "layout/material-ui/core";
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Choice from 'components/Choice';
+import Question from 'components/Question';
+import Main from 'layout/Main';
+import { useSession } from 'hooks/useSession';
+import { Link, RouterLink, CircularProgress } from 'layout/material-ui/core';
 
 const Start = ({ match, index }) => {
   const [question, setQuestion] = useState(null);

@@ -1,17 +1,17 @@
-import React, { Fragment } from "react";
-import Choice from "components/Choice";
-import Question from "components/Question";
-import { useStyles } from "app/Theme";
-import Section from "layout/Section";
-import ButtonGrid from "layout/ButtonGrid";
-import { AddIcon, DoneIcon, CloudDoneIcon } from "layout/material-ui/icons";
+import React, { Fragment } from 'react';
+import Choice from 'components/Choice';
+import Question from 'components/Question';
+import { useStyles } from 'app/Theme';
+import Section from 'layout/Section';
+import ButtonGrid from 'layout/ButtonGrid';
+import { AddIcon, DoneIcon, CloudDoneIcon } from 'layout/material-ui/icons';
 import {
   Typography,
   Button,
   TextField,
   Paper,
   Fab
-} from "layout/material-ui/core";
+} from 'layout/material-ui/core';
 
 const SessionForm = ({
   title,
@@ -33,9 +33,9 @@ const SessionForm = ({
               margin="normal"
               required
               fullWidth
-              id={`sessonName`}
+              id="sessonName"
               label="Name"
-              name={`sessonName`}
+              name="sessonName"
               onChange={e => {
                 setSession({ ...session, name: e.target.value });
               }}
@@ -127,9 +127,9 @@ const SessionForm = ({
           {!editMode && errors.length > 0 && (
             <Typography variant="subtitle1" color="error">
               This session can not be saved, Please go back to Edit Mode
-              {errors.map(error => {
-                return <div key={error.field}>{error.message}</div>;
-              })}
+              {errors.map(error => (
+                <div key={error.field}>{error.message}</div>
+              ))}
             </Typography>
           )}
           {editMode ? (

@@ -1,7 +1,7 @@
-import React from "react";
-import Loadable from "react-loadable";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Loadable from 'react-loadable';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Loading = ({ error, timedOut, pastDelay, retry }) => {
   if (error) {
@@ -12,13 +12,14 @@ const Loading = ({ error, timedOut, pastDelay, retry }) => {
         <Link to="/">Home</Link>
       </div>
     );
-  } else if (pastDelay) {
-    return <div>Loading..</div>;
-  } else if (timedOut) {
-    return <div>Taking A Little Longer Than Expected !.. Please Wait</div>;
-  } else {
-    return null;
   }
+  if (pastDelay) {
+    return <div>Loading..</div>;
+  }
+  if (timedOut) {
+    return <div>Taking A Little Longer Than Expected !.. Please Wait</div>;
+  }
+  return null;
 };
 
 Loading.propTypes = {

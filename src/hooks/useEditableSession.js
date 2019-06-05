@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import fakeData from "helpers/fakeData";
-import validate from "helpers/validate";
+import { useState, useEffect } from 'react';
+import fakeData from 'helpers/fakeData';
+import validate from 'helpers/validate';
 
 const useEditableSession = id => {
   const [session, setSession] = useState(null);
@@ -9,11 +9,11 @@ const useEditableSession = id => {
 
   useEffect(() => {
     if (!id) {
-      setSession({ name: "", questions: [] });
+      setSession({ name: '', questions: [] });
       return;
     }
     setTimeout(() => {
-      setSession({ name: "Session1", id: "123", questions: fakeData });
+      setSession({ name: 'Session1', id: '123', questions: fakeData });
     }, 700);
   }, [id]);
 
@@ -27,9 +27,9 @@ const useEditableSession = id => {
     const newQuestion = { ...question, body: newBody };
     setSession({
       ...session,
-      questions: session.questions.map((question, index) => {
-        return index === questionIndex ? newQuestion : question;
-      })
+      questions: session.questions.map((question, index) =>
+        index === questionIndex ? newQuestion : question
+      )
     });
   };
 
@@ -38,9 +38,9 @@ const useEditableSession = id => {
     const newQuestion = { ...question, images };
     setSession({
       ...session,
-      questions: session.questions.map((question, index) => {
-        return index === questionIndex ? newQuestion : question;
-      })
+      questions: session.questions.map((question, index) =>
+        index === questionIndex ? newQuestion : question
+      )
     });
   };
 
@@ -49,9 +49,9 @@ const useEditableSession = id => {
     const newQuestion = { ...question, label: newLabel };
     setSession({
       ...session,
-      questions: session.questions.map((question, index) => {
-        return index === questionIndex ? newQuestion : question;
-      })
+      questions: session.questions.map((question, index) =>
+        index === questionIndex ? newQuestion : question
+      )
     });
   };
 
@@ -61,15 +61,15 @@ const useEditableSession = id => {
     const newChoice = { ...choice, body: newBody };
     const newQuestion = {
       ...question,
-      choices: question.choices.map((choice, i) => {
-        return i === choiceIndex ? newChoice : choice;
-      })
+      choices: question.choices.map((choice, i) =>
+        i === choiceIndex ? newChoice : choice
+      )
     };
     setSession({
       ...session,
-      questions: session.questions.map((question, i) => {
-        return i === questionIndex ? newQuestion : question;
-      })
+      questions: session.questions.map((question, i) =>
+        i === questionIndex ? newQuestion : question
+      )
     });
   };
 
@@ -79,7 +79,7 @@ const useEditableSession = id => {
       ...session,
       questions: [
         ...session.questions,
-        { id: `q${Math.random()}`, body: "", choices: [] }
+        { id: `q${Math.random()}`, body: '', choices: [] }
       ]
     });
   };
@@ -87,17 +87,17 @@ const useEditableSession = id => {
   const handleAddNewChoice = questionIndex => {
     setSession({
       ...session,
-      questions: session.questions.map((question, i) => {
-        return i === questionIndex
+      questions: session.questions.map((question, i) =>
+        i === questionIndex
           ? {
               ...question,
               choices: [
                 ...question.choices,
-                { id: `c${Math.random()}`, body: "" }
+                { id: `c${Math.random()}`, body: '' }
               ]
             }
-          : question;
-      })
+          : question
+      )
     });
   };
 
@@ -105,15 +105,13 @@ const useEditableSession = id => {
     const question = session.questions[questionIndex];
     const newQuestion = {
       ...question,
-      choices: question.choices.filter((choice, i) => {
-        return i !== choiceIndex;
-      })
+      choices: question.choices.filter((choice, i) => i !== choiceIndex)
     };
     setSession({
       ...session,
-      questions: session.questions.map((question, i) => {
-        return i === questionIndex ? newQuestion : question;
-      })
+      questions: session.questions.map((question, i) =>
+        i === questionIndex ? newQuestion : question
+      )
     });
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Link,
   RouterLink,
@@ -6,12 +6,12 @@ import {
   Card,
   Grid,
   CardHeader
-} from "layout/material-ui/core";
-import { SendIcon, CreateIcon } from "layout/material-ui/icons";
-import Main from "layout/Main";
-import { useStyles } from "app/Theme";
-import NewSection from "layout/NewSection";
-import Title from "layout/Title";
+} from 'layout/material-ui/core';
+import { SendIcon, CreateIcon } from 'layout/material-ui/icons';
+import Main from 'layout/Main';
+import { useStyles } from 'app/Theme';
+import NewSection from 'layout/NewSection';
+import Title from 'layout/Title';
 
 const Home = () => {
   const classes = useStyles();

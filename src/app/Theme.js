@@ -1,80 +1,80 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => {
+const useStyles = makeStyles(theme =>
   // console.log({ theme });
-  return {
-    "@global": {
+  ({
+    '@global': {
       body: {
         backgroundColor: theme.palette.common.white
       }
     },
     appBar: {
-      position: "relative"
+      position: 'relative'
       // display: "flex",
       // justifyContet: "spaceBetween",
       // flexGrow: 1
     },
     section: {
-      width: "100%",
+      width: '100%',
       padding: theme.spacing(1)
     },
     rowFlexStart: {
-      display: "flex",
-      justifyContent: "flex-start",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center'
     },
     rowFlexEnd: {
-      display: "flex",
-      justifyContent: "flex-end",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'flex-end',
+      alignItems: 'center'
     },
     rowCenter: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     },
     rowSpaceBetween: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
     },
     rowSpaceAround: {
-      display: "flex",
-      justifyContent: "space-around",
-      alignItems: "center"
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center'
     },
     columnFlexStart: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "flex-start",
-      justifyContent: "center"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'center'
     },
     columnFlexEnd: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "flex-end",
-      justifyContent: "center"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+      justifyContent: 'center'
     },
     columnCenter: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center'
     },
     columnSpaceBetween: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "space-between",
-      justifyContent: "center"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'space-between',
+      justifyContent: 'center'
     },
     columnSpaceAround: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "space-around",
-      justifyContent: "center"
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'space-around',
+      justifyContent: 'center'
     },
     borderBottom: {
-      borderBottom: "solid 1px #ddd",
+      borderBottom: 'solid 1px #ddd',
       marginBottom: theme.spacing(2)
     },
     fab: {
@@ -91,7 +91,7 @@ const useStyles = makeStyles(theme => {
       // }
     },
     card: {
-      margin: theme.spacing(3),
+      margin: theme.spacing(3)
       // width: "40%",
       // [theme.breakpoints.down(600 + theme.spacing(3) * 2)]: {
       //   width: "100%"
@@ -111,7 +111,7 @@ const useStyles = makeStyles(theme => {
       marginLeft: theme.spacing(1)
     },
     form: {
-      width: "100%", // Fix IE 11 issue.
+      width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(1)
     },
     submit: {
@@ -119,9 +119,9 @@ const useStyles = makeStyles(theme => {
     },
     media: {
       height: 0,
-      paddingTop: "56.25%" // 16:9
+      paddingTop: '56.25%' // 16:9
     }
-  };
-});
+  })
+);
 
 export { useStyles };
