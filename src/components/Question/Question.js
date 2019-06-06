@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { DeleteIcon } from 'layout/material-ui/icons';
-import Section from 'layout/NewSection';
+import Section from 'layout/Section';
 import DropZone from 'layout/DropZone';
 import ImagePreviews from 'layout/ImagePreviews';
 import Checkbox from '@material-ui/core/Checkbox';

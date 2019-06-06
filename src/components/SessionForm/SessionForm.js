@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import useStyles from 'app/Theme';
-import Section from 'layout/NewSection';
-import ButtonGrid from 'layout/ButtonGrid';
+import Section from 'layout/Section';
 import { AddIcon, DoneIcon, CloudDoneIcon } from 'layout/material-ui/icons';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -47,17 +46,15 @@ const SessionForm = () => {
             }}
             value={session.name}
           />
-          <ButtonGrid>
-            <Button
-              variant="text"
-              color="default"
-              className={classes.submit}
-              onClick={handleAddNewQuestion}
-            >
-              <AddIcon />
-              Add New Question
-            </Button>
-          </ButtonGrid>
+          <Button
+            variant="text"
+            color="default"
+            className={classes.submit}
+            onClick={handleAddNewQuestion}
+          >
+            <AddIcon />
+            Add New Question
+          </Button>
         </Section>
       ) : (
         <Section>

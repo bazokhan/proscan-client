@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import Main from 'layout/Main';
-// import useSession from 'hooks/useEditableSession';
 import {
   Link,
   RouterLink,
@@ -15,7 +14,9 @@ const Start = () => {
   const { session, setEditMode } = useContext(SessionContext);
   const [question, setQuestion] = useState(null);
   const [questionIndex, setQuestionIndex] = useState(0);
-  setEditMode(false);
+  useEffect(() => {
+    setEditMode(false);
+  }, [setEditMode]);
 
   useEffect(() => {
     if (session && session.activeQuestion) {

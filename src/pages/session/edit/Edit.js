@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Main from 'layout/Main';
 import SessionForm from 'components/SessionForm';
 import SessionContext from 'context/SessionContext';
@@ -15,7 +15,10 @@ import Section from 'layout/Section';
 
 const Edit = () => {
   const { session, setEditMode } = useContext(SessionContext);
-  setEditMode(true);
+
+  useEffect(() => {
+    setEditMode(true);
+  }, [setEditMode]);
 
   if (!session)
     return (
@@ -25,7 +28,7 @@ const Edit = () => {
     );
   return (
     <Main>
-      <Section flex="column center">
+      <Section>
         <Avatar>
           <CreateIcon />
         </Avatar>
@@ -33,7 +36,7 @@ const Edit = () => {
           Edit Session
         </Typography>
       </Section>
-      <Section flex="row space-between">
+      <Section>
         <Button variant="text">
           <Link to="/sessions" component={RouterLink}>
             Back To My Sessions

@@ -10,7 +10,7 @@ import {
 import { SendIcon, CreateIcon } from 'layout/material-ui/icons';
 import Main from 'layout/Main';
 import useStyles from 'app/Theme';
-import NewSection from 'layout/NewSection';
+import NewSection from 'layout/Section';
 import Title from 'layout/Title';
 
 const Home = () => {

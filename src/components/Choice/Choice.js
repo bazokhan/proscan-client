@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ClearIcon } from 'layout/material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
-import Section from 'layout/NewSection';
+import Section from 'layout/Section';
 import SessionContext from 'context/SessionContext';
 
 const Choice = ({ choice, children }) => {

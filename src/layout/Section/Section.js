@@ -1,26 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import useStyles from 'app/Theme';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
-const snakeToCamel = string => {
-  const className = string
-    .split(' ')
-    .map(word => word.split('-'))
-    .reduce((acc, next) => [...acc, ...next])
-    .reduce((acc, next) => acc + next.charAt(0).toUpperCase() + next.slice(1));
-  return className;
-};
+const useStyles = makeStyles(theme => ({
+  section: {
+    padding: theme.spacing(2)
+  },
+  light: {
+    backgroundImage: 'linear-gradient(to bottom right, #FFF, #DDD)'
+  },
+  dark: {
+    backgroundImage: 'linear-gradient(to bottom right, #1AAAE3, #2AB679)'
+  }
+}));
 
-const Section = ({ classes, flex, borderBottom, children }) => {
-  const styles = useStyles({ classes });
-  const flexStyle = snakeToCamel(flex);
+const Section = ({ children, variant, ...props }) => {
+  const classes = useStyles();
+  const getVariantClass = () => {
+    if (variant === 'dark') return classes.dark;
+    if (variant === 'light') return classes.light;
+    return '';
+  };
   return (
-    <div
-      className={`${styles.section} ${styles[flexStyle]} ${
-        borderBottom ? styles.borderBottom : ''
-      }`}
-    >
-      {children}
+    <div className={`${classes.section} ${getVariantClass()}`}>
+      <Grid container {...props}>
+        {children}
+      </Grid>
     </div>
   );
 };
@@ -30,26 +36,11 @@ Section.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]).isRequired,
-  classes: PropTypes.object,
-  flex: PropTypes.oneOf([
-    'row flex-start',
-    'row flex-end',
-    'row center',
-    'row space-between',
-    'row space-around',
-    'column flex-start',
-    'column flex-end',
-    'column center',
-    'column space-between',
-    'column space-around'
-  ]),
-  borderBottom: PropTypes.bool
+  variant: PropTypes.oneOf(['transparent', 'light', 'dark'])
 };
 
 Section.defaultProps = {
-  classes: {},
-  flex: 'row flex-start',
-  borderBottom: false
+  variant: 'transparent'
 };
 
 export default Section;

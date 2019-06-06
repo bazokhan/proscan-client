@@ -8,10 +8,9 @@ import {
   Typography
 } from 'layout/material-ui/core';
 import Section from 'layout/Section';
-import ButtonGrid from 'layout/ButtonGrid';
 import RouteButton from 'layout/RouteButton';
-import useSessions from 'hooks/useSessions';
 import useStyles from 'app/Theme';
+import useSessions from './hooks/useSessions';
 
 const Join = () => {
   const classes = useStyles();
@@ -49,31 +48,33 @@ const Join = () => {
   return (
     <Main>
       {session && <Redirect to={`/${session.id}`} />}
-      <Section flex="column center">
+      <Section>
         <Typography component="h1" variant="h6">
           Join A Session
         </Typography>
       </Section>
       {isLoading ? (
-        <CircularProgress />
+        <Section>
+          <CircularProgress />
+        </Section>
       ) : (
-        <form onSubmit={handleSubmit} className={classes.form}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            size="large"
-            margin="normal"
-            required
-            label="Enter Session ID"
-            value={publicId || ''}
-            onChange={handleChange}
-          />
-          {!isLoading && !session && !!requestsSent && (
-            <Typography variant="subtitle1" color="error">
-              Could Not Find This Session
-            </Typography>
-          )}
-          <ButtonGrid spacing={2}>
+        <Section>
+          <form onSubmit={handleSubmit} className={classes.form}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="large"
+              margin="normal"
+              required
+              label="Enter Session ID"
+              value={publicId || ''}
+              onChange={handleChange}
+            />
+            {!isLoading && !session && !!requestsSent && (
+              <Typography variant="subtitle1" color="error">
+                Could Not Find This Session
+              </Typography>
+            )}
             <Button
               variant="contained"
               size="large"
@@ -86,8 +87,8 @@ const Join = () => {
             <RouteButton to="/" size="large">
               Home
             </RouteButton>
-          </ButtonGrid>
-        </form>
+          </form>
+        </Section>
       )}
     </Main>
   );

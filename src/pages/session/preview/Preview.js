@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
@@ -9,7 +9,9 @@ import SessionContext from 'context/SessionContext';
 
 const Preview = () => {
   const { session, setEditMode } = useContext(SessionContext);
-  setEditMode(false);
+  useEffect(() => {
+    setEditMode(false);
+  }, [setEditMode]);
   if (!session)
     return (
       <Main>

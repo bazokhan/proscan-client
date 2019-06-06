@@ -9,7 +9,7 @@ import {
   Typography
 } from 'layout/material-ui/core';
 import { CreateIcon } from 'layout/material-ui/icons';
-import Section from 'layout/NewSection';
+import Section from 'layout/Section';
 import SessionContext from 'context/SessionContext';
 import useSession from './hooks/useSession';
 
