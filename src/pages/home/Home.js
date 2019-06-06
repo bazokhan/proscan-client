@@ -9,7 +9,7 @@ import {
 } from 'layout/material-ui/core';
 import { SendIcon, CreateIcon } from 'layout/material-ui/icons';
 import Main from 'layout/Main';
-import { useStyles } from 'app/Theme';
+import useStyles from 'app/Theme';
 import NewSection from 'layout/NewSection';
 import Title from 'layout/Title';
 

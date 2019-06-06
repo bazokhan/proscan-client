@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Main from 'layout/Main';
-import { useEditableSession } from 'hooks/useEditableSession';
+import useEditableSession from 'hooks/useEditableSession';
 import SessionForm from 'components/SessionForm';
 import {
   Link,
@@ -63,4 +64,9 @@ const Edit = ({ match }) => {
     </Main>
   );
 };
+
+Edit.propTypes = {
+  match: PropTypes.object.isRequired
+};
+
 export default Edit;

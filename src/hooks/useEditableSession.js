@@ -17,7 +17,7 @@ const useEditableSession = id => {
     }, 700);
   }, [id]);
 
-  const toggleEditMode = e => {
+  const toggleEditMode = () => {
     setErrors(validate(session));
     setEditMode(!editMode);
   };
@@ -27,8 +27,8 @@ const useEditableSession = id => {
     const newQuestion = { ...question, body: newBody };
     setSession({
       ...session,
-      questions: session.questions.map((question, index) =>
-        index === questionIndex ? newQuestion : question
+      questions: session.questions.map((q, index) =>
+        index === questionIndex ? newQuestion : q
       )
     });
   };
@@ -38,8 +38,8 @@ const useEditableSession = id => {
     const newQuestion = { ...question, images };
     setSession({
       ...session,
-      questions: session.questions.map((question, index) =>
-        index === questionIndex ? newQuestion : question
+      questions: session.questions.map((q, index) =>
+        index === questionIndex ? newQuestion : q
       )
     });
   };
@@ -49,8 +49,8 @@ const useEditableSession = id => {
     const newQuestion = { ...question, label: newLabel };
     setSession({
       ...session,
-      questions: session.questions.map((question, index) =>
-        index === questionIndex ? newQuestion : question
+      questions: session.questions.map((q, index) =>
+        index === questionIndex ? newQuestion : q
       )
     });
   };
@@ -61,14 +61,14 @@ const useEditableSession = id => {
     const newChoice = { ...choice, body: newBody };
     const newQuestion = {
       ...question,
-      choices: question.choices.map((choice, i) =>
-        i === choiceIndex ? newChoice : choice
+      choices: question.choices.map((c, i) =>
+        i === choiceIndex ? newChoice : c
       )
     };
     setSession({
       ...session,
-      questions: session.questions.map((question, i) =>
-        i === questionIndex ? newQuestion : question
+      questions: session.questions.map((q, i) =>
+        i === questionIndex ? newQuestion : q
       )
     });
   };
@@ -109,8 +109,8 @@ const useEditableSession = id => {
     };
     setSession({
       ...session,
-      questions: session.questions.map((question, i) =>
-        i === questionIndex ? newQuestion : question
+      questions: session.questions.map((q, i) =>
+        i === questionIndex ? newQuestion : q
       )
     });
   };
@@ -133,4 +133,4 @@ const useEditableSession = id => {
   ];
 };
 
-export { useEditableSession };
+export default useEditableSession;

@@ -2,16 +2,11 @@ import React, { Fragment } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from 'layout/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import { ThemeProvider } from "@material-ui/styles";
-import { useTheme } from '@material-ui/core/styles';
 import routes from './routes';
 
 function App() {
-  const theme = useTheme();
-  console.log(theme);
   return (
     <Fragment>
-      {/* <ThemeProvider theme={theme}> */}
       <CssBaseline />
       <BrowserRouter>
         <Header />
@@ -26,7 +21,6 @@ function App() {
           <Route path="/" component={routes.home} />
         </Switch>
       </BrowserRouter>
-      {/* </ThemeProvider> */}
     </Fragment>
   );
 }

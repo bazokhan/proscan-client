@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// import Choice from "components/Choice";
 import Question from 'components/Question';
 import Main from 'layout/Main';
 import {
-  // Link,
-  // RouterLink,
   CircularProgress,
   Card,
   CardContent,
@@ -15,13 +12,13 @@ import {
 } from 'layout/material-ui/core';
 import RouteButton from 'layout/RouteButton';
 import Section from 'layout/Section';
-import { useSession } from 'hooks/useSession';
+import useSession from 'hooks/useSession';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
-import { useStyles } from 'app/Theme';
+import useStyles from 'app/Theme';
 
 const Joined = ({ match, index }) => {
   const classes = useStyles();
@@ -98,7 +95,7 @@ const Joined = ({ match, index }) => {
                     handleChoiceChange(question.id, e.target.value)
                   }
                 >
-                  {question.choices.map((choice, choiceIndex) => (
+                  {question.choices.map(choice => (
                     <FormControlLabel
                       key={choice.id}
                       value={choice.id}
@@ -124,6 +121,7 @@ const Joined = ({ match, index }) => {
 };
 
 Joined.propTypes = {
+  match: PropTypes.object.isRequired,
   index: PropTypes.number
 };
 

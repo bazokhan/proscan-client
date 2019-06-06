@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import Main from 'layout/Main';
-import { useSession } from 'hooks/useSession';
-import { Link, RouterLink, CircularProgress } from 'layout/material-ui/core';
+import useSession from 'hooks/useSession';
+import {
+  Link,
+  RouterLink,
+  CircularProgress,
+  Button
+} from 'layout/material-ui/core';
 
 const Start = ({ match, index }) => {
   const [question, setQuestion] = useState(null);
@@ -46,8 +51,8 @@ const Start = ({ match, index }) => {
         key={question.id}
         question={question}
       >
-        <button onClick={() => handleNavClick(-1)}>Previous</button>
-        <button onClick={() => handleNavClick(1)}>Next</button>
+        <Button onClick={() => handleNavClick(-1)}>Previous</Button>
+        <Button onClick={() => handleNavClick(1)}>Next</Button>
         {question.choices.map((choice, choiceIndex) => (
           <Choice
             label={`${choiceIndex + 1} - `}
@@ -64,6 +69,7 @@ const Start = ({ match, index }) => {
 };
 
 Start.propTypes = {
+  match: PropTypes.object.isRequired,
   index: PropTypes.number
 };
 

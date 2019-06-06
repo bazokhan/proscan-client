@@ -13,7 +13,6 @@ const Question = ({
   question,
   editMode,
   children,
-  handleLabelChange,
   handleBodyChange,
   handleUploadImages
 }) => {
@@ -75,10 +74,13 @@ const Question = ({
   );
 };
 Question.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   label: PropTypes.string,
   question: PropTypes.object.isRequired,
   editMode: PropTypes.bool,
-  handleLabelChange: PropTypes.func,
   handleBodyChange: PropTypes.func,
   handleUploadImages: PropTypes.func
 };
@@ -86,15 +88,11 @@ Question.propTypes = {
 Question.defaultProps = {
   label: '*',
   editMode: false,
-  handleLabelChange: () =>
-    console.log(
-      'You Have Not Set A handleLabelChange Function For The Question Inputs'
-    ),
   handleBodyChange: () =>
     console.log(
       'You Have Not Set A handleBodyChange Function For The Question Inputs'
     ),
-  handleUploadImages: images =>
+  handleUploadImages: () =>
     console.log(
       'You Have Not Set A handleUploadImages Function For The Question Images'
     )

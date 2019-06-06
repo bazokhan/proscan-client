@@ -56,7 +56,6 @@ const DropZone = ({ handleSubmit, images }) => {
       const filteredAcceptedFiles = acceptedFiles.filter(newFile =>
         files.every(oldFile => oldFile.name !== newFile.name)
       );
-      console.log({ acceptedFiles, filteredAcceptedFiles });
       setFiles([
         ...files,
         ...filteredAcceptedFiles.map(file =>
@@ -106,7 +105,8 @@ const DropZone = ({ handleSubmit, images }) => {
               <input {...getInputProps()} />
               <CloudUploadIcon />
               <Typography align="center">
-                Drag 'n' drop some files here, or click to select files
+                Drag &apos;n&apos; drop some files here, or click to select
+                files
               </Typography>
             </Paper>
           )}
@@ -135,7 +135,6 @@ const DropZone = ({ handleSubmit, images }) => {
                   disabled={!files.length}
                   onClick={() => {
                     handleSubmit(files);
-                    console.log({ files });
                     setEditMode(false);
                   }}
                 >
@@ -163,6 +162,7 @@ const DropZone = ({ handleSubmit, images }) => {
 };
 
 DropZone.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
   images: PropTypes.array
 };
 

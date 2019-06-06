@@ -2,13 +2,14 @@ import React from 'react';
 import Loadable from 'react-loadable';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 const Loading = ({ error, timedOut, pastDelay, retry }) => {
   if (error) {
     console.log(error);
     return (
       <div>
-        Error Loading Page !<button onClick={retry}>Retry</button>
+        Error Loading Page !<Button onClick={retry}>Retry</Button>
         <Link to="/">Home</Link>
       </div>
     );
@@ -30,7 +31,7 @@ Loading.propTypes = {
 };
 
 Loading.defaultProps = {
-  loading: {},
+  error: null,
   retry: () => {}
 };
 

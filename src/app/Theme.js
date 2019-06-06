@@ -124,4 +124,4 @@ const useStyles = makeStyles(theme =>
   })
 );
 
-export { useStyles };
+export default useStyles;

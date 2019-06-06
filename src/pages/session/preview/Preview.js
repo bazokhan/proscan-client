@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import Main from 'layout/Main';
-import { useSession } from 'hooks/useSession';
+import useSession from 'hooks/useSession';
 import { Link, RouterLink, CircularProgress } from 'layout/material-ui/core';
 
 const Preview = ({ match }) => {
@@ -46,4 +47,9 @@ const Preview = ({ match }) => {
     </Main>
   );
 };
+
+Preview.propTypes = {
+  match: PropTypes.object.isRequired
+};
+
 export default Preview;

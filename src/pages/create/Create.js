@@ -1,6 +1,6 @@
 import React from 'react';
 import Main from 'layout/Main';
-import { useEditableSession } from 'hooks/useEditableSession';
+import useEditableSession from 'hooks/useEditableSession';
 import SessionForm from 'components/SessionForm';
 import {
   Link,

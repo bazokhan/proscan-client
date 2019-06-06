@@ -1,8 +1,8 @@
 import React from 'react';
-import { useStyles } from 'app/Theme';
+import useStyles from 'app/Theme';
 import Main from 'layout/Main';
 import Section from 'layout/Section';
-import { useSessions } from 'hooks/useSessions';
+import useSessions from 'hooks/useSessions';
 import {
   Link,
   RouterLink,

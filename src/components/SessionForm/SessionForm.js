@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
-import { useStyles } from 'app/Theme';
+import useStyles from 'app/Theme';
 import Section from 'layout/Section';
 import ButtonGrid from 'layout/ButtonGrid';
 import { AddIcon, DoneIcon, CloudDoneIcon } from 'layout/material-ui/icons';
@@ -14,7 +15,6 @@ import {
 } from 'layout/material-ui/core';
 
 const SessionForm = ({
-  title,
   session,
   setSession,
   editMode,
@@ -109,7 +109,7 @@ const SessionForm = ({
                 ))}
                 {editMode && (
                   <Button
-                    onClick={e => {
+                    onClick={() => {
                       handlers.handleAddNewChoice(questionIndex);
                     }}
                     // fullWidth
@@ -164,6 +164,15 @@ const SessionForm = ({
       </Section>
     </Fragment>
   );
+};
+
+SessionForm.propTypes = {
+  session: PropTypes.object.isRequired,
+  setSession: PropTypes.func.isRequired,
+  editMode: PropTypes.bool.isRequired,
+  toggleEditMode: PropTypes.func.isRequired,
+  errors: PropTypes.array.isRequired,
+  handlers: PropTypes.object.isRequired
 };
 
 export default SessionForm;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStyles } from 'app/Theme';
+import useStyles from 'app/Theme';
 
 const snakeToCamel = string => {
   const className = string
@@ -26,6 +26,10 @@ const Section = ({ classes, flex, borderBottom, children }) => {
 };
 
 Section.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   classes: PropTypes.object,
   flex: PropTypes.oneOf([
     'row flex-start',

@@ -21,4 +21,4 @@ const useSessions = () => {
   return [sessions];
 };
 
-export { useSessions };
+export default useSessions;

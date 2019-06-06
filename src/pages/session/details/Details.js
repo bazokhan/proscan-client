@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import Main from 'layout/Main';
@@ -12,9 +13,9 @@ import {
   CardContent
 } from 'layout/material-ui/core';
 import { SendIcon } from 'layout/material-ui/icons';
-import { useSession } from 'hooks/useSession';
+import useSession from 'hooks/useSession';
 import Section from 'layout/Section';
-import { useStyles } from 'app/Theme';
+import useStyles from 'app/Theme';
 
 const Details = ({ match }) => {
   const [session] = useSession(match.params.sessionId);
@@ -85,4 +86,9 @@ const Details = ({ match }) => {
     </Main>
   );
 };
+
+Details.propTypes = {
+  match: PropTypes.object.isRequired
+};
+
 export default Details;

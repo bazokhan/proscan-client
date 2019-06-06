@@ -1,13 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { useStyles } from 'app/Theme';
+import useStyles from 'app/Theme';
 
-const ButtonGrid = ({ children, withMargin = false }) => {
+const ButtonGrid = ({ children, withMargin }) => {
   const classes = useStyles();
   return (
     <Grid container spacing={2}>
       {React.Children.map(children, child => {
-        if (!child) return;
+        if (!child) return null;
         const clonedChild = withMargin
           ? React.cloneElement(child, {
               fullWidth: true,
@@ -24,6 +25,18 @@ const ButtonGrid = ({ children, withMargin = false }) => {
       })}
     </Grid>
   );
+};
+
+ButtonGrid.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
+  withMargin: PropTypes.bool
+};
+
+ButtonGrid.defaultProps = {
+  withMargin: false
 };
 
 export default ButtonGrid;

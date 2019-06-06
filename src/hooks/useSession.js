@@ -6,11 +6,11 @@ const useSession = id => {
 
   useEffect(() => {
     setTimeout(() => {
-      setSession({ name: 'Session1', id: '123', questions: fakeData });
+      setSession({ name: 'Session1', id, questions: fakeData });
     }, 700);
   }, []);
 
   return [session];
 };
 
-export { useSession };
+export default useSession;

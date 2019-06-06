@@ -10,8 +10,8 @@ import {
 import Section from 'layout/Section';
 import ButtonGrid from 'layout/ButtonGrid';
 import RouteButton from 'layout/RouteButton';
-import { useSessions } from 'hooks/useSessions';
-import { useStyles } from 'app/Theme';
+import useSessions from 'hooks/useSessions';
+import useStyles from 'app/Theme';
 
 const Join = () => {
   const classes = useStyles();
@@ -31,11 +31,7 @@ const Join = () => {
     setTimeoutFunction(
       setTimeout(() => {
         setRequestsSent(requestsSent + 1);
-        setSession(
-          sessions.find(
-            session => session.active && session.publicId === publicId
-          )
-        );
+        setSession(sessions.find(s => s.active && s.publicId === publicId));
       }, 2000)
     );
   };

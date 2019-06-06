@@ -32,6 +32,10 @@ const Section = ({ children, variant, ...props }) => {
 };
 
 Section.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   variant: PropTypes.oneOf(['transparent', 'light', 'dark'])
 };
 

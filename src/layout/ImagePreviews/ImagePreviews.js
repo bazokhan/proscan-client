@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ImagePreviews = ({ handleSubmit, images }) => {
+const ImagePreviews = ({ images }) => {
   const classes = useStyles();
 
   const thumbs = images.map(file => (

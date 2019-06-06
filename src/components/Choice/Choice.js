@@ -44,10 +44,15 @@ const Choice = ({
   </Fragment>
 );
 Choice.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   label: PropTypes.string.isRequired,
   choice: PropTypes.object.isRequired,
   editMode: PropTypes.bool,
-  handleBodyChange: PropTypes.func
+  handleBodyChange: PropTypes.func,
+  handleDeleteChoice: PropTypes.func
 };
 
 Choice.defaultProps = {
@@ -55,6 +60,10 @@ Choice.defaultProps = {
   handleBodyChange: () =>
     console.log(
       'You Have Not Set A handleBodyChange Function For The Choice Inputs'
+    ),
+  handleDeleteChoice: () =>
+    console.log(
+      'You Have Not Set A handleDeleteChoice Function For Deleting The Choice'
     )
 };
 
