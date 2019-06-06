@@ -13,7 +13,7 @@ const useEditableSession = id => {
       return;
     }
     setTimeout(() => {
-      setSession({ name: 'Session1', id: '123', questions: fakeData });
+      setSession({ name: 'Session1', id, questions: fakeData });
     }, 700);
   }, [id]);
 
@@ -121,15 +121,13 @@ const useEditableSession = id => {
     editMode,
     toggleEditMode,
     errors,
-    {
-      handleQuestionBodyChange,
-      handleQuestionLabelChange,
-      handleChoiceBodyChange,
-      handleAddNewQuestion,
-      handleAddNewChoice,
-      handleDeleteChoice,
-      handleUploadImages
-    }
+    handleQuestionBodyChange,
+    handleQuestionLabelChange,
+    handleChoiceBodyChange,
+    handleAddNewQuestion,
+    handleAddNewChoice,
+    handleDeleteChoice,
+    handleUploadImages
   ];
 };
 

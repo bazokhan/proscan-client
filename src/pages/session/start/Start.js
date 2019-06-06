@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useContext } from 'react';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import Main from 'layout/Main';
-import useSession from 'hooks/useSession';
+// import useSession from 'hooks/useEditableSession';
 import {
   Link,
   RouterLink,
   CircularProgress,
   Button
 } from 'layout/material-ui/core';
+import SessionContext from 'context/SessionContext';
 
-const Start = ({ match, index }) => {
+const Start = () => {
+  const { session, setEditMode } = useContext(SessionContext);
   const [question, setQuestion] = useState(null);
-  const [questionIndex, setQuestionIndex] = useState(index);
-  const [session] = useSession(match.params.id);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  setEditMode(false);
+
+  useEffect(() => {
+    if (session && session.activeQuestion) {
+      setQuestionIndex(session.activeQuestion);
+    }
+  }, []);
 
   useEffect(() => {
     if (session) {
@@ -66,15 +73,6 @@ const Start = ({ match, index }) => {
       </Link>
     </Main>
   );
-};
-
-Start.propTypes = {
-  match: PropTypes.object.isRequired,
-  index: PropTypes.number
-};
-
-Start.defaultProps = {
-  index: 0
 };
 
 export default Start;

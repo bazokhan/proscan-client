@@ -1,14 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+// import PropTypes from 'prop-types';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import Main from 'layout/Main';
-import useSession from 'hooks/useSession';
+// import useSession from 'hooks/useEditableSession';
 import { Link, RouterLink, CircularProgress } from 'layout/material-ui/core';
+import SessionContext from 'context/SessionContext';
 
-const Preview = ({ match }) => {
-  const [session] = useSession(match.params.sessionId);
-
+const Preview = () => {
+  const { session, setEditMode } = useContext(SessionContext);
+  setEditMode(false);
   if (!session)
     return (
       <Main>
@@ -46,10 +47,6 @@ const Preview = ({ match }) => {
       </Link>
     </Main>
   );
-};
-
-Preview.propTypes = {
-  match: PropTypes.object.isRequired
 };
 
 export default Preview;

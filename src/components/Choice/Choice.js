@@ -1,70 +1,56 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { ClearIcon } from 'layout/material-ui/icons';
-import { IconButton, TextField } from 'layout/material-ui/core';
-import Section from 'layout/Section';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Section from 'layout/NewSection';
+import SessionContext from 'context/SessionContext';
 
-const Choice = ({
-  label,
-  choice,
-  children,
-  editMode,
-  handleBodyChange,
-  handleDeleteChoice
-}) => (
-  <Fragment>
-    {editMode ? (
-      <Section flex="row space-between">
-        <TextField
-          variant="standard"
-          margin="normal"
-          required
-          fullWidth
-          id={`bodyof${choice.id}`}
-          label={label}
-          name={`bodyof${choice.id}`}
-          onChange={e => handleBodyChange(e.target.value)}
-          value={choice.body}
-        />
-        <IconButton
-          onClick={handleDeleteChoice}
-          aria-label="Delete"
-          size="small"
-        >
-          <ClearIcon />
-        </IconButton>
-      </Section>
-    ) : (
-      <Section flex="row flex-start">
-        {label}
-        {choice.body}
-      </Section>
-    )}
-    {children}
-  </Fragment>
-);
+const Choice = ({ choice, children }) => {
+  const [body, setBody] = useState(choice.body);
+  const { editMode, handleChoiceBodyChange, handleDeleteChoice } = useContext(
+    SessionContext
+  );
+  return (
+    <Fragment>
+      {editMode ? (
+        <Section>
+          <TextField
+            variant="standard"
+            margin="normal"
+            required
+            fullWidth
+            id={`bodyof${choice.id}`}
+            name={`bodyof${choice.id}`}
+            onBlur={() => handleChoiceBodyChange(choice.id, body)}
+            onChange={e => setBody(e.target.value)}
+            value={body}
+          />
+          <IconButton
+            onClick={() => handleDeleteChoice(choice.id)}
+            aria-label="Delete"
+            size="small"
+          >
+            <ClearIcon />
+          </IconButton>
+        </Section>
+      ) : (
+        <Section>{choice.body}</Section>
+      )}
+      {children}
+    </Fragment>
+  );
+};
 Choice.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ]).isRequired,
-  label: PropTypes.string.isRequired,
-  choice: PropTypes.object.isRequired,
-  editMode: PropTypes.bool,
-  handleBodyChange: PropTypes.func,
-  handleDeleteChoice: PropTypes.func
+  ]),
+  choice: PropTypes.object.isRequired
 };
 
 Choice.defaultProps = {
-  editMode: false,
-  handleBodyChange: () =>
-    console.log(
-      'You Have Not Set A handleBodyChange Function For The Choice Inputs'
-    ),
-  handleDeleteChoice: () =>
-    console.log(
-      'You Have Not Set A handleDeleteChoice Function For Deleting The Choice'
-    )
+  children: null
 };
 
 export default Choice;
