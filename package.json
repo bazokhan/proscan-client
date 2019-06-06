@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.0.1",
+    "@material-ui/icons": "^4.0.1",
     "apollo-client-preset": "^1.0.8",
     "graphql": "^14.3.0",
     "graphql-tag": "^2.10.1",
+    "material-ui-dropzone": "^2.3.5",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-apollo": "^2.5.5",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.1.5",
+    "react-loadable": "^5.5.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1"
   },
@@ -17,7 +22,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
+    "lint": "eslint src"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -33,5 +41,22 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^2.4.0",
+    "prettier": "^1.15.3",
+    "react-styleguidist": "^9.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn lint"
+    }
   }
 }
