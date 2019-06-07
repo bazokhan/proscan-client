@@ -12,7 +12,7 @@ function App() {
         <Header />
         <Switch>
           <Route path="/signup" component={routes.home} />
-          <Route path="/login" component={routes.home} />
+          <Route path="/login" component={routes.login} />
           <Route path="/join" component={routes.join} />
           <Route path="/sessions/create" component={routes.create} />
           <Route path="/sessions/:sessionId" component={routes.session} />
