@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ApolloProvider } from 'react-apollo-hooks';
-import { HttpLink, ApolloClient, InMemoryCache } from 'apollo-client-preset';
+import { HttpLink, ApolloClient, InMemoryCache } from 'apollo-boost';
 
 import App from './app';
 import serverUri from './app/constants';
