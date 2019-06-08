@@ -18,6 +18,7 @@ import useSessions from './hooks/useSessions';
 const Sessions = () => {
   const classes = useStyles();
   const [sessions] = useSessions();
+
   if (!sessions.length)
     return (
       <Main>

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 const login = gql`
   mutation LOGIN($email: String!, $password: String!) {
