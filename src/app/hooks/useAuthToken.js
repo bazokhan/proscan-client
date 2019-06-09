@@ -9,7 +9,9 @@ const useAuthToken = () => {
   useEffect(() => {
     const getToken = async () => {
       try {
-        const { token } = await client.readQuery({ query: tokenGql });
+        const {
+          token: { token }
+        } = await client.readQuery({ query: tokenGql });
         setAuthToken(token);
         setIsLoading(false);
       } catch (e) {
