@@ -20,7 +20,29 @@ const useAuthToken = () => {
     };
     getToken();
   }, [client]);
-  return { client, isLoading, authToken, setAuthToken };
+  const logout = () => {
+    client.writeQuery({
+      query: tokenGql,
+      data: {
+        token: {
+          id: 'auth_token',
+          __typename: 'Token',
+          token: null
+        }
+      }
+    });
+    setAuthToken(null);
+  };
+  const login = loginMutationResult => {
+    client.writeQuery({
+      query: tokenGql,
+      data: {
+        token: { ...loginMutationResult, id: 'auth_token' }
+      }
+    });
+    setAuthToken(loginMutationResult.token);
+  };
+  return { client, isLoading, authToken, setAuthToken, login, logout };
 };
 
 export default useAuthToken;

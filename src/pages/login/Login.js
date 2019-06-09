@@ -5,16 +5,13 @@ import Main from 'layout/Main';
 import Section from 'layout/Section';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import tokenGql from 'app/gql/token.gql';
 import ErrorMessage from 'components/SessionForm/ErrorMessage';
 import AuthContext from 'context/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import loginGql from './gql/login.gql';
 
 const Login = () => {
-  const { client, isLoading, authToken, setAuthToken } = useContext(
-    AuthContext
-  );
+  const { isLoading, authToken, login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -24,15 +21,9 @@ const Login = () => {
     e.preventDefault();
     loginMutation({
       variables: { email, password },
-      update: (_, { data: { login } }) => {
-        client.writeQuery({
-          query: tokenGql,
-          data: {
-            token: { ...login, id: 'auth_token' }
-          }
-        });
+      update: (_, { data }) => {
         setError(null);
-        setAuthToken(login.token);
+        login(data.login);
       }
     }).catch(setError);
   };

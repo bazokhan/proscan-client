@@ -11,13 +11,10 @@ import AuthContext from 'context/AuthContext';
 import { Link, Button, Avatar } from '@material-ui/core';
 import Logo from 'images/logo.png';
 import { RouterLink } from 'layout/material-ui/core';
-import tokenGql from 'app/gql/token.gql';
 import useStyles from './Header.styles';
 
 const Header = () => {
-  const { isLoading, authToken, setAuthToken, client } = useContext(
-    AuthContext
-  );
+  const { isLoading, authToken, logout } = useContext(AuthContext);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -43,17 +40,7 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    client.writeQuery({
-      query: tokenGql,
-      data: {
-        token: {
-          id: 'auth_token',
-          __typename: 'Token',
-          token: null
-        }
-      }
-    });
-    setAuthToken(null);
+    logout();
     handleMenuClose();
   };
 
