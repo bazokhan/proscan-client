@@ -10,17 +10,38 @@ import App from './app';
 import serverUri from './app/constants';
 import * as serviceWorker from './serviceWorker';
 
+const getToken = () => {
+  const cache = localStorage.getItem('apollo-cache-persist');
+  if (cache) {
+    const tokenStore = JSON.parse(cache)['Token:auth_token'];
+    if (tokenStore) {
+      return tokenStore.token;
+    }
+  }
+  return null;
+};
+
+const token = getToken();
+
 const render = async () => {
   const cache = new InMemoryCache({
     dataIdFromObject: object => defaultDataIdFromObject(object) // fall back to default handling
   });
   const client = new ApolloClient({
     uri: serverUri,
+    request: async operation => {
+      console.log({ token });
+      operation.setContext({
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      });
+    },
     cache
   });
 
   try {
-    await persistCache({ cache, storage: window.localStorage });
+    await persistCache({ cache, storage: localStorage });
   } catch (e) {
     console.log(e);
   }

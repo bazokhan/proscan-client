@@ -19,6 +19,7 @@ import SessionContext from 'context/SessionContext';
 const Details = () => {
   const classes = useStyles();
   const { session, setEditMode } = useContext(SessionContext);
+
   useEffect(() => {
     setEditMode(false);
   }, [setEditMode]);
