@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect } from 'react';
 import Main from 'layout/Main';
-import useEditableSession from 'hooks/useEditableSession';
 import SessionForm from 'components/SessionForm';
+import SessionContext from 'context/SessionContext';
 import {
   Link,
   RouterLink,
@@ -14,15 +13,12 @@ import {
 import { CreateIcon } from 'layout/material-ui/icons';
 import Section from 'layout/Section';
 
-const Edit = ({ match }) => {
-  const [
-    session,
-    setSession,
-    editMode,
-    toggleEditMode,
-    errors,
-    handlers
-  ] = useEditableSession(match.params.sessionId);
+const Edit = () => {
+  const { session, setEditMode } = useContext(SessionContext);
+
+  useEffect(() => {
+    setEditMode(true);
+  }, [setEditMode]);
 
   if (!session)
     return (
@@ -32,7 +28,7 @@ const Edit = ({ match }) => {
     );
   return (
     <Main>
-      <Section flex="column center">
+      <Section>
         <Avatar>
           <CreateIcon />
         </Avatar>
@@ -40,7 +36,7 @@ const Edit = ({ match }) => {
           Edit Session
         </Typography>
       </Section>
-      <Section flex="row space-between">
+      <Section>
         <Button variant="text">
           <Link to="/sessions" component={RouterLink}>
             Back To My Sessions
@@ -52,21 +48,9 @@ const Edit = ({ match }) => {
           </Link>
         </Button>
       </Section>
-      <SessionForm
-        title="Edit Session"
-        session={session}
-        setSession={setSession}
-        editMode={editMode}
-        toggleEditMode={toggleEditMode}
-        errors={errors}
-        handlers={handlers}
-      />
+      <SessionForm />
     </Main>
   );
-};
-
-Edit.propTypes = {
-  match: PropTypes.object.isRequired
 };
 
 export default Edit;

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect } from 'react';
 import Choice from 'components/Choice';
 import Question from 'components/Question';
 import Main from 'layout/Main';
@@ -13,13 +12,17 @@ import {
   CardContent
 } from 'layout/material-ui/core';
 import { SendIcon } from 'layout/material-ui/icons';
-import useSession from 'hooks/useSession';
 import Section from 'layout/Section';
 import useStyles from 'app/Theme';
+import SessionContext from 'context/SessionContext';
 
-const Details = ({ match }) => {
-  const [session] = useSession(match.params.sessionId);
+const Details = () => {
   const classes = useStyles();
+  const { session, setEditMode } = useContext(SessionContext);
+
+  useEffect(() => {
+    setEditMode(false);
+  }, [setEditMode]);
 
   if (!session)
     return (
@@ -30,12 +33,12 @@ const Details = ({ match }) => {
 
   return (
     <Main>
-      <Section flex="column center">
+      <Section>
         <Typography component="h1" variant="h6">
           {session.name}
         </Typography>
       </Section>
-      <Section flex="row space-between">
+      <Section>
         <Button variant="text">
           <Link to={`/sessions/${session.id}/edit`} component={RouterLink}>
             Edit
@@ -57,7 +60,7 @@ const Details = ({ match }) => {
         </Button>
       </Section>
       {session.questions.map((question, questionIndex) => (
-        <div key={question.id} className={classes.form}>
+        <Section key={question.id} className={classes.form}>
           <Card className={classes.card}>
             <CardContent>
               <Question
@@ -74,9 +77,9 @@ const Details = ({ match }) => {
               </Question>
             </CardContent>
           </Card>
-        </div>
+        </Section>
       ))}
-      <Section flex="row center">
+      <Section>
         <Button variant="text">
           <Link to="/sessions/" component={RouterLink}>
             Back To My Sessions
@@ -85,10 +88,6 @@ const Details = ({ match }) => {
       </Section>
     </Main>
   );
-};
-
-Details.propTypes = {
-  match: PropTypes.object.isRequired
 };
 
 export default Details;

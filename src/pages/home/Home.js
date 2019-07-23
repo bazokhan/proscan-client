@@ -10,14 +10,14 @@ import {
 import { SendIcon, CreateIcon } from 'layout/material-ui/icons';
 import Main from 'layout/Main';
 import useStyles from 'app/Theme';
-import NewSection from 'layout/NewSection';
+import Section from 'layout/Section';
 import Title from 'layout/Title';
 
 const Home = () => {
   const classes = useStyles();
   return (
     <Main>
-      <NewSection spacing={3}>
+      <Section spacing={3}>
         <Title
           title="Welcome, Mohamed!"
           component="h1"
@@ -25,8 +25,8 @@ const Home = () => {
           color="textPrimary"
           align="left"
         />
-      </NewSection>
-      <NewSection spacing={3}>
+      </Section>
+      <Section spacing={3}>
         <Grid item xs={12} md={6}>
           <Link to="/sessions" component={RouterLink} className={classes.form}>
             <Card>
@@ -57,7 +57,7 @@ const Home = () => {
             </Card>
           </Link>
         </Grid>
-      </NewSection>
+      </Section>
     </Main>
   );
 };

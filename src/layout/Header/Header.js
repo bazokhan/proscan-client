@@ -1,107 +1,48 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState, useContext, Fragment } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import AuthContext from 'context/AuthContext';
+import { Link, Button, Avatar } from '@material-ui/core';
+import Logo from 'images/logo.png';
+import { RouterLink } from 'layout/material-ui/core';
+import useStyles from './Header.styles';
 
-const useStyles = makeStyles(theme => ({
-  grow: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginRight: theme.spacing(2)
-  },
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block'
-    }
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto'
-    }
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  inputRoot: {
-    color: 'inherit'
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200
-    }
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex'
-    }
-  },
-  sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
-  }
-}));
-
-function PrimarySearchAppBar() {
+const Header = () => {
+  const { isLoading, authToken, logout } = useContext(AuthContext);
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  function handleProfileMenuOpen(event) {
+  const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
-  }
+  };
 
-  function handleMobileMenuClose() {
+  const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  }
+  };
 
-  function handleMenuClose() {
+  const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-  }
+  };
 
-  function handleMobileMenuOpen(event) {
+  const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
-  }
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleMenuClose();
+  };
 
   const renderMenu = (
     <Menu
@@ -112,7 +53,7 @@ function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -124,86 +65,96 @@ function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton color="inherit">
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+      {authToken && (
+        <MenuItem variant="text" color="inherit">
+          <Link to="/sessions" color="inherit" component={RouterLink}>
+            My Sessions
+          </Link>
+        </MenuItem>
+      )}
+      {!authToken && (
+        <MenuItem variant="text" color="inherit">
+          <Link to="/login" color="inherit" component={RouterLink}>
+            Login
+          </Link>
+        </MenuItem>
+      )}
+      {!authToken && (
+        <MenuItem variant="text" color="inherit">
+          <Link to="/signup" color="inherit" component={RouterLink}>
+            Signup
+          </Link>
+        </MenuItem>
+      )}
+      <MenuItem edge="end" onClick={handleProfileMenuOpen} color="inherit">
+        <AccountCircle />
+        &nbsp; <p>Settings</p>
       </MenuItem>
     </Menu>
   );
 
+  if (isLoading) return null;
+
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" color="default">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Open drawer"
-          >
-            <MenuIcon />
+          <IconButton edge="start" className={classes.menuButton}>
+            <Avatar src={Logo} />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Manal Classroom Quiz Tool
+          <Typography
+            className={classes.title}
+            variant="h6"
+            noWrap
+            color="primary"
+          >
+            MIST
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-            />
-          </div>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            <Button variant="contained" color="secondary">
+              <Link to="/join" color="inherit" component={RouterLink}>
+                Join A Session
+              </Link>
+            </Button>
+            {authToken ? (
+              <Fragment>
+                <Button variant="text" color="inherit">
+                  <Link to="/sessions" color="inherit" component={RouterLink}>
+                    My Sessions
+                  </Link>
+                </Button>
+                <IconButton
+                  edge="end"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Button variant="text" color="inherit">
+                  <Link to="/login" color="inherit" component={RouterLink}>
+                    Login
+                  </Link>
+                </Button>
+                <Button variant="text" color="inherit">
+                  <Link to="/signup" color="inherit" component={RouterLink}>
+                    Signup
+                  </Link>
+                </Button>
+              </Fragment>
+            )}
           </div>
           <div className={classes.sectionMobile}>
-            <IconButton
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
+            <Button variant="contained" color="secondary">
+              <Link to="/join" color="inherit" component={RouterLink}>
+                Join A Session
+              </Link>
+            </Button>
+            <IconButton onClick={handleMobileMenuOpen} color="inherit">
               <MoreIcon />
             </IconButton>
           </div>
@@ -213,6 +164,6 @@ function PrimarySearchAppBar() {
       {renderMobileMenu}
     </div>
   );
-}
+};
 
-export default PrimarySearchAppBar;
+export default Header;
