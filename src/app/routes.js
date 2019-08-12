@@ -1,11 +1,11 @@
-import loadable from 'helpers/loadable';
+import { lazy } from 'react';
 
 export default {
-  home: loadable(import('../pages/home')),
-  login: loadable(import('../pages/login')),
-  sessions: loadable(import('../pages/sessions')),
-  session: loadable(import('../pages/session')),
-  join: loadable(import('../pages/join')),
-  joined: loadable(import('../pages/joined')),
-  create: loadable(import('../pages/create'))
+  home: lazy(() => import('pages/home')),
+  login: lazy(() => import('pages/login')),
+  sessions: lazy(() => import('pages/sessions')),
+  session: lazy(() => import('pages/session')),
+  join: lazy(() => import('pages/join')),
+  joined: lazy(() => import('pages/joined')),
+  create: lazy(() => import('pages/create'))
 };

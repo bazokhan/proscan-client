@@ -1,8 +1,8 @@
-import loadable from 'helpers/loadable';
+import { lazy } from 'react';
 
 export default {
-  details: loadable(import('./details')),
-  edit: loadable(import('./edit')),
-  preview: loadable(import('./preview')),
-  start: loadable(import('./start'))
+  details: lazy(() => import('./details')),
+  edit: lazy(() => import('./edit')),
+  preview: lazy(() => import('./preview')),
+  start: lazy(() => import('./start'))
 };

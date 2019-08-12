@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from 'react-apollo';
 import Main from 'layout/Main';
 import Section from 'layout/Section';
 import TextField from '@material-ui/core/TextField';

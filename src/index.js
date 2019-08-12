@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import ApolloClient, {
   InMemoryCache,
   defaultDataIdFromObject
 } from 'apollo-boost';
 import { persistCache } from 'apollo-cache-persist';
-import { ApolloProvider } from 'react-apollo-hooks';
+import { ApolloProvider } from 'react-apollo';
 import App from './app';
 import serverUri from './app/constants';
 import * as serviceWorker from './serviceWorker';
@@ -47,9 +47,11 @@ const render = async () => {
   }
 
   ReactDOM.render(
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>,
+    <Suspense fallback={<div>Loading...</div>}>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </Suspense>,
     document.getElementById('root')
   );
 };

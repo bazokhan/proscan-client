@@ -13,7 +13,7 @@ import {
   Avatar,
   Typography
 } from 'layout/material-ui/core';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from 'react-apollo';
 import userSessionsGql from './gql/userSessions.gql';
 
 const Sessions = () => {

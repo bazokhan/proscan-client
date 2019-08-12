@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 // import fakeData from 'helpers/fakeData';
 import validate from 'helpers/validate';
-import { useQuery } from 'react-apollo-hooks';
+import { useQuery } from 'react-apollo';
 import sessionByIDGql from '../gql/sessionByID.gql';
 
 const useSession = id => {
