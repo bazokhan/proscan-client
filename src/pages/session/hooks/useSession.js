@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// import fakeData from 'helpers/fakeData';
 import validate from 'helpers/validate';
 import { useQuery } from 'react-apollo';
 import sessionByIDGql from './gql/sessionByID.gql';
@@ -8,13 +7,10 @@ const useSession = id => {
   const [session, setSession] = useState(null);
   const [editMode, setEditMode] = useState(true);
   const [errors, setErrors] = useState([]);
-  console.log(id);
 
-  const { data, error, loading } = useQuery(sessionByIDGql, {
+  const { data } = useQuery(sessionByIDGql, {
     variables: { publicId: id }
   });
-
-  console.log({ data, error, loading });
 
   useEffect(() => {
     setSession(data.sessionByID);

@@ -1,23 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Choice from 'components/Choice';
-import Question from 'components/Question';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 import Main from 'layout/Main';
-import {
-  Link,
-  RouterLink,
-  CircularProgress,
-  Button
-} from 'layout/material-ui/core';
-import SessionContext from 'context/SessionContext';
+import { Link, CircularProgress, Button } from '@material-ui/core';
+import { useQuery } from 'react-apollo';
+import Question from '../components/Question';
+import Choice from '../components/Choice';
+import sessionByIDGql from '../gql/sessionByID.gql';
 
-const Start = () => {
-  const { session, setEditMode } = useContext(SessionContext);
-  console.log({ sessionFromStart: session });
+const Start = ({ match }) => {
   const [question, setQuestion] = useState(null);
   const [questionIndex, setQuestionIndex] = useState(0);
-  useEffect(() => {
-    setEditMode(false);
-  }, [setEditMode]);
+
+  const { data } = useQuery(sessionByIDGql, {
+    variables: { publicId: match.params.sessionId }
+  });
+  const { sessionByID: session, error, loading } = data;
 
   useEffect(() => {
     if (session && session.activeQuestion) {
@@ -25,8 +23,10 @@ const Start = () => {
         q => q.id === session.activeQuestion
       );
       setQuestionIndex(session.questions.indexOf(activeQuestion));
+    } else {
+      setQuestionIndex(0);
     }
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     if (session) {
@@ -34,20 +34,21 @@ const Start = () => {
     }
   }, [session, questionIndex]);
 
+  if (error) return <div>Error</div>;
+  if (loading)
+    return (
+      <Main>
+        <CircularProgress />
+      </Main>
+    );
+
   const handleNavClick = value => {
     const newIndex = questionIndex + value;
     if (newIndex <= session.questions.length - 1 && newIndex >= 0) {
       setQuestionIndex(newIndex);
     }
   };
-  console.log({ activeQuestion: session.activeQuestion, question });
 
-  if (!session)
-    return (
-      <Main>
-        <CircularProgress />
-      </Main>
-    );
   if (!question)
     return (
       <Main>
@@ -79,6 +80,10 @@ const Start = () => {
       </Link>
     </Main>
   );
+};
+
+Start.propTypes = {
+  match: PropTypes.object.isRequired
 };
 
 export default Start;

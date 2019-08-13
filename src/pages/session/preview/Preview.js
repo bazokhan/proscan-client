@@ -1,18 +1,20 @@
-import React, { useContext, useEffect } from 'react';
-// import PropTypes from 'prop-types';
-import Choice from 'components/Choice';
-import Question from 'components/Question';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
 import Main from 'layout/Main';
-// import useSession from 'hooks/useEditableSession';
-import { Link, RouterLink, CircularProgress } from 'layout/material-ui/core';
-import SessionContext from 'context/SessionContext';
+import { Link, CircularProgress } from '@material-ui/core';
+import { useQuery } from 'react-apollo';
+import Question from '../components/Question';
+import Choice from '../components/Choice';
+import sessionByIDGql from '../gql/sessionByID.gql';
 
-const Preview = () => {
-  const { session, setEditMode } = useContext(SessionContext);
-  useEffect(() => {
-    setEditMode(false);
-  }, [setEditMode]);
-  if (!session)
+const Preview = ({ match }) => {
+  const { data } = useQuery(sessionByIDGql, {
+    variables: { publicId: match.params.sessionId }
+  });
+  const { sessionByID: session, error, loading } = data;
+  if (error) return <div>Error</div>;
+  if (loading)
     return (
       <Main>
         <CircularProgress />
@@ -49,6 +51,10 @@ const Preview = () => {
       </Link>
     </Main>
   );
+};
+
+Preview.propTypes = {
+  match: PropTypes.object.isRequired
 };
 
 export default Preview;
