@@ -18,8 +18,8 @@ function App() {
           <Route path="/signup" component={routes.signup} />
           <Route path="/login" component={routes.login} />
           <AuthRoute path="/sessions/create" component={routes.create} />
-          <AuthRoute path="/sessions/:sessionId" component={routes.session} />
           <AuthRoute path="/sessions" component={routes.sessions} />
+          <AuthRoute path="/profile" component={routes.profile} />
           <Route path="/join" component={routes.join} />
           <Route path="/:sessionId" component={routes.joined} />
           <Route path="/" component={routes.home} />

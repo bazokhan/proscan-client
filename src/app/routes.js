@@ -4,9 +4,9 @@ export default {
   home: lazy(() => import('pages/home')),
   login: lazy(() => import('pages/login')),
   signup: lazy(() => import('pages/signup')),
-  sessions: lazy(() => import('pages/sessions')),
-  session: lazy(() => import('pages/session')),
+  profile: lazy(() => import('pages/profile')),
   join: lazy(() => import('pages/join')),
   joined: lazy(() => import('pages/joined')),
-  create: lazy(() => import('pages/create'))
+  create: lazy(() => import('pages/create')),
+  sessions: lazy(() => import('pages/session'))
 };

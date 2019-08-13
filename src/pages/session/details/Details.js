@@ -31,6 +31,8 @@ const Details = ({ match }) => {
         <CircularProgress />
       </Main>
     );
+  if (!session)
+    return <div>Session Could not be loaded, please try again!</div>;
 
   return (
     <Main>

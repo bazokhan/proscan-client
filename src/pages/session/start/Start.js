@@ -41,6 +41,8 @@ const Start = ({ match }) => {
         <CircularProgress />
       </Main>
     );
+  if (!session)
+    return <div>Session Could not be loaded, please try again!</div>;
 
   const handleNavClick = value => {
     const newIndex = questionIndex + value;
