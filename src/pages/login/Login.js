@@ -22,7 +22,6 @@ const Login = () => {
     loginMutation({
       variables: { email, password },
       update: (_, { data }) => {
-        console.log({ data });
         setError(null);
         login(data.login);
       }

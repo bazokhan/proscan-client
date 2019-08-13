@@ -2,13 +2,11 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import Main from 'layout/Main';
-import Section from 'layout/Section';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import ErrorMessage from 'components/SessionForm/ErrorMessage';
 import AuthContext from 'context/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import signupGql from './gql/signup.gql';
+import styles from './Signup.module.scss';
 
 const Signup = () => {
   const { isLoading, authToken, login } = useContext(AuthContext);
@@ -23,7 +21,6 @@ const Signup = () => {
     signupMutation({
       variables: { data: { email, username, password } },
       update: (_, { data }) => {
-        console.log({ data });
         setError(null);
         login(data.signup);
       }
@@ -43,35 +40,57 @@ const Signup = () => {
 
   return (
     <Main>
-      <Section>
-        <form onSubmit={handleSignupSubmit}>
-          <TextField
-            label="username"
-            type="username"
+      <form className={styles.form} onSubmit={handleSignupSubmit}>
+        <label className={styles.label} htmlFor="username">
+          <span>Username</span>
+          <input
+            className={styles.input}
+            placeholder="username"
+            id="username"
+            name="username"
+            type="text"
             required
-            autoComplete="username"
             value={username}
+            autoComplete="username"
             onChange={e => setUsername(e.target.value)}
           />
-          <TextField
-            label="email"
+        </label>
+
+        <label className={styles.label} htmlFor="username">
+          <span>Email</span>
+          <input
+            className={styles.input}
+            placeholder="email"
+            id="email"
+            name="email"
             type="email"
             required
-            autoComplete="email"
             value={email}
+            autoComplete="email"
             onChange={e => setEmail(e.target.value)}
           />
-          <TextField
-            label="password"
+        </label>
+
+        <label className={styles.label} htmlFor="username">
+          <span>Password</span>
+          <input
+            className={styles.input}
+            placeholder="password"
+            id="password"
+            name="password"
             type="password"
             required
             value={password}
+            autoComplete="password"
             onChange={e => setPassword(e.target.value)}
           />
-          <Button type="submit">Signup</Button>
-        </form>
-        {error && <ErrorMessage error={error} />}
-      </Section>
+        </label>
+
+        <button className={styles.button} type="submit">
+          Signup
+        </button>
+      </form>
+      {error && <ErrorMessage error={error} />}
     </Main>
   );
 };
