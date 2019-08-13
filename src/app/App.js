@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route path="/signup" component={routes.home} />
+          <Route path="/signup" component={routes.signup} />
           <Route path="/login" component={routes.login} />
           <AuthRoute path="/sessions/create" component={routes.create} />
           <AuthRoute path="/sessions/:sessionId" component={routes.session} />

@@ -18,8 +18,9 @@ const Edit = () => {
 
   useEffect(() => {
     setEditMode(true);
-  }, [setEditMode]);
+  }, []);
 
+  console.log({ session });
   if (!session)
     return (
       <Main>
@@ -43,7 +44,7 @@ const Edit = () => {
           </Link>
         </Button>
         <Button variant="text">
-          <Link to={`/sessions/${session.id}`} component={RouterLink}>
+          <Link to={`/sessions/${session.publicId}`} component={RouterLink}>
             Return To Session Details
           </Link>
         </Button>

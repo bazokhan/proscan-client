@@ -31,6 +31,7 @@ const useAuthToken = () => {
         }
       }
     });
+    client.resetStore();
     setAuthToken(null);
   };
   const login = loginMutationResult => {

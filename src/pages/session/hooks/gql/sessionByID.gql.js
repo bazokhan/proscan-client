@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 const sessionByID = gql`
   query SESSION_BYID($publicId: String!) {

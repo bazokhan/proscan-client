@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 // import fakeData from 'helpers/fakeData';
 import validate from 'helpers/validate';
 import { useQuery } from 'react-apollo';
-import sessionByIDGql from '../gql/sessionByID.gql';
+import sessionByIDGql from './gql/sessionByID.gql';
 
 const useSession = id => {
   const [session, setSession] = useState(null);
@@ -18,7 +18,7 @@ const useSession = id => {
 
   useEffect(() => {
     setSession(data.sessionByID);
-  }, [id]);
+  }, [data]);
 
   const toggleEditMode = () => {
     setErrors(validate(session));

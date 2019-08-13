@@ -1,9 +1,13 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import ApolloClient, {
-  InMemoryCache,
-  defaultDataIdFromObject
-} from 'apollo-boost';
+// import ApolloClient, {
+//   InMemoryCache,
+//   defaultDataIdFromObject
+// } from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { persistCache } from 'apollo-cache-persist';
 import { ApolloProvider } from 'react-apollo';
 import App from './app';
@@ -21,30 +25,34 @@ const getToken = () => {
   return null;
 };
 
-const token = getToken();
-
 const render = async () => {
-  const cache = new InMemoryCache({
-    dataIdFromObject: object => defaultDataIdFromObject(object) // fall back to default handling
-  });
-  const client = new ApolloClient({
-    uri: serverUri,
-    request: async operation => {
-      console.log({ token });
-      operation.setContext({
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      });
-    },
-    cache
-  });
-
+  const cache = new InMemoryCache();
   try {
     await persistCache({ cache, storage: localStorage });
   } catch (e) {
-    console.log(e);
+    ReactDOM.render(<div>Error !!!</div>, document.getElementById('root'));
+    return;
   }
+  const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token = getToken();
+    // return the headers to the context so httpLink can read them
+    console.log({ token });
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : ''
+      }
+    };
+  });
+  const httpLink = createHttpLink({
+    uri: serverUri
+  });
+
+  const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache
+  });
 
   ReactDOM.render(
     <Suspense fallback={<div>Loading...</div>}>

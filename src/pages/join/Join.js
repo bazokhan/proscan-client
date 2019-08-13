@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useMutation } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
 import Main from 'layout/Main';
 import {
@@ -10,44 +11,35 @@ import {
 import Section from 'layout/Section';
 import RouteButton from 'layout/RouteButton';
 import useStyles from 'app/Theme';
-import useSessions from './hooks/useSessions';
+import sessionByIDGql from './gql/joinSession.gql';
 
 const Join = () => {
   const classes = useStyles();
-  const [sessions] = useSessions();
-  const [timeoutFunction, setTimeoutFunction] = useState(null);
   const [session, setSession] = useState(null);
   const [publicId, setPublicId] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  const [requestsSent, setRequestsSent] = useState(0);
+
+  const [joinSessionMutation] = useMutation(sessionByIDGql, {
+    variables: { publicId, username: 'Guest' },
+    onCompleted: ({ joinSession }) => {
+      setSession(joinSession.session);
+      setLoading(false);
+    }
+  });
 
   const handleChange = e => {
     setPublicId(e.target.value);
   };
+
   const handleSubmit = e => {
     e.preventDefault();
     setLoading(true);
-    setTimeoutFunction(
-      setTimeout(() => {
-        setRequestsSent(requestsSent + 1);
-        setSession(sessions.find(s => s.active && s.publicId === publicId));
-      }, 2000)
-    );
+    joinSessionMutation();
   };
 
-  useEffect(() => {
-    setLoading(false);
-  }, [requestsSent]);
-
-  useEffect(
-    () => () => {
-      clearTimeout(timeoutFunction);
-    },
-    [timeoutFunction]
-  );
   return (
     <Main>
-      {session && <Redirect to={`/${session.id}`} />}
+      {session && <Redirect to={`/${session.publicId}`} />}
       <Section>
         <Typography component="h1" variant="h6">
           Join A Session
@@ -70,7 +62,7 @@ const Join = () => {
               value={publicId || ''}
               onChange={handleChange}
             />
-            {!isLoading && !session && !!requestsSent && (
+            {!isLoading && !session && (
               <Typography variant="subtitle1" color="error">
                 Could Not Find This Session
               </Typography>

@@ -21,7 +21,7 @@ const Preview = () => {
 
   return (
     <Main>
-      <div>Sessions ID: {session.id}</div>
+      <div>Sessions ID: {session.publicId}</div>
       <div>{session.name}</div>
       {session.questions.map((question, questionIndex) => (
         <Question
@@ -38,10 +38,10 @@ const Preview = () => {
           ))}
         </Question>
       ))}
-      <Link to={`/sessions/${session.id}/edit`} component={RouterLink}>
+      <Link to={`/sessions/${session.publicId}/edit`} component={RouterLink}>
         Edit This Session
       </Link>
-      <Link to={`/sessions/${session.id}/start`} component={RouterLink}>
+      <Link to={`/sessions/${session.publicId}/start`} component={RouterLink}>
         Start This Session
       </Link>
       <Link to="/sessions" component={RouterLink}>

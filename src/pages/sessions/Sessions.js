@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import useStyles from 'app/Theme';
 import Main from 'layout/Main';
 import Section from 'layout/Section';
@@ -18,22 +18,23 @@ import userSessionsGql from './gql/userSessions.gql';
 
 const Sessions = () => {
   const classes = useStyles();
-  const [sessions, setSession] = useState([]);
+
   const { data } = useQuery(userSessionsGql);
-
-  useEffect(() => {
-    if (data && data.userSessions) {
-      setSession(data.userSessions);
-    }
-  }, [data]);
-
-  if (!data || !data.userSessions) {
+  const { userSessions, loading, error } = data;
+  if (error) {
+    return <div>Error, {error.message}</div>;
+  }
+  if (loading) {
     return (
       <Main>
         <CircularProgress />
       </Main>
     );
   }
+  if (!userSessions || !userSessions.length) {
+    return <div>You have no sessions yet</div>;
+  }
+
   return (
     <Main>
       <Section>
@@ -53,8 +54,8 @@ const Sessions = () => {
           </Link>
         </Button>
       </Section>
-      {sessions.map(session => (
-        <Section key={session.id}>
+      {userSessions.map(session => (
+        <Section key={session.publicId}>
           <Card className={classes.card}>
             <Link to={`/sessions/${session.publicId}`} component={RouterLink}>
               <CardHeader

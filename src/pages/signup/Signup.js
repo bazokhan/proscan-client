@@ -8,23 +8,24 @@ import Button from '@material-ui/core/Button';
 import ErrorMessage from 'components/SessionForm/ErrorMessage';
 import AuthContext from 'context/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import loginGql from './gql/login.gql';
+import signupGql from './gql/signup.gql';
 
-const Login = () => {
+const Signup = () => {
   const { isLoading, authToken, login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState(null);
-  const [loginMutation] = useMutation(loginGql);
+  const [signupMutation] = useMutation(signupGql);
 
-  const handleLoginSubmit = e => {
+  const handleSignupSubmit = e => {
     e.preventDefault();
-    loginMutation({
-      variables: { email, password },
+    signupMutation({
+      variables: { data: { email, username, password } },
       update: (_, { data }) => {
         console.log({ data });
         setError(null);
-        login(data.login);
+        login(data.signup);
       }
     }).catch(setError);
   };
@@ -43,7 +44,15 @@ const Login = () => {
   return (
     <Main>
       <Section>
-        <form onSubmit={handleLoginSubmit}>
+        <form onSubmit={handleSignupSubmit}>
+          <TextField
+            label="username"
+            type="username"
+            required
+            autoComplete="username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
           <TextField
             label="email"
             type="email"
@@ -59,7 +68,7 @@ const Login = () => {
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
-          <Button type="submit">Login</Button>
+          <Button type="submit">Signup</Button>
         </form>
         {error && <ErrorMessage error={error} />}
       </Section>
@@ -67,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

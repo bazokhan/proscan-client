@@ -12,6 +12,7 @@ import SessionContext from 'context/SessionContext';
 
 const Start = () => {
   const { session, setEditMode } = useContext(SessionContext);
+  console.log({ sessionFromStart: session });
   const [question, setQuestion] = useState(null);
   const [questionIndex, setQuestionIndex] = useState(0);
   useEffect(() => {
@@ -20,7 +21,10 @@ const Start = () => {
 
   useEffect(() => {
     if (session && session.activeQuestion) {
-      setQuestionIndex(session.activeQuestion);
+      const activeQuestion = session.questions.find(
+        q => q.id === session.activeQuestion
+      );
+      setQuestionIndex(session.questions.indexOf(activeQuestion));
     }
   }, []);
 
@@ -36,6 +40,7 @@ const Start = () => {
       setQuestionIndex(newIndex);
     }
   };
+  console.log({ activeQuestion: session.activeQuestion, question });
 
   if (!session)
     return (
@@ -52,7 +57,7 @@ const Start = () => {
 
   return (
     <Main>
-      <div>Sessions ID: {session.id}</div>
+      <div>Sessions ID: {session.publicId}</div>
       <div>{session.name}</div>
       <Question
         label={`Question ${questionIndex + 1} : `}
@@ -69,7 +74,7 @@ const Start = () => {
           />
         ))}
       </Question>
-      <Link to={`/sessions/${session.id}`} component={RouterLink}>
+      <Link to={`/sessions/${session.publicId}`} component={RouterLink}>
         Stop This Session
       </Link>
     </Main>

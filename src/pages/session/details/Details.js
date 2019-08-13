@@ -22,7 +22,9 @@ const Details = () => {
 
   useEffect(() => {
     setEditMode(false);
-  }, [setEditMode]);
+  }, []);
+
+  console.log({ session });
 
   if (!session)
     return (
@@ -40,18 +42,24 @@ const Details = () => {
       </Section>
       <Section>
         <Button variant="text">
-          <Link to={`/sessions/${session.id}/edit`} component={RouterLink}>
+          <Link
+            to={`/sessions/${session.publicId}/edit`}
+            component={RouterLink}
+          >
             Edit
           </Link>
         </Button>
         <Button variant="text">
-          <Link to={`/sessions/${session.id}/preview`} component={RouterLink}>
+          <Link
+            to={`/sessions/${session.publicId}/preview`}
+            component={RouterLink}
+          >
             Preview
           </Link>
         </Button>
         <Button variant="contained">
           <Link
-            to={`/sessions/${session.id}/start`}
+            to={`/sessions/${session.publicId}/start`}
             component={RouterLink}
             className={classes.rowCenter}
           >
