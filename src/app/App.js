@@ -9,6 +9,7 @@ import useAuthToken from './hooks/useAuthToken';
 import './styles/form.scss';
 import './styles/typography.scss';
 import './styles/boxes.scss';
+import './styles/general.scss';
 
 function App() {
   const contextValue = useAuthToken();

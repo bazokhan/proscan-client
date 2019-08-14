@@ -1,27 +1,19 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import useStyles from 'app/Theme';
+import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
-import {
-  Link,
-  CircularProgress,
-  Card,
-  CardHeader,
-  CardContent,
-  Button,
-  Avatar,
-  Typography
-} from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import { useQuery } from 'react-apollo';
 import userSessionsGql from './gql/userSessions.gql';
 
 const List = () => {
-  const classes = useStyles();
-
   const { data } = useQuery(userSessionsGql);
   const { userSessions, loading, error } = data;
   if (error) {
-    return <div>Error, {error.message}</div>;
+    return (
+      <Main>
+        <div className="toast-error">Error, {error.message}</div>
+      </Main>
+    );
   }
   if (loading) {
     return (
@@ -31,44 +23,37 @@ const List = () => {
     );
   }
   if (!userSessions || !userSessions.length) {
-    return <div>You have no sessions yet</div>;
+    return (
+      <Main>
+        <div className="toast-error">You have no sessions yet</div>
+      </Main>
+    );
   }
 
   return (
     <Main>
-      <Typography component="h1" variant="h6">
-        My Sessions
-      </Typography>
-      <Button variant="text">
-        <Link to="/" component={RouterLink}>
-          Home
+      <div className="container">
+        <Link to="/sessions/create" className="link">
+          <button type="button" className="button">
+            Create New Session
+          </button>
         </Link>
-      </Button>
-      <Button variant="text">
-        <Link to="/sessions/create" component={RouterLink}>
-          Create New Session
-        </Link>
-      </Button>
-      {userSessions.map(session => (
-        <Card className={classes.card} key={session.publicId}>
-          <Link to={`/sessions/${session.publicId}`} component={RouterLink}>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="Session" className={classes.avatar}>
-                  M
-                </Avatar>
-              }
-              title={session.publicId}
-              subheader={session.status}
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                Go To Session
-              </Typography>
-            </CardContent>
+        <h1 className="h1">My Sessions</h1>
+
+        {userSessions.map(session => (
+          <Link
+            to={`/sessions/${session.publicId}`}
+            key={session.publicId}
+            className="link"
+          >
+            <div className="card-hover" key={session.publicId}>
+              <div className="card-row">{session.publicId}</div>
+              <div className="card-row">{session.status}</div>
+              <div className="card-row">Go To Session..</div>
+            </div>
           </Link>
-        </Card>
-      ))}
+        ))}
+      </div>
     </Main>
   );
 };

@@ -5,7 +5,6 @@ import Main from 'layout/Main';
 import { useQuery } from 'react-apollo';
 import AuthContext from 'context/AuthContext';
 import profileGql from './gql/profile.gql';
-import styles from './Home.module.scss';
 
 const Home = () => {
   const { authToken } = useContext(AuthContext);
@@ -16,7 +15,7 @@ const Home = () => {
       <Main>
         <div className="container">
           <h1 className="h1">Welcome, Guest..</h1>
-          <Link to="/join" className={styles.link}>
+          <Link to="/join" className="link">
             <div className="card-hover">
               <div className="card-row">
                 <h2>Join Session</h2>
@@ -58,7 +57,7 @@ const Home = () => {
           </div>
         )}
         {profile ? (
-          <Link to="/sessions" className={styles.link}>
+          <Link to="/sessions" className="link">
             <div className="card-hover">
               <div className="card-row">
                 <h2>My Sessions</h2>
@@ -67,7 +66,7 @@ const Home = () => {
             </div>
           </Link>
         ) : null}
-        <Link to="/join" className={styles.link}>
+        <Link to="/join" className="link">
           <div className="card-hover">
             <div className="card-row">
               <h2>Join Session</h2>
