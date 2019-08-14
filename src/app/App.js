@@ -6,6 +6,9 @@ import AuthContext from 'context/AuthContext';
 import routes from './routes';
 import AuthRoute from './routeTypes/AuthRoute/AuthRoute';
 import useAuthToken from './hooks/useAuthToken';
+import './styles/form.scss';
+import './styles/typography.scss';
+import './styles/boxes.scss';
 
 function App() {
   const contextValue = useAuthToken();

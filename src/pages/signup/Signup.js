@@ -6,7 +6,6 @@ import ErrorMessage from 'components/SessionForm/ErrorMessage';
 import AuthContext from 'context/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import signupGql from './gql/signup.gql';
-import styles from './Signup.module.scss';
 
 const Signup = () => {
   const { isLoading, authToken, login } = useContext(AuthContext);
@@ -40,11 +39,12 @@ const Signup = () => {
 
   return (
     <Main>
-      <form className={styles.form} onSubmit={handleSignupSubmit}>
-        <label className={styles.label} htmlFor="username">
+      <h1 className="h1">Signup</h1>
+      <form className="form" onSubmit={handleSignupSubmit}>
+        <label className="label" htmlFor="username">
           <span>Username</span>
           <input
-            className={styles.input}
+            className="input"
             placeholder="username"
             id="username"
             name="username"
@@ -56,10 +56,10 @@ const Signup = () => {
           />
         </label>
 
-        <label className={styles.label} htmlFor="username">
+        <label className="label" htmlFor="email">
           <span>Email</span>
           <input
-            className={styles.input}
+            className="input"
             placeholder="email"
             id="email"
             name="email"
@@ -71,10 +71,10 @@ const Signup = () => {
           />
         </label>
 
-        <label className={styles.label} htmlFor="username">
+        <label className="label" htmlFor="password">
           <span>Password</span>
           <input
-            className={styles.input}
+            className="input"
             placeholder="password"
             id="password"
             name="password"
@@ -86,7 +86,7 @@ const Signup = () => {
           />
         </label>
 
-        <button className={styles.button} type="submit">
+        <button className="button" type="submit">
           Signup
         </button>
       </form>

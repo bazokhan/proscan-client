@@ -2,27 +2,34 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation, useQuery } from 'react-apollo';
 import Main from 'layout/Main';
-import { TextField, Button, Typography } from '@material-ui/core';
-import RouteButton from 'layout/RouteButton';
-import useStyles from 'app/Theme';
 import joinSessionGql from './gql/joinSession.gql';
 import activeSessionsGql from './gql/activeSessions.gql';
 
 const Join = ({ history }) => {
-  const classes = useStyles();
-
   const [sessions, setSessions] = useState([]);
   const [session, setSession] = useState(null);
   const [publicId, setPublicId] = useState(null);
   const [username, setUsername] = useState('');
+  const [notFound, setNotFound] = useState(false);
 
   useQuery(activeSessionsGql, {
-    onCompleted: ({ activeSessions }) => setSessions(activeSessions)
+    onError: e => console.log(e),
+    onCompleted: data => {
+      if (data) {
+        console.log({ data });
+        setSessions(data.activeSessions);
+      }
+    }
   });
 
   const handleSearch = () => {
     const requiredSession = sessions.find(s => s.publicId === publicId);
+    if (!requiredSession) {
+      setNotFound(true);
+      return;
+    }
     setSession(requiredSession);
+    setNotFound(false);
   };
 
   const [joinSessionMutation] = useMutation(joinSessionGql, {
@@ -38,58 +45,72 @@ const Join = ({ history }) => {
     joinSessionMutation();
   };
 
-  const handleNameChange = e => {
-    setUsername(e.target.value);
-  };
-
   return (
     <Main>
-      <Typography component="h1" variant="h6">
-        Join A Session
-      </Typography>
-
-      <form onSubmit={handleSubmit} className={classes.form}>
-        <TextField
-          fullWidth
-          variant="outlined"
-          size="large"
-          margin="normal"
-          required
-          label="Enter Session ID"
-          value={publicId || ''}
-          onChange={e => setPublicId(e.target.value)}
-        />
-        <button type="button" onClick={handleSearch}>
-          Search
-        </button>
+      <h1 className="h1">Join A Session</h1>
+      <form onSubmit={handleSubmit} className="form">
+        {!session && (
+          <>
+            <label className="label" htmlFor="sessionId">
+              <span>Search for an active session..</span>
+              <input
+                name="sessionId"
+                type="text"
+                className="input"
+                placeholder="Session ID"
+                value={publicId || ''}
+                onChange={e => setPublicId(e.target.value)}
+              />
+            </label>
+            <button type="button" className="button" onClick={handleSearch}>
+              Search
+            </button>
+            {notFound && (
+              <div className="toast-error">Session Not Found.. Try Again!</div>
+            )}
+          </>
+        )}
         {session && (
-          <div>
-            <div>{session.publicId}</div>
-            <div>{session.author.username}</div>
-            <label htmlFor="username">
-              Username
+          <>
+            <div className="card">
+              <div className="toast-success">Session Found ...</div>
+              <div className="card-row">Session ID: {session.publicId}</div>
+              <div className="card-row">
+                Author:{' '}
+                {session.author ? session.author.username : 'Unknown Author'}
+              </div>
+            </div>
+            <label className="label" htmlFor="username">
+              <span>Enter a username to join..</span>
               <input
                 name="username"
                 type="text"
-                placeholder="username"
-                onChange={handleNameChange}
+                className="input"
+                placeholder="Username"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
               />
             </label>
-            <Button
-              variant="contained"
-              size="large"
-              fullWidth
+            <button
+              className="button"
               type="submit"
               disabled={!session || !publicId || !username}
             >
               Join
-            </Button>
-          </div>
+            </button>
+            <button
+              className="button"
+              type="button"
+              onClick={() => {
+                setSession(null);
+                setPublicId('');
+              }}
+            >
+              Search Again
+            </button>
+          </>
         )}
       </form>
-      <RouteButton to="/" size="large">
-        Home
-      </RouteButton>
     </Main>
   );
 };

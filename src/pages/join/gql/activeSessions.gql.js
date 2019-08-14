@@ -5,9 +5,6 @@ const activeSessions = gql`
     activeSessions {
       id
       publicId
-      author {
-        username
-      }
       status
     }
   }

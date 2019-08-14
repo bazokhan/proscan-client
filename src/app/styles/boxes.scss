@@ -1,0 +1,77 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  width: 600px;
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  width: 100%;
+  color: #333;
+  background-color: #eee;
+  transition: all 0.2s ease-in-out;
+  margin: 10px 0;
+}
+
+.card-hover {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  width: 100%;
+  color: #333;
+  background-color: #eee;
+  transition: all 0.2s ease-in-out;
+  margin: 10px 0;
+
+  &:hover {
+    color: #eee;
+    background-color: #333;
+  }
+}
+
+.card-row {
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.toast-info {
+  border-radius: 5px;
+  background-color: #818fb5;
+  color: #fff;
+  padding: 15px;
+  width: 100%;
+}
+
+.toast-error {
+  border-radius: 5px;
+  background-color: #cf8691;
+  color: #fff;
+  padding: 15px;
+  width: 100%;
+}
+
+.toast-success {
+  border-radius: 5px;
+  background-color: #74a18e;
+  color: #fff;
+  padding: 15px;
+  width: 100%;
+}

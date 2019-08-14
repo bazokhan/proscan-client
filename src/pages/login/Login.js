@@ -2,9 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import Main from 'layout/Main';
-import Section from 'layout/Section';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import ErrorMessage from 'components/SessionForm/ErrorMessage';
 import AuthContext from 'context/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -41,27 +38,41 @@ const Login = () => {
 
   return (
     <Main>
-      <Section>
-        <form onSubmit={handleLoginSubmit}>
-          <TextField
-            label="email"
+      <h1 className="h1">Login</h1>
+      <form className="form" onSubmit={handleLoginSubmit}>
+        <label className="label" htmlFor="email">
+          <span>Email</span>
+          <input
+            className="input"
+            placeholder="email"
+            id="email"
+            name="email"
             type="email"
             required
-            autoComplete="email"
             value={email}
+            autoComplete="email"
             onChange={e => setEmail(e.target.value)}
           />
-          <TextField
-            label="password"
+        </label>
+        <label className="label" htmlFor="password">
+          <span>Password</span>
+          <input
+            className="input"
+            placeholder="password"
+            id="password"
+            name="password"
             type="password"
             required
             value={password}
+            autoComplete="password"
             onChange={e => setPassword(e.target.value)}
           />
-          <Button type="submit">Login</Button>
-        </form>
-        {error && <ErrorMessage error={error} />}
-      </Section>
+        </label>
+        <button className="button" type="submit">
+          Login
+        </button>
+      </form>
+      {error && <ErrorMessage error={error} />}
     </Main>
   );
 };
