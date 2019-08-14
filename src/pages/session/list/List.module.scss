@@ -1,0 +1,44 @@
+.ACTIVE {
+  background-color: #74a18e;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.ENDED {
+  background-color: #cf8691;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.PENDING {
+  background-color: #818fb5;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.PAUSED {
+  background-color: #cf8691;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.sessionName {
+  padding: 10px;
+  font-size: 1.2em;
+}

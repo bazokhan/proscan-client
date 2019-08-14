@@ -16,7 +16,6 @@ const Join = ({ history }) => {
     onError: e => console.log(e),
     onCompleted: data => {
       if (data) {
-        console.log({ data });
         setSessions(data.activeSessions);
       }
     }

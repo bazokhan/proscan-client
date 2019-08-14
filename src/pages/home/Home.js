@@ -61,6 +61,8 @@ const Home = () => {
             <div className="card-hover">
               <div className="card-row">
                 <h2>My Sessions</h2>
+              </div>
+              <div className="card-row">
                 <p>Create, Edit, Preview and Start my sessions</p>
               </div>
             </div>

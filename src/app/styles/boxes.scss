@@ -47,9 +47,16 @@
   padding: 10px;
   margin-bottom: 10px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
+}
+
+.toast {
+  background-color: inherit;
+  color: inherit;
+  padding: 10px 15px;
+  width: 100%;
 }
 
 .toast-info {
