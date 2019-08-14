@@ -1,88 +1,101 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-apollo';
-import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useMutation, useQuery } from 'react-apollo';
 import Main from 'layout/Main';
-import {
-  TextField,
-  Button,
-  CircularProgress,
-  Typography
-} from 'layout/material-ui/core';
-import Section from 'layout/Section';
+import { TextField, Button, Typography } from '@material-ui/core';
 import RouteButton from 'layout/RouteButton';
 import useStyles from 'app/Theme';
-import sessionByIDGql from './gql/joinSession.gql';
+import joinSessionGql from './gql/joinSession.gql';
+import activeSessionsGql from './gql/activeSessions.gql';
 
-const Join = () => {
+const Join = ({ history }) => {
   const classes = useStyles();
+
+  const [sessions, setSessions] = useState([]);
   const [session, setSession] = useState(null);
   const [publicId, setPublicId] = useState(null);
-  const [isLoading, setLoading] = useState(false);
+  const [username, setUsername] = useState('');
 
-  const [joinSessionMutation] = useMutation(sessionByIDGql, {
-    variables: { publicId, username: 'Guest' },
+  useQuery(activeSessionsGql, {
+    onCompleted: ({ activeSessions }) => setSessions(activeSessions)
+  });
+
+  const handleSearch = () => {
+    const requiredSession = sessions.find(s => s.publicId === publicId);
+    setSession(requiredSession);
+  };
+
+  const [joinSessionMutation] = useMutation(joinSessionGql, {
+    variables: { publicId, username },
     onCompleted: ({ joinSession }) => {
-      setSession(joinSession.session);
-      setLoading(false);
+      const { publicId: sessionId } = joinSession.session;
+      history.push(`/${sessionId}`);
     }
   });
 
-  const handleChange = e => {
-    setPublicId(e.target.value);
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
-    setLoading(true);
     joinSessionMutation();
+  };
+
+  const handleNameChange = e => {
+    setUsername(e.target.value);
   };
 
   return (
     <Main>
-      {session && <Redirect to={`/${session.publicId}`} />}
-      <Section>
-        <Typography component="h1" variant="h6">
-          Join A Session
-        </Typography>
-      </Section>
-      {isLoading ? (
-        <Section>
-          <CircularProgress />
-        </Section>
-      ) : (
-        <Section>
-          <form onSubmit={handleSubmit} className={classes.form}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              size="large"
-              margin="normal"
-              required
-              label="Enter Session ID"
-              value={publicId || ''}
-              onChange={handleChange}
-            />
-            {!isLoading && !session && (
-              <Typography variant="subtitle1" color="error">
-                Could Not Find This Session
-              </Typography>
-            )}
+      <Typography component="h1" variant="h6">
+        Join A Session
+      </Typography>
+
+      <form onSubmit={handleSubmit} className={classes.form}>
+        <TextField
+          fullWidth
+          variant="outlined"
+          size="large"
+          margin="normal"
+          required
+          label="Enter Session ID"
+          value={publicId || ''}
+          onChange={e => setPublicId(e.target.value)}
+        />
+        <button type="button" onClick={handleSearch}>
+          Search
+        </button>
+        {session && (
+          <div>
+            <div>{session.publicId}</div>
+            <div>{session.author.username}</div>
+            <label htmlFor="username">
+              Username
+              <input
+                name="username"
+                type="text"
+                placeholder="username"
+                onChange={handleNameChange}
+              />
+            </label>
             <Button
               variant="contained"
               size="large"
               fullWidth
               type="submit"
-              disabled={isLoading}
+              disabled={!session || !publicId || !username}
             >
               Join
             </Button>
-            <RouteButton to="/" size="large">
-              Home
-            </RouteButton>
-          </form>
-        </Section>
-      )}
+          </div>
+        )}
+      </form>
+      <RouteButton to="/" size="large">
+        Home
+      </RouteButton>
     </Main>
   );
 };
+
+Join.propTypes = {
+  history: PropTypes.object.isRequired
+};
+
 export default Join;
