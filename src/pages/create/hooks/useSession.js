@@ -8,10 +8,8 @@ const useSession = () => {
 
   useEffect(() => {
     setSession({
-      name: '',
-      questions: [],
-      active: false,
-      guests: null
+      publicId: '',
+      questions: []
     });
   }, []);
 
@@ -20,8 +18,8 @@ const useSession = () => {
     setEditMode(!editMode);
   };
 
-  const handleSessionNameChange = newName => {
-    setSession({ ...session, name: newName });
+  const handlePublicIdChange = newId => {
+    setSession({ ...session, publicId: newId });
   };
 
   const handleQuestionBodyChange = (questionId, newBody) => {
@@ -116,7 +114,7 @@ const useSession = () => {
     editMode,
     toggleEditMode,
     errors,
-    handleSessionNameChange,
+    handlePublicIdChange,
     handleQuestionBodyChange,
     handleChoiceBodyChange,
     handleAddNewQuestion,

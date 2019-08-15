@@ -1,9 +1,9 @@
 const validate = session => {
   const errors = [];
-  if (!session.name) {
+  if (!session.publicId) {
     errors.push({
-      field: 'Session Name',
-      message: 'A Session Must Have A Valid Name'
+      field: 'Session PublicId',
+      message: 'A Session Must Have A Valid PublicId'
     });
   }
   if (!session.questions.length) {

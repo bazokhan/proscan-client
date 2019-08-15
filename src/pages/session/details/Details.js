@@ -38,6 +38,10 @@ const Details = ({ match }) => {
     <Main>
       <div className="container">
         <h1 className="h1">Session ID: {session.publicId}</h1>
+        <div className="toast-info">
+          This session has {session.questions ? session.questions.length : 'no'}{' '}
+          questions
+        </div>
         <div className="card-row">
           <Link to={`/sessions/${session.publicId}/edit`} className="link">
             <button className="button-small" type="button">
@@ -45,12 +49,20 @@ const Details = ({ match }) => {
             </button>
           </Link>
           <Link to={`/sessions/${session.publicId}/preview`} className="link">
-            <button className="button-small" type="button">
+            <button
+              className="button-small"
+              type="button"
+              disabled={!session.questions || !session.questions.length}
+            >
               Preview
             </button>
           </Link>
           <Link to={`/sessions/${session.publicId}/start`} className="link">
-            <button className="button-small" type="button">
+            <button
+              className="button-small"
+              type="button"
+              disabled={!session.questions || !session.questions.length}
+            >
               Start &nbsp; &gt;
             </button>
           </Link>
