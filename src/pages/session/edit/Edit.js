@@ -1,57 +1,57 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useQuery } from 'react-apollo';
+import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
-import SessionForm from 'components/SessionForm';
-import SessionContext from 'context/SessionContext';
-import {
-  Link,
-  RouterLink,
-  CircularProgress,
-  Typography,
-  Button,
-  Avatar
-} from 'layout/material-ui/core';
-import { CreateIcon } from 'layout/material-ui/icons';
-import Section from 'layout/Section';
+// import SessionContext from 'context/SessionContext';
+import { CircularProgress } from 'layout/material-ui/core';
+// import { CreateIcon } from 'layout/material-ui/icons';
+// import Section from 'layout/Section';
+import SessionForm from './components/SessionForm';
+import sessionByIDGql from '../gql/sessionByID.gql';
 
-const Edit = () => {
-  const { session, setEditMode } = useContext(SessionContext);
-
-  useEffect(() => {
-    setEditMode(true);
-  }, []);
-
-  console.log({ session });
-  if (!session)
+const Edit = ({ match }) => {
+  const { data } = useQuery(sessionByIDGql, {
+    variables: { publicId: match.params.sessionId }
+  });
+  const { sessionByID: session, error, loading } = data;
+  if (error)
+    return (
+      <Main>
+        <div className="toast-error">Error: {error.message}</div>
+      </Main>
+    );
+  if (loading)
     return (
       <Main>
         <CircularProgress />
       </Main>
     );
+  if (!session)
+    return (
+      <Main>
+        <div className="toast-error">
+          Session Could not be loaded, please try again!
+        </div>
+      </Main>
+    );
   return (
     <Main>
-      <Section>
-        <Avatar>
-          <CreateIcon />
-        </Avatar>
-        <Typography component="h1" variant="h6">
-          Edit Session
-        </Typography>
-      </Section>
-      <Section>
-        <Button variant="text">
-          <Link to="/sessions" component={RouterLink}>
-            Back To My Sessions
-          </Link>
-        </Button>
-        <Button variant="text">
-          <Link to={`/sessions/${session.publicId}`} component={RouterLink}>
+      <h1 className="h1">Edit Session</h1>
+      <form className="form">
+        <Link to={`/sessions/${session.publicId}`} className="link-full">
+          <button type="button" className="button">
             Return To Session Details
-          </Link>
-        </Button>
-      </Section>
-      <SessionForm />
+          </button>
+        </Link>
+      </form>
+      <SessionForm session={session} />
     </Main>
   );
+};
+
+Edit.propTypes = {
+  match: PropTypes.object.isRequired
 };
 
 export default Edit;

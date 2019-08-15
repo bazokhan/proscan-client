@@ -34,7 +34,7 @@ const List = () => {
   return (
     <Main>
       <div className="container">
-        <Link to="/sessions/create" className="link">
+        <Link to="/sessions/create" className="link-full">
           <button type="button" className="button">
             Create New Session
           </button>
