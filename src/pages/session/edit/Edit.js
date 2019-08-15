@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
-// import SessionContext from 'context/SessionContext';
 import { CircularProgress } from 'layout/material-ui/core';
-// import { CreateIcon } from 'layout/material-ui/icons';
-// import Section from 'layout/Section';
 import SessionForm from './components/SessionForm';
 import sessionByIDGql from '../gql/sessionByID.gql';
 

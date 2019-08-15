@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Question from 'components/Question';
 import Main from 'layout/Main';
 import {
   CircularProgress,
@@ -18,7 +17,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import useStyles from 'app/Theme';
-import SessionContext from 'context/SessionContext';
+// import SessionContext from 'context/SessionContext';
+import Question from '../session/components/Question';
 import useSession from './hooks/useSession';
 
 const Joined = ({ match }) => {
@@ -67,65 +67,65 @@ const Joined = ({ match }) => {
     );
 
   return (
-    <SessionContext.Provider value={contextValue}>
-      <Main>
+    // <SessionContext.Provider value={contextValue}>
+    <Main>
+      <Section>
+        <Typography component="h1" variant="h6">
+          {session.name}
+        </Typography>
+      </Section>
+      {isLoading ? (
         <Section>
-          <Typography component="h1" variant="h6">
-            {session.name}
+          <CircularProgress />
+        </Section>
+      ) : (
+        <Section>
+          <Typography color="primary">
+            {`Question ${questionIndex + 1} : `}
           </Typography>
+          <Question key={question.id} question={question}>
+            <Card className={classes.form}>
+              <CardContent>
+                <FormControl component="fieldset">
+                  <CardHeader
+                    title={
+                      <FormLabel component="legend">Pick Only One</FormLabel>
+                    }
+                  />
+                  <RadioGroup
+                    value={answers[question.id] || ''}
+                    onChange={e =>
+                      handleChoiceChange(question.id, e.target.value)
+                    }
+                  >
+                    {question.choices.map(choice => (
+                      <FormControlLabel
+                        key={choice.id}
+                        value={choice.id}
+                        control={<Radio />}
+                        label={choice.body}
+                      />
+                    ))}
+                  </RadioGroup>
+                </FormControl>
+              </CardContent>
+            </Card>
+          </Question>
         </Section>
-        {isLoading ? (
-          <Section>
-            <CircularProgress />
-          </Section>
-        ) : (
-          <Section>
-            <Typography color="primary">
-              {`Question ${questionIndex + 1} : `}
-            </Typography>
-            <Question key={question.id} question={question}>
-              <Card className={classes.form}>
-                <CardContent>
-                  <FormControl component="fieldset">
-                    <CardHeader
-                      title={
-                        <FormLabel component="legend">Pick Only One</FormLabel>
-                      }
-                    />
-                    <RadioGroup
-                      value={answers[question.id] || ''}
-                      onChange={e =>
-                        handleChoiceChange(question.id, e.target.value)
-                      }
-                    >
-                      {question.choices.map(choice => (
-                        <FormControlLabel
-                          key={choice.id}
-                          value={choice.id}
-                          control={<Radio />}
-                          label={choice.body}
-                        />
-                      ))}
-                    </RadioGroup>
-                  </FormControl>
-                </CardContent>
-              </Card>
-            </Question>
-          </Section>
-        )}
-        <Section>
-          <Button
-            disabled={questionIndex < session.questions.length - 1}
-            onClick={() => {
-              console.log({ answers });
-            }}
-          >
-            Submit
-          </Button>
-          <RouteButton to="/join">Exit This Session</RouteButton>
-        </Section>
-      </Main>
-    </SessionContext.Provider>
+      )}
+      <Section>
+        <Button
+          disabled={questionIndex < session.questions.length - 1}
+          onClick={() => {
+            console.log({ answers });
+          }}
+        >
+          Submit
+        </Button>
+        <RouteButton to="/join">Exit This Session</RouteButton>
+      </Section>
+    </Main>
+    // </SessionContext.Provider>
   );
 };
 

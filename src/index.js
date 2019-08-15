@@ -37,7 +37,6 @@ const render = async () => {
     // get the authentication token from local storage if it exists
     const token = getToken();
     // return the headers to the context so httpLink can read them
-    console.log({ token });
     return {
       headers: {
         ...headers,

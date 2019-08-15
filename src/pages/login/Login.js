@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useMutation } from 'react-apollo';
 import Main from 'layout/Main';
-import ErrorMessage from 'components/SessionForm/ErrorMessage';
 import AuthContext from 'context/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import loginGql from './gql/login.gql';
@@ -71,8 +70,8 @@ const Login = () => {
         <button className="button" type="submit">
           Login
         </button>
+        {error && <div className="toast-error">{error}</div>}
       </form>
-      {error && <ErrorMessage error={error} />}
     </Main>
   );
 };
