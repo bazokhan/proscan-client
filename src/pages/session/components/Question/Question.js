@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImagePreviews from 'layout/ImagePreviews';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 
-const Question = ({ question, children }) => (
-  <>
-    <Grid>
-      <Typography variant="subtitle1">{question.body}</Typography>
-      {question.images && <ImagePreviews images={question.images} />}
-    </Grid>
-    {children}
-  </>
-);
+const Question = ({ question, children }) => {
+  console.log({ question });
+  return (
+    <>
+      <div className="toast">
+        <h3 className="h3">{question.body}</h3>
+        {question.images && <ImagePreviews images={question.images} />}
+      </div>
+      {children}
+    </>
+  );
+};
 
 Question.propTypes = {
   children: PropTypes.node,

@@ -1,30 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery } from 'react-apollo';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
-import {
-  Link,
-  CircularProgress,
-  Button,
-  Typography,
-  Card,
-  CardContent
-} from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
-import useStyles from 'app/Theme';
+import { CircularProgress } from '@material-ui/core';
 import Question from '../components/Question';
 import Choice from '../components/Choice';
 import sessionByIDGql from '../gql/sessionByID.gql';
 
 const Details = ({ match }) => {
-  const classes = useStyles();
-
   const { data } = useQuery(sessionByIDGql, {
     variables: { publicId: match.params.sessionId }
   });
   const { sessionByID: session, error, loading } = data;
-  if (error) return <div>Error</div>;
+  if (error)
+    return (
+      <Main>
+        <div className="toast-error">Error: {error.message}</div>
+      </Main>
+    );
   if (loading)
     return (
       <Main>
@@ -32,59 +26,45 @@ const Details = ({ match }) => {
       </Main>
     );
   if (!session)
-    return <div>Session Could not be loaded, please try again!</div>;
+    return (
+      <Main>
+        <div className="toast-error">
+          Session Could not be loaded, please try again!
+        </div>
+      </Main>
+    );
 
   return (
     <Main>
-      <Typography component="h1" variant="h6">
-        {session.name}
-      </Typography>
-
-      <Button variant="text">
-        <Link to={`/sessions/${session.publicId}/edit`} component={RouterLink}>
-          Edit
-        </Link>
-      </Button>
-      <Button variant="text">
-        <Link
-          to={`/sessions/${session.publicId}/preview`}
-          component={RouterLink}
-        >
-          Preview
-        </Link>
-      </Button>
-      <Button variant="contained">
-        <Link
-          to={`/sessions/${session.publicId}/start`}
-          component={RouterLink}
-          className={classes.rowCenter}
-        >
-          Start &nbsp; <SendIcon />
-        </Link>
-      </Button>
-      {session.questions.map((question, questionIndex) => (
-        <Card className={classes.card} key={question.id}>
-          <CardContent>
-            <Question
-              label={`Question ${questionIndex + 1} : `}
-              question={question}
-            >
-              {question.choices.map((choice, choiceIndex) => (
-                <Choice
-                  label={`${choiceIndex + 1} - `}
-                  key={choice.id}
-                  choice={choice}
-                />
+      <div className="container">
+        <h1 className="h1">Session ID: {session.publicId}</h1>
+        <div className="card-row">
+          <Link to={`/sessions/${session.publicId}/edit`} className="link">
+            <button className="button-small" type="button">
+              Edit
+            </button>
+          </Link>
+          <Link to={`/sessions/${session.publicId}/preview`} className="link">
+            <button className="button-small" type="button">
+              Preview
+            </button>
+          </Link>
+          <Link to={`/sessions/${session.publicId}/start`} className="link">
+            <button className="button-small" type="button">
+              Start &nbsp; &gt;
+            </button>
+          </Link>
+        </div>
+        {session.questions.map(question => (
+          <div className="card" key={question.id}>
+            <Question question={question}>
+              {question.choices.map(choice => (
+                <Choice key={choice.id} choice={choice} />
               ))}
             </Question>
-          </CardContent>
-        </Card>
-      ))}
-      <Button variant="text">
-        <Link to="/sessions/" component={RouterLink}>
-          Back To My Sessions
-        </Link>
-      </Button>
+          </div>
+        ))}
+      </div>
     </Main>
   );
 };
