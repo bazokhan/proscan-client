@@ -10,14 +10,12 @@ import {
   Button
 } from 'layout/material-ui/core';
 import RouteButton from 'layout/RouteButton';
-import Section from 'layout/Section';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import useStyles from 'app/Theme';
-// import SessionContext from 'context/SessionContext';
 import Question from '../session/components/Question';
 import useSession from './hooks/useSession';
 
@@ -69,17 +67,13 @@ const Joined = ({ match }) => {
   return (
     // <SessionContext.Provider value={contextValue}>
     <Main>
-      <Section>
-        <Typography component="h1" variant="h6">
-          {session.name}
-        </Typography>
-      </Section>
+      <Typography component="h1" variant="h6">
+        {session.name}
+      </Typography>
       {isLoading ? (
-        <Section>
-          <CircularProgress />
-        </Section>
+        <CircularProgress />
       ) : (
-        <Section>
+        <>
           <Typography color="primary">
             {`Question ${questionIndex + 1} : `}
           </Typography>
@@ -111,19 +105,17 @@ const Joined = ({ match }) => {
               </CardContent>
             </Card>
           </Question>
-        </Section>
+        </>
       )}
-      <Section>
-        <Button
-          disabled={questionIndex < session.questions.length - 1}
-          onClick={() => {
-            console.log({ answers });
-          }}
-        >
-          Submit
-        </Button>
-        <RouteButton to="/join">Exit This Session</RouteButton>
-      </Section>
+      <Button
+        disabled={questionIndex < session.questions.length - 1}
+        onClick={() => {
+          console.log({ answers });
+        }}
+      >
+        Submit
+      </Button>
+      <RouteButton to="/join">Exit This Session</RouteButton>
     </Main>
     // </SessionContext.Provider>
   );
