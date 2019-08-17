@@ -1,42 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ClearIcon } from 'layout/material-ui/icons';
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const Choice = ({
   choice,
   children,
   handleChoiceBodyChange,
-  handleDeleteChoice
-}) => (
-  <>
-    <TextField
-      variant="standard"
-      margin="normal"
-      required
-      fullWidth
-      id={`bodyof${choice.id}`}
-      name={`bodyof${choice.id}`}
-      onChange={e => handleChoiceBodyChange(choice.id, e.target.value)}
-    />
-    <IconButton
-      onClick={() => handleDeleteChoice(choice.id)}
-      aria-label="Delete"
-      size="small"
-    >
-      <ClearIcon />
-    </IconButton>
+  handleDeleteChoice,
+  handleChoiceCorrectToggle
+}) => {
+  const handleBodyChange = e => handleChoiceBodyChange(choice, e.target.value);
+  const handleCorrectToggle = () => handleChoiceCorrectToggle(choice);
+  const handleDelete = () => handleDeleteChoice(choice);
+  return (
+    <>
+      <input
+        type="checkbox"
+        checked={choice.correct}
+        onChange={handleCorrectToggle}
+      />
+      <input
+        type="text"
+        className="input"
+        placeholder="Enter question text"
+        name={`bodyof${choice.id}`}
+        onChange={handleBodyChange}
+        value={choice.body}
+      />
+      <div className={`toast-${choice.correct ? 'success' : 'error'}`}>
+        This choice is {choice.correct ? 'Correct' : 'Wrong'}
+      </div>
+      <button onClick={handleDelete} className="button-small" type="button">
+        <ClearIcon />
+      </button>
 
-    {children}
-  </>
-);
+      {children}
+    </>
+  );
+};
 
 Choice.propTypes = {
   children: PropTypes.node,
   choice: PropTypes.object.isRequired,
   handleChoiceBodyChange: PropTypes.func.isRequired,
-  handleDeleteChoice: PropTypes.func.isRequired
+  handleDeleteChoice: PropTypes.func.isRequired,
+  handleChoiceCorrectToggle: PropTypes.func.isRequired
 };
 
 Choice.defaultProps = {

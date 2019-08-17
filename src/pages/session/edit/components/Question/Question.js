@@ -1,50 +1,48 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { DeleteIcon } from 'layout/material-ui/icons';
+import DeleteIcon from '@material-ui/icons/Delete';
 import DropZone from 'layout/DropZone';
-import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const Question = ({
   question,
   children,
   handleQuestionBodyChange,
-  handleUploadImages
+  handleUploadImages,
+  handleDeleteQuestion
 }) => {
   const [hasImages, setHasImages] = useState(
     !!question.images && question.images.length > 0
   );
 
+  const handleBodyChange = e =>
+    handleQuestionBodyChange(question, e.target.value);
+  const handleDelete = () => handleDeleteQuestion(question);
+
   return (
     <>
-      <IconButton size="small">
+      <button type="button" className="button-small" onClick={handleDelete}>
         <DeleteIcon />
-      </IconButton>
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        multiline
-        fullWidth
-        id={`bodyof${question.id}`}
-        label="Question Text"
+      </button>
+      <input
+        type="text"
+        className="input"
+        placeholder="Enter question text"
         name={`bodyof${question.id}`}
-        onChange={e => handleQuestionBodyChange(question.id, e.target.value)}
+        onChange={handleBodyChange}
+        value={question.body}
       />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={hasImages}
-            onChange={() => setHasImages(!hasImages)}
-          />
-        }
-        label="This Question Has Images."
-      />
+      <label htmlFor="hasImages" className="label">
+        <input
+          type="checkbox"
+          name="hasImages"
+          checked={hasImages}
+          onChange={() => setHasImages(!hasImages)}
+        />
+        <span>This Question Has Images.</span>
+      </label>
       {hasImages && (
         <DropZone
-          handleSubmit={images => handleUploadImages(question.id, images)}
+          handleSubmit={images => handleUploadImages(question, images)}
           images={question.images || []}
         />
       )}
@@ -57,7 +55,8 @@ Question.propTypes = {
   children: PropTypes.node,
   question: PropTypes.object.isRequired,
   handleQuestionBodyChange: PropTypes.func.isRequired,
-  handleUploadImages: PropTypes.func.isRequired
+  handleUploadImages: PropTypes.func.isRequired,
+  handleDeleteQuestion: PropTypes.func.isRequired
 };
 
 Question.defaultProps = {
