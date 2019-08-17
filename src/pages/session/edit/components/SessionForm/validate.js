@@ -1,11 +1,5 @@
 const validate = questions => {
   const errors = [];
-  // if (!session.publicId) {
-  //   errors.push({
-  //     field: 'Session PublicId',
-  //     message: 'A Session Must Have A Valid PublicId'
-  //   });
-  // }
   if (!questions.length) {
     errors.push({
       field: 'Session Questions',
@@ -29,7 +23,22 @@ const validate = questions => {
   if (
     !questions.every(
       question =>
-        question.choices && question.choices.every(choice => choice.body)
+        question.choices &&
+        question.choices.length &&
+        question.choices.find(choice => choice.correct)
+    )
+  ) {
+    errors.push({
+      field: 'Question Correct Choice',
+      message: 'A Question Must Have At Least One Correct Choice'
+    });
+  }
+  if (
+    !questions.every(
+      question =>
+        question.choices &&
+        question.choices.length &&
+        question.choices.every(choice => choice.body)
     )
   ) {
     errors.push({

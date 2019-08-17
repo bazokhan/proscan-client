@@ -1,17 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-apollo';
-import { Link } from 'react-router-dom';
+import { useQuery, useMutation } from 'react-apollo';
 import Main from 'layout/Main';
 import { CircularProgress } from 'layout/material-ui/core';
 import SessionForm from './components/SessionForm';
 import sessionByIDGql from '../gql/sessionByID.gql';
+import createQuestionsGql from './gql/createQuestions.gql';
 
 const Edit = ({ match }) => {
   const { data } = useQuery(sessionByIDGql, {
     variables: { publicId: match.params.sessionId }
   });
+
   const { sessionByID: session, error, loading } = data;
+
+  const [questions, setQuestions] = useState(session.questions);
+
+  const [createQuestionsMutation] = useMutation(createQuestionsGql, {
+    variables: {
+      publicId: session.publicId,
+      data: questions.map(({ body, imageUrls, choices }) => ({
+        body,
+        imageUrls,
+        choices: choices.map(({ body: choiceBody, correct }) => ({
+          body: choiceBody,
+          correct
+        }))
+      }))
+    },
+    // variables: {
+    //   publicId: session.publicId,
+    //   data: questions
+    // },
+    onError: e => {
+      console.log('Error!');
+      console.log({ e });
+    },
+    onCompleted: res => {
+      console.log('COmpleted!');
+      if (res) {
+        console.log('Really completed');
+        console.log({ res });
+      }
+    },
+    update: (cache, res) => {
+      console.log({ cache, res });
+    },
+    refetchQueries: [sessionByIDGql]
+  });
+
   if (error)
     return (
       <Main>
@@ -34,15 +71,14 @@ const Edit = ({ match }) => {
     );
   return (
     <Main>
-      <h1 className="h1">Edit Session</h1>
-      <form className="form">
-        <Link to={`/sessions/${session.publicId}`} className="link-full">
-          <button type="button" className="button">
-            Return To Session Details
-          </button>
-        </Link>
-      </form>
-      <SessionForm session={session} />
+      <div className="container">
+        <h1 className="h1">Edit Session</h1>
+        <SessionForm
+          questions={questions}
+          setQuestions={setQuestions}
+          createQuestionsMutation={createQuestionsMutation}
+        />
+      </div>
     </Main>
   );
 };
