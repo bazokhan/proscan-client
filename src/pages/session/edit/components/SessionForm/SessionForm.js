@@ -37,7 +37,7 @@ const createChoice = (question, newChoice) => ({
 const updateChoice = (question, ...newChoices) => {
   const choices = question.choices.map(originalChoice => {
     const updatedChoice = includes(newChoices, originalChoice);
-    if (updateChoice) {
+    if (updatedChoice) {
       return updatedChoice;
     }
     return originalChoice;
@@ -58,8 +58,12 @@ const deleteChoice = (question, targetChoice) => {
   };
 };
 
-const questionByChoice = (questions, choice) =>
-  questions.find(q => q.choices && q.choices.find(c => isEqual(c, choice)));
+const questionByChoice = (questions, choice) => {
+  const question = questions.find(
+    q => q.choices && q.choices.find(c => isEqual(c, choice))
+  );
+  return question;
+};
 
 export { isEqual, createChoice, updateQuestion, questionByChoice };
 
@@ -158,16 +162,21 @@ const SessionForm = ({ questions, setQuestions, createQuestionsMutation }) => {
                   handleDeleteQuestion={handleDeleteQuestion}
                 >
                   {question.choices &&
-                    question.choices.map(choice => (
-                      <div className="toast" key={choice.id}>
-                        <Choice
-                          choice={choice}
-                          handleChoiceBodyChange={handleChoiceBodyChange}
-                          handleDeleteChoice={handleDeleteChoice}
-                          handleChoiceCorrectToggle={handleChoiceCorrectToggle}
-                        />
-                      </div>
-                    ))}
+                    question.choices.map(
+                      choice =>
+                        choice && (
+                          <div className="toast" key={choice.id}>
+                            <Choice
+                              choice={choice}
+                              handleChoiceBodyChange={handleChoiceBodyChange}
+                              handleDeleteChoice={handleDeleteChoice}
+                              handleChoiceCorrectToggle={
+                                handleChoiceCorrectToggle
+                              }
+                            />
+                          </div>
+                        )
+                    )}
                   <button
                     onClick={() => handleAddNewChoice(question)}
                     type="button"

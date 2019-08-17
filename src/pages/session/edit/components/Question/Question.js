@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DropZone from 'layout/DropZone';
+import styles from './Question.module.scss';
 
 const Question = ({
   question,
@@ -20,25 +21,26 @@ const Question = ({
 
   return (
     <>
-      <button type="button" className="button-small" onClick={handleDelete}>
+      <button type="button" className="button-fab" onClick={handleDelete}>
         <DeleteIcon />
       </button>
-      <input
+      <textarea
         type="text"
-        className="input"
+        className="textarea"
         placeholder="Enter question text"
         name={`bodyof${question.id}`}
         onChange={handleBodyChange}
         value={question.body}
       />
-      <label htmlFor="hasImages" className="label">
+      <label htmlFor="hasImages" className={styles.toastInfo}>
         <input
           type="checkbox"
           name="hasImages"
+          className={styles.checkbox}
           checked={hasImages}
           onChange={() => setHasImages(!hasImages)}
         />
-        <span>This Question Has Images.</span>
+        <span>This Question Has {hasImages ? '' : 'No'} Images.</span>
       </label>
       {hasImages && (
         <DropZone

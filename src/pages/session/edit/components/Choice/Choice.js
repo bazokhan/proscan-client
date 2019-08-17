@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ClearIcon from '@material-ui/icons/Clear';
+import styles from './Choice.module.scss';
 
 const Choice = ({
   choice,
@@ -14,26 +15,33 @@ const Choice = ({
   const handleDelete = () => handleDeleteChoice(choice);
   return (
     <>
-      <input
-        type="checkbox"
-        checked={choice.correct}
-        onChange={handleCorrectToggle}
-      />
-      <input
-        type="text"
-        className="input"
-        placeholder="Enter question text"
-        name={`bodyof${choice.id}`}
-        onChange={handleBodyChange}
-        value={choice.body}
-      />
-      <div className={`toast-${choice.correct ? 'success' : 'error'}`}>
-        This choice is {choice.correct ? 'Correct' : 'Wrong'}
+      <div className={styles.container}>
+        <div className={styles.left}>
+          <input
+            type="checkbox"
+            checked={choice.correct}
+            onChange={handleCorrectToggle}
+          />
+        </div>
+        <div className={styles.middle}>
+          <input
+            type="text"
+            className="input"
+            placeholder="Enter choice text"
+            name={`bodyof${choice.id}`}
+            onChange={handleBodyChange}
+            value={choice.body}
+          />
+          <div className={`toast-${choice.correct ? 'success' : 'error'}`}>
+            This choice is {choice.correct ? 'Correct' : 'Wrong'}
+          </div>
+        </div>
+        <div className={styles.right}>
+          <button onClick={handleDelete} className="button-fab" type="button">
+            <ClearIcon />
+          </button>
+        </div>
       </div>
-      <button onClick={handleDelete} className="button-small" type="button">
-        <ClearIcon />
-      </button>
-
       {children}
     </>
   );

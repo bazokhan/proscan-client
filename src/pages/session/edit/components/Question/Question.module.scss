@@ -1,0 +1,16 @@
+.toastInfo {
+  border-radius: 5px;
+  background-color: #818fb5;
+  color: #fff;
+  padding: 0 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  input[type='checkbox'] {
+    width: 30px;
+    height: 30px;
+    margin: 15px 15px 15px 0;
+  }
+}

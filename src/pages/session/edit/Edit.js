@@ -17,21 +17,24 @@ const Edit = ({ match }) => {
   const [questions, setQuestions] = useState(session.questions);
 
   const [createQuestionsMutation] = useMutation(createQuestionsGql, {
-    variables: {
-      publicId: session.publicId,
-      data: questions.map(({ body, imageUrls, choices }) => ({
-        body,
-        imageUrls,
-        choices: choices.map(({ body: choiceBody, correct }) => ({
-          body: choiceBody,
-          correct
-        }))
-      }))
-    },
     // variables: {
     //   publicId: session.publicId,
-    //   data: questions
+    //   data: questions.map(({ body, imageUrls, choices }) => ({
+    //     body,
+    //     imageUrls,
+    //     choices: choices.map((c, i) => {
+    //       console.log(c, i);
+    //       return {
+    //         body: c.body,
+    //         correct: c.correct
+    //       };
+    //     })
+    //   }))
     // },
+    variables: {
+      publicId: session.publicId,
+      data: questions
+    },
     onError: e => {
       console.log('Error!');
       console.log({ e });
