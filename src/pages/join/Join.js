@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation, useQuery } from 'react-apollo';
 import Main from 'layout/Main';
+import { toast } from 'react-toastify';
+import { CircularProgress } from '@material-ui/core';
 import joinSessionGql from './gql/joinSession.gql';
 import activeSessionsGql from './gql/activeSessions.gql';
 
@@ -12,36 +14,48 @@ const Join = ({ history }) => {
   const [username, setUsername] = useState('');
   const [notFound, setNotFound] = useState(false);
 
-  useQuery(activeSessionsGql, {
-    onError: e => console.log(e),
-    onCompleted: data => {
-      if (data) {
-        setSessions(data.activeSessions);
-      }
+  const { data, error, loading } = useQuery(activeSessionsGql);
+
+  useEffect(() => {
+    if (data && data.activeSessions) {
+      setSessions(data.activeSessions);
     }
-  });
+  }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message.replace('GraphQL error: ', ''));
+    }
+  }, [error]);
 
   const handleSearch = () => {
     const requiredSession = sessions.find(s => s.publicId === publicId);
     if (!requiredSession) {
+      toast.error('Session not found, please try again.');
       setNotFound(true);
       return;
     }
     setSession(requiredSession);
+    toast.success('Session found.');
     setNotFound(false);
   };
 
-  const [joinSessionMutation] = useMutation(joinSessionGql, {
-    variables: { publicId, username },
-    onCompleted: ({ joinSession }) => {
-      const { publicId: sessionId } = joinSession.session;
-      history.push(`/${sessionId}`);
-    }
-  });
+  const [joinSessionMutation] = useMutation(joinSessionGql);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    joinSessionMutation();
+    try {
+      await joinSessionMutation({
+        variables: { publicId, username },
+        update: (_, { data: joinData }) => {
+          toast.info('Joining...');
+          const { publicId: sessionId } = joinData.joinSession.session;
+          history.push(`/${sessionId}`);
+        }
+      });
+    } catch (err) {
+      toast.error(err.message.replace('GraphQL error: ', ''));
+    }
   };
 
   return (
@@ -61,8 +75,13 @@ const Join = ({ history }) => {
                 onChange={e => setPublicId(e.target.value)}
               />
             </label>
-            <button type="button" className="button" onClick={handleSearch}>
-              Search
+            <button
+              type="button"
+              className="button"
+              onClick={handleSearch}
+              disabled={loading || error}
+            >
+              {loading ? <CircularProgress /> : 'Search'}
             </button>
             {notFound && (
               <div className="toast-error">Session Not Found.. Try Again!</div>

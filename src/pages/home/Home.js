@@ -8,7 +8,7 @@ import profileGql from './gql/profile.gql';
 
 const Home = () => {
   const { authToken } = useContext(AuthContext);
-  const { data } = useQuery(profileGql);
+  const { data, loading, error } = useQuery(profileGql);
 
   if (!authToken) {
     return (
@@ -27,13 +27,6 @@ const Home = () => {
     );
   }
 
-  if (!data)
-    return (
-      <Main>
-        <div>Error Please Refresh !!!</div>
-      </Main>
-    );
-  const { profile, loading, error } = data;
   if (error) {
     return <div className="toast-info">Error, {error.message}</div>;
   }
@@ -44,6 +37,14 @@ const Home = () => {
       </Main>
     );
   }
+  if (!data)
+    return (
+      <Main>
+        <div>Error Please Refresh !!!</div>
+      </Main>
+    );
+  const { profile } = data;
+
   return (
     <Main>
       <div className="container">
