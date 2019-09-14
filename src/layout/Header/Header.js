@@ -8,8 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import AuthContext from 'context/AuthContext';
-import { Link, Button, Avatar } from '@material-ui/core';
-import Logo from 'images/logo.png';
+import { Link, Button } from '@material-ui/core';
 import { RouterLink } from 'layout/material-ui/core';
 import useRouter from 'use-react-router';
 import useStyles from './Header.styles';
@@ -69,11 +68,29 @@ const Header = () => {
     >
       {authToken && (
         <MenuItem variant="text" color="inherit">
-          <Link to="/sessions" color="inherit" component={RouterLink}>
+          <Link
+            to="/sessions"
+            color="inherit"
+            onClick={handleMenuClose}
+            component={RouterLink}
+          >
             My Sessions
           </Link>
         </MenuItem>
       )}
+      {authToken && (
+        <MenuItem variant="text" color="inherit">
+          <Link
+            to="/"
+            color="inherit"
+            onClick={handleMenuClose}
+            component={RouterLink}
+          >
+            Profile
+          </Link>
+        </MenuItem>
+      )}
+      {authToken && <MenuItem onClick={handleLogout}>Log Out</MenuItem>}
       {!authToken && (
         <MenuItem variant="text" color="inherit">
           <Link to="/login" color="inherit" component={RouterLink}>
@@ -88,10 +105,6 @@ const Header = () => {
           </Link>
         </MenuItem>
       )}
-      <MenuItem edge="end" onClick={handleProfileMenuOpen} color="inherit">
-        <AccountCircle />
-        &nbsp; <p>Settings</p>
-      </MenuItem>
     </Menu>
   );
 
@@ -101,18 +114,16 @@ const Header = () => {
     <div className={classes.grow}>
       <AppBar position="static" color="default">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton}>
-            <Avatar src={Logo} />
-          </IconButton>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            noWrap
-            color="primary"
-          >
-            MIST
-          </Typography>
-
+          <Link to="/" color="inherit" component={RouterLink}>
+            <Typography
+              className={classes.title}
+              variant="h6"
+              noWrap
+              color="primary"
+            >
+              QuizBank
+            </Typography>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button variant="contained" color="secondary">
