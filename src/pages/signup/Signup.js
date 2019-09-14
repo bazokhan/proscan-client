@@ -1,29 +1,46 @@
-import React, { useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo';
+import { toast } from 'react-toastify';
 import Main from 'layout/Main';
 import AuthContext from 'context/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import signupGql from './gql/signup.gql';
 
-const Signup = () => {
+const Signup = ({ history }) => {
   const { isLoading, authToken, login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [signupLoading, setSignupLoading] = useState(false);
   const [error, setError] = useState(null);
   const [signupMutation] = useMutation(signupGql);
 
-  const handleSignupSubmit = e => {
+  const handleSignupSubmit = async e => {
     e.preventDefault();
-    signupMutation({
-      variables: { data: { email, username, password } },
-      update: (_, { data }) => {
-        setError(null);
-        login(data.signup);
-      }
-    }).catch(setError);
+    try {
+      setSignupLoading(true);
+      await signupMutation({
+        variables: { data: { email, username, password } },
+        update: (_, { data }) => {
+          toast.success('Signup Successful');
+          setError(null);
+          setSignupLoading(false);
+          login(data.signup);
+        }
+      });
+    } catch (err) {
+      toast.error(err.message.replace('GraphQL error: ', ''));
+      setSignupLoading(false);
+      setError(err);
+    }
   };
+
+  useEffect(() => {
+    if (authToken) {
+      history.push('/');
+    }
+  }, [authToken]);
 
   if (isLoading) {
     return (
@@ -31,9 +48,6 @@ const Signup = () => {
         <CircularProgress />
       </Main>
     );
-  }
-  if (authToken) {
-    return <Redirect exact to="/" />;
   }
 
   return (
@@ -85,13 +99,21 @@ const Signup = () => {
           />
         </label>
 
-        <button className="button" type="submit">
-          Signup
+        <button className="button" type="submit" disabled={signupLoading}>
+          {signupLoading ? <CircularProgress /> : 'Singup'}
         </button>
-        {error && <div className="toast-error">{error}</div>}
+        {error && (
+          <div className="toast-error">
+            {error.message.replace('GraphQL error: ', '')}
+          </div>
+        )}
       </form>
     </Main>
   );
+};
+
+Signup.propTypes = {
+  history: PropTypes.object.isRequired
 };
 
 export default Signup;
