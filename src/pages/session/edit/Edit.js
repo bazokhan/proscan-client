@@ -9,7 +9,8 @@ import createQuestionsGql from './gql/createQuestions.gql';
 
 const Edit = ({ match }) => {
   const { data } = useQuery(sessionByIDGql, {
-    variables: { publicId: match.params.sessionId }
+    variables: { publicId: match.params.sessionId },
+    fetchPolicy: 'cache-and-network'
   });
 
   const { sessionByID: session, error, loading } = data;

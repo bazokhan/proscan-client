@@ -18,7 +18,9 @@ import userSessionsGql from './gql/userSessions.gql';
 const Profile = () => {
   const classes = useStyles();
 
-  const { data } = useQuery(userSessionsGql);
+  const { data } = useQuery(userSessionsGql, {
+    fetchPolicy: 'cache-and-network'
+  });
   const { userSessions, loading, error } = data;
   if (error) {
     return <div>Error, {error.message}</div>;

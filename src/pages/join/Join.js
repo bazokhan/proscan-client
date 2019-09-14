@@ -14,7 +14,9 @@ const Join = ({ history }) => {
   const [username, setUsername] = useState('');
   const [notFound, setNotFound] = useState(false);
 
-  const { data, error, loading } = useQuery(activeSessionsGql);
+  const { data, error, loading } = useQuery(activeSessionsGql, {
+    fetchPolicy: 'cache-and-network'
+  });
 
   useEffect(() => {
     if (data && data.activeSessions) {

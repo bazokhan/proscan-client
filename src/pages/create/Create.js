@@ -2,28 +2,37 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo';
 import Main from 'layout/Main';
+import { toast } from 'react-toastify';
 import createSessionGql from './gql/createSession.gql';
 
 const Create = ({ history }) => {
   const [publicId, setPublicId] = useState('');
-  const [sessionError, setSessionError] = useState(null);
+  const [sessionError, setSessionError] = useState('');
 
-  const [createSessionMutation] = useMutation(createSessionGql, {
-    variables: { publicId },
-    onError: e => {
-      setSessionError(e.message);
-    },
-    onCompleted: () => {
-      if (sessionError) {
-        return;
-      }
-      history.push(`/sessions/${publicId}/edit`);
-    }
-  });
+  const [createSessionMutation] = useMutation(createSessionGql);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    createSessionMutation();
+    if (!publicId) {
+      setSessionError('You must provide an ID for your session!');
+      return;
+    }
+    if (publicId.length < 4 || publicId.length > 6) {
+      setSessionError('IDs must be between 4 and 6 characters');
+      return;
+    }
+    try {
+      await createSessionMutation({
+        variables: { publicId },
+        update: (_, { data }) => {
+          toast.success('Session Created');
+          setSessionError('');
+          history.push(`/sessions/${data.createSession.publicId}/edit`);
+        }
+      });
+    } catch (err) {
+      toast.error(err.message.replace('GraphQL error: ', ''));
+    }
   };
 
   const handlePublicIdChange = e => {

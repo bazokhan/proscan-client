@@ -39,7 +39,7 @@ const Login = ({ history }) => {
     if (authToken) {
       history.push('/');
     }
-  }, [authToken]);
+  }, [authToken, history]);
 
   if (isLoading) {
     return (

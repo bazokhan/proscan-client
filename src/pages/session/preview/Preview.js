@@ -10,7 +10,8 @@ import sessionByIDGql from '../gql/sessionByID.gql';
 
 const Preview = ({ match }) => {
   const { data } = useQuery(sessionByIDGql, {
-    variables: { publicId: match.params.sessionId }
+    variables: { publicId: match.params.sessionId },
+    fetchPolicy: 'cache-and-network'
   });
   const { sessionByID: session, error, loading } = data;
   if (error) return <div>Error</div>;

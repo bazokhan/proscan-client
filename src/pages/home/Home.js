@@ -9,7 +9,9 @@ import profileGql from './gql/profile.gql';
 
 const Home = () => {
   const { authToken } = useContext(AuthContext);
-  const { data, loading, error } = useQuery(profileGql);
+  const { data, loading, error } = useQuery(profileGql, {
+    fetchPolicy: 'cache-and-network'
+  });
 
   useEffect(() => {
     if (error) {

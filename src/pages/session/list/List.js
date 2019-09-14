@@ -7,7 +7,9 @@ import userSessionsGql from './gql/userSessions.gql';
 import styles from './List.module.scss';
 
 const List = () => {
-  const { data, loading, error } = useQuery(userSessionsGql);
+  const { data, loading, error } = useQuery(userSessionsGql, {
+    fetchPolicy: 'cache-and-network'
+  });
 
   if (error) {
     return (
