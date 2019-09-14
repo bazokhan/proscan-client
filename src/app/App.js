@@ -3,6 +3,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from 'layout/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AuthContext from 'context/AuthContext';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import routes from './routes';
 import AuthRoute from './routeTypes/AuthRoute/AuthRoute';
 import useAuthToken from './hooks/useAuthToken';
@@ -18,6 +20,7 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Header />
+        <ToastContainer autoClose={4000} />
         <Switch>
           <Route path="/signup" component={routes.signup} />
           <Route path="/login" component={routes.login} />
