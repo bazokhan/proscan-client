@@ -7,8 +7,8 @@ import userSessionsGql from './gql/userSessions.gql';
 import styles from './List.module.scss';
 
 const List = () => {
-  const { data } = useQuery(userSessionsGql);
-  const { userSessions, loading, error } = data;
+  const { data, loading, error } = useQuery(userSessionsGql);
+
   if (error) {
     return (
       <Main>
@@ -23,13 +23,8 @@ const List = () => {
       </Main>
     );
   }
-  if (!userSessions || !userSessions.length) {
-    return (
-      <Main>
-        <div className="toast-error">You have no sessions yet</div>
-      </Main>
-    );
-  }
+
+  const { userSessions } = data;
 
   return (
     <Main>
@@ -41,34 +36,38 @@ const List = () => {
         </Link>
         <h1 className="h1">My Sessions</h1>
 
-        {userSessions.map(session => (
-          <Link
-            to={`/sessions/${session.publicId}`}
-            key={session.publicId}
-            className="link"
-          >
-            <div className="card-hover" key={session.publicId}>
-              <div className="card-row">
-                <div className={styles.sessionName}>
-                  Session ID: {session.publicId}
+        {userSessions && userSessions.length ? (
+          userSessions.map(session => (
+            <Link
+              to={`/sessions/${session.publicId}`}
+              key={session.publicId}
+              className="link"
+            >
+              <div className="card-hover" key={session.publicId}>
+                <div className="card-row">
+                  <div className={styles.sessionName}>
+                    Session ID: {session.publicId}
+                  </div>
+                  <div className={styles[session.status]}>
+                    Status: {session.status}
+                  </div>
                 </div>
-                <div className={styles[session.status]}>
-                  Status: {session.status}
+                <div className="toast">
+                  No. of questions:{' '}
+                  {session.questions ? session.questions.length : 'unknown'}
+                </div>
+                <div className="toast">
+                  Author: {session.author ? session.author.username : 'unknown'}
+                </div>
+                <div className="toast">
+                  Active Question: {session.activeQuestion || 'None'}
                 </div>
               </div>
-              <div className="toast">
-                No. of questions:{' '}
-                {session.questions ? session.questions.length : 'unknown'}
-              </div>
-              <div className="toast">
-                Author: {session.author ? session.author.username : 'unknown'}
-              </div>
-              <div className="toast">
-                Active Question: {session.activeQuestion || 'None'}
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))
+        ) : (
+          <div className="toast-error">You have no sessions yet</div>
+        )}
       </div>
     </Main>
   );
