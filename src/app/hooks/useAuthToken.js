@@ -20,7 +20,7 @@ const useAuthToken = () => {
     };
     getToken();
   }, [client]);
-  const logout = () => {
+  const logout = cb => {
     client.writeQuery({
       query: tokenGql,
       data: {
@@ -33,6 +33,9 @@ const useAuthToken = () => {
     });
     client.resetStore();
     setAuthToken(null);
+    if (cb && typeof cb === 'function') {
+      cb();
+    }
   };
   const login = loginMutationResult => {
     client.writeQuery({

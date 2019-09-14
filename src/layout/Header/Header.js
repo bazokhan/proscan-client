@@ -11,9 +11,11 @@ import AuthContext from 'context/AuthContext';
 import { Link, Button, Avatar } from '@material-ui/core';
 import Logo from 'images/logo.png';
 import { RouterLink } from 'layout/material-ui/core';
+import useRouter from 'use-react-router';
 import useStyles from './Header.styles';
 
 const Header = () => {
+  const { history } = useRouter();
   const { isLoading, authToken, logout } = useContext(AuthContext);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -40,7 +42,7 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    logout();
+    logout(() => history.push('/'));
     handleMenuClose();
   };
 

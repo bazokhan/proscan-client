@@ -1,14 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import Main from 'layout/Main';
 import { useQuery } from 'react-apollo';
 import AuthContext from 'context/AuthContext';
+import { toast } from 'react-toastify';
 import profileGql from './gql/profile.gql';
 
 const Home = () => {
   const { authToken } = useContext(AuthContext);
   const { data, loading, error } = useQuery(profileGql);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message.replace('GraphQL error: ', ''));
+    }
+  }, [error]);
 
   if (!authToken) {
     return (
@@ -27,9 +34,6 @@ const Home = () => {
     );
   }
 
-  if (error) {
-    return <div className="toast-info">Error, {error.message}</div>;
-  }
   if (loading) {
     return (
       <Main>
@@ -40,7 +44,7 @@ const Home = () => {
   if (!data)
     return (
       <Main>
-        <div>Error Please Refresh !!!</div>
+        <div className="toast-info">Error Please Refresh !!!</div>
       </Main>
     );
   const { profile } = data;
