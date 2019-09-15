@@ -77,7 +77,8 @@ const SessionForm = ({ questions, setQuestions, createQuestionsMutation }) => {
       createQuestion(questions, {
         id: Math.random(),
         body: '',
-        choices: []
+        choices: [],
+        imageUrls: []
       })
     );
   };
