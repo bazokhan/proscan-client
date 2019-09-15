@@ -50,9 +50,7 @@ const List = () => {
                   <div className={styles.sessionName}>
                     Session ID: {session.publicId}
                   </div>
-                  <div className={styles[session.status]}>
-                    Status: {session.status}
-                  </div>
+                  <div className={session.status}>Status: {session.status}</div>
                 </div>
                 <div className="toast">
                   No. of questions:{' '}

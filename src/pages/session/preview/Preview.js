@@ -1,58 +1,79 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
 import { CircularProgress } from '@material-ui/core';
-import { useQuery } from 'react-apollo';
+import useSession from 'hooks/useSession';
+import { toast } from 'react-toastify';
 import Question from '../components/Question';
 import Choice from '../components/Choice';
-import sessionByIDGql from '../gql/sessionByID.gql';
 
 const Preview = ({ match }) => {
-  const { data } = useQuery(sessionByIDGql, {
-    variables: { publicId: match.params.sessionId },
-    fetchPolicy: 'cache-and-network'
-  });
-  const { sessionByID: session, error, loading } = data;
-  if (error) return <div>Error</div>;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const { publicId, questions, error, loading } = useSession(
+    match.params.sessionId
+  );
+
+  const next = () =>
+    setCurrentIndex(Math.min(currentIndex + 1, questions.length - 1));
+
+  const prev = () => setCurrentIndex(Math.max(currentIndex - 1, 0));
+
+  useEffect(() => {
+    if (questions && questions[currentIndex]) {
+      setCurrentQuestion(questions[currentIndex]);
+    }
+  }, [questions, currentIndex]);
+
+  if (error) {
+    toast.error(error.message.replace('GraphQL error: ', ''));
+    return (
+      <Main>
+        <div className="toast-error">
+          Error: {error.message.replace('GraphQL error: ', '')}
+        </div>
+      </Main>
+    );
+  }
+
   if (loading)
     return (
       <Main>
         <CircularProgress />
       </Main>
     );
-  if (!session)
-    return <div>Session Could not be loaded, please try again!</div>;
 
   return (
     <Main>
       <div className="container">
-        <h1 className="h1">Preview Session: {session.publicId}</h1>
-        {session.questions.map(question => (
-          <div className="card" key={question.id}>
-            {' '}
-            <Question question={question}>
-              {question.choices.map(choice => (
+        <h1 className="h1">Preview Session: {publicId}</h1>
+        {currentQuestion && (
+          <div className="card">
+            <div className="card-row">
+              <button type="button" className="button-fab" onClick={prev}>
+                -
+              </button>
+              <button type="button" className="button-fab" onClick={next}>
+                +
+              </button>
+            </div>
+            <Question question={currentQuestion}>
+              {currentQuestion.choices.map(choice => (
                 <Choice key={choice.id} choice={choice} />
               ))}
             </Question>
           </div>
-        ))}
+        )}
         <div className="card-row">
-          <Link to="/sessions" className="link">
-            <button className="button-small" type="button">
-              &lt; &nbsp; Back To My Sessions
-            </button>
+          <Link to="/sessions" className="link-outlined">
+            &lt; &nbsp; Back To My Sessions
           </Link>
-          <Link to={`/sessions/${session.publicId}/edit`} className="link">
-            <button className="button-small" type="button">
-              Edit This Session
-            </button>
+          <Link to={`/sessions/${publicId}/edit`} className="link-outlined">
+            Edit This Session
           </Link>
-          <Link to={`/sessions/${session.publicId}/start`} className="link">
-            <button className="button-small" type="button">
-              Start This Session &nbsp; &gt;
-            </button>
+          <Link to={`/sessions/${publicId}/start`} className="link-outlined">
+            Start This Session &nbsp; &gt;
           </Link>
         </div>
       </div>

@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery, useMutation } from 'react-apollo';
+import { useMutation } from 'react-apollo';
+import useSession from 'hooks/useSession';
 import Main from 'layout/Main';
 import { CircularProgress } from 'layout/material-ui/core';
 import { toast } from 'react-toastify';
 import SessionForm from './components/SessionForm';
-import sessionByIDGql from '../gql/sessionByID.gql';
 import createQuestionsGql from './gql/createQuestions.gql';
 
 const Edit = ({ match, history }) => {
-  const { data, error, loading } = useQuery(sessionByIDGql, {
-    variables: { publicId: match.params.sessionId },
-    fetchPolicy: 'cache-and-network'
-  });
+  const {
+    publicId,
+    questions: queryQuestions,
+    error,
+    loading,
+    refetchSession
+  } = useSession(match.params.sessionId);
 
   const [questions, setQuestions] = useState([]);
   const [editError, setEditError] = useState(null);
@@ -21,10 +24,8 @@ const Edit = ({ match, history }) => {
   const [createQuestionsMutation] = useMutation(createQuestionsGql);
 
   useEffect(() => {
-    if (data && data.sessionByID) {
-      setQuestions(data.sessionByID.questions);
-    }
-  }, [data]);
+    setQuestions(queryQuestions);
+  }, [queryQuestions]);
 
   useEffect(() => {
     const filteredQuestions = questions.map(
@@ -72,26 +73,23 @@ const Edit = ({ match, history }) => {
       setIsUpdating(true);
       await createQuestionsMutation({
         variables: {
-          publicId: data.sessionByID.publicId,
+          publicId,
           data: mutationQuestions
         },
-        optimisticResponse: ({ publicId, data: updatedQuestions }) => {
-          toast.info(`Updating your session: ${publicId}`);
+        optimisticResponse: ({
+          publicId: sessionId,
+          data: updatedQuestions
+        }) => {
+          toast.info(`Updating your session: ${sessionId}`);
           console.log(updatedQuestions);
         },
         update: (cache, res) => {
           console.log({ cache, res });
           toast.success('Questions saved successfully..');
           setIsUpdating(false);
-          history.push(`/sessions/${match.params.sessionId}`);
-        },
-        refetchQueries: [
-          sessionByIDGql,
-          {
-            variables: { publicId: match.params.sessionId },
-            fetchPolicy: 'cache-and-network'
-          }
-        ]
+          refetchSession();
+          history.push(`/sessions/${publicId}`);
+        }
       });
       setIsUpdating(false);
     } catch (err) {

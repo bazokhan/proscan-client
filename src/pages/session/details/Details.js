@@ -1,74 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
 import { CircularProgress } from '@material-ui/core';
+import { toast } from 'react-toastify';
+import useSession from 'hooks/useSession';
 import Question from '../components/Question';
 import Choice from '../components/Choice';
-import sessionByIDGql from '../gql/sessionByID.gql';
 
 const Details = ({ match }) => {
-  const { data } = useQuery(sessionByIDGql, {
-    variables: { publicId: match.params.sessionId },
-    fetchPolicy: 'cache-and-network'
-  });
-  const { sessionByID: session, error, loading } = data;
-  if (error)
+  const { publicId, questions, error, loading } = useSession(
+    match.params.sessionId
+  );
+
+  if (error) {
+    toast.error(error.message.replace('GraphQL error: ', ''));
     return (
       <Main>
-        <div className="toast-error">Error: {error.message}</div>
+        <div className="toast-error">
+          Error: {error.message.replace('GraphQL error: ', '')}
+        </div>
       </Main>
     );
+  }
+
   if (loading)
     return (
       <Main>
         <CircularProgress />
       </Main>
     );
-  if (!session)
-    return (
-      <Main>
-        <div className="toast-error">
-          Session Could not be loaded, please try again!
-        </div>
-      </Main>
-    );
 
   return (
     <Main>
       <div className="container">
-        <h1 className="h1">Session ID: {session.publicId}</h1>
+        <h1 className="h1">Session ID: {publicId}</h1>
         <div className="toast-info">
-          This session has {session.questions ? session.questions.length : 'no'}{' '}
-          questions
+          This session has {questions ? questions.length : 'no'} questions
         </div>
         <div className="card-row">
-          <Link to={`/sessions/${session.publicId}/edit`} className="link">
+          <Link to={`/sessions/${publicId}/edit`} className="link">
             <button className="button-small" type="button">
               Edit
             </button>
           </Link>
-          <Link to={`/sessions/${session.publicId}/preview`} className="link">
+          <Link to={`/sessions/${publicId}/preview`} className="link">
             <button
               className="button-small"
               type="button"
-              disabled={!session.questions || !session.questions.length}
+              disabled={!questions || !questions.length}
             >
               Preview
             </button>
           </Link>
-          <Link to={`/sessions/${session.publicId}/start`} className="link">
+          <Link to={`/sessions/${publicId}/start`} className="link">
             <button
               className="button-small"
               type="button"
-              disabled={!session.questions || !session.questions.length}
+              disabled={!questions || !questions.length}
             >
               Start &nbsp; &gt;
             </button>
           </Link>
         </div>
-        {session.questions.map(question => (
+        {questions.map(question => (
           <div className="card" key={question.id}>
             <Question question={question}>
               {question.choices.map(choice => (
