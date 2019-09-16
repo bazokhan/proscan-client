@@ -1,17 +1,16 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-// import ApolloClient, {
-//   InMemoryCache,
-//   defaultDataIdFromObject
-// } from 'apollo-boost';
 import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
+import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { persistCache } from 'apollo-cache-persist';
 import { ApolloProvider } from 'react-apollo';
+import { WebSocketLink } from 'apollo-link-ws';
+import { split } from 'apollo-link';
+import { getMainDefinition } from 'apollo-utilities';
 import App from './app';
-import serverUri from './app/constants';
+import { serverUri, webSocketUri } from './app/constants';
 import * as serviceWorker from './serviceWorker';
 
 const getToken = () => {
@@ -44,21 +43,46 @@ const render = async () => {
       }
     };
   });
-  const httpLink = createHttpLink({
+  const httpLink = new HttpLink({
     uri: serverUri
   });
 
+  const wsLink = new WebSocketLink({
+    uri: webSocketUri,
+    options: {
+      reconnect: true
+    }
+  });
+
+  // using the ability to split links, you can send data to each link
+  // depending on what kind of operation is being sent
+  const link = split(
+    // split based on operation type
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition' &&
+        definition.operation === 'subscription'
+      );
+    },
+    wsLink,
+    httpLink
+  );
+
+  // const client = new ApolloClient({
+  //   link: authLink.concat(httpLink),
+  //   cache
+  // });
+
   const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: authLink.concat(link),
     cache
   });
 
   ReactDOM.render(
-    <Suspense fallback={<div>Loading...</div>}>
-      <ApolloProvider client={client}>
-        <App />
-      </ApolloProvider>
-    </Suspense>,
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>,
     document.getElementById('root')
   );
 };

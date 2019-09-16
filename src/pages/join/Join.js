@@ -4,6 +4,7 @@ import { useMutation, useQuery } from 'react-apollo';
 import Main from 'layout/Main';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@material-ui/core';
+import useGuestSession from 'app/hooks/useGuestSession';
 import joinSessionGql from './gql/joinSession.gql';
 import activeSessionsGql from './gql/activeSessions.gql';
 
@@ -17,6 +18,8 @@ const Join = ({ history }) => {
   const { data, error, loading } = useQuery(activeSessionsGql, {
     fetchPolicy: 'cache-and-network'
   });
+
+  const { guestLogin } = useGuestSession();
 
   useEffect(() => {
     if (data && data.activeSessions) {
@@ -49,9 +52,14 @@ const Join = ({ history }) => {
     try {
       await joinSessionMutation({
         variables: { publicId, username },
-        update: (_, { data: joinData }) => {
+        update: async (_, { data: joinData }) => {
           toast.info('Joining...');
-          const { publicId: sessionId } = joinData.joinSession.session;
+          const {
+            id,
+            username: name,
+            session: { publicId: sessionId }
+          } = joinData.joinSession;
+          await guestLogin({ guestId: id, username: name, sessionId });
           history.push(`/${sessionId}`);
         }
       });

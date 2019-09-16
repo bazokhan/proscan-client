@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import tokenGql from 'app/gql/token.gql';
 import { useApolloClient } from 'react-apollo';
+import tokenGql from './gql/token.gql';
 
 const useAuthToken = () => {
   const client = useApolloClient();
