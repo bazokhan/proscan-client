@@ -23,6 +23,10 @@
   background-color: $light;
   transition: all 0.2s ease-in-out;
   margin: 10px 0;
+
+  .main {
+    background: $main;
+  }
 }
 
 .card-hover {
@@ -30,17 +34,16 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  border: solid 1px #ddd;
-  border-radius: 5px;
+  border: solid 1px $main;
   width: 100%;
-  color: #333;
-  background-color: #eee;
+  color: $dark;
+  background-color: $light;
   transition: all 0.2s ease-in-out;
   margin: 10px 0;
 
   &:hover {
-    color: #eee;
-    background-color: #333;
+    color: $light;
+    background-color: $dark;
   }
 }
 

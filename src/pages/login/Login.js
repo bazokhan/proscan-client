@@ -52,7 +52,7 @@ const Login = ({ history }) => {
   return (
     <Main>
       <h1 className="h1">Login</h1>
-      <form className="form" onSubmit={handleLoginSubmit}>
+      <form className="form main" onSubmit={handleLoginSubmit}>
         <label className="label" htmlFor="email">
           <span>Email</span>
           <input

@@ -1,16 +1,21 @@
+@import 'app/styles/variables.scss';
+
 .form {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
   align-items: center;
-  border: solid 1px #ddd;
-  border-radius: 5px;
+  margin: 10px;
   padding: 20px;
-  width: 600px;
+  max-width: 600px;
 
   @media (max-width: 700px) {
-    width: 100%;
+    max-width: 100%;
   }
+}
+
+.main {
+  background: $main;
 }
 
 .input {
@@ -18,8 +23,7 @@
   display: flex;
   width: 100%;
   padding: 15px;
-  border-radius: 5px;
-  border: solid 1px #eee;
+  border: solid 1px $dark;
   font-size: 1em;
 }
 
@@ -28,16 +32,15 @@
   display: flex;
   width: 100%;
   padding: 15px;
-  border-radius: 5px;
-  border: solid 1px #eee;
+  border: solid 1px $dark;
   font-size: 1.2em;
   resize: none;
   line-height: 1.4em;
   height: 150px;
-  background: rgba(255, 255, 255, 0.5);
+  background: $light;
 
   &:hover {
-    box-shadow: 0 1px #ccc;
+    box-shadow: 0 1px $main;
   }
 }
 
@@ -46,31 +49,30 @@
   display: flex;
   width: 100%;
   padding: 15px;
-  border-radius: 5px;
   margin: 20px 0 10px;
-  border: solid 1px #eee;
+  border: solid 1px $dark;
   cursor: pointer;
-  background: #ddd;
+  background: $light;
   transition: all 0.2s ease-in-out;
-  color: #333;
+  color: $dark;
   font-weight: bolder;
   justify-content: center;
   align-items: center;
   font-size: 1em;
 
   &:hover {
-    background: #333;
-    color: #ccc;
+    background: $dark;
+    color: $main;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
   }
 
   &:disabled {
-    background: #eee;
+    background: $dark;
     cursor: not-allowed;
-    color: #ccc;
+    color: $main;
     &:hover {
-      background: #eee;
-      color: #ccc;
+      background: $dark;
+      color: $main;
       box-shadow: none;
     }
   }
@@ -82,31 +84,30 @@
   flex-wrap: wrap;
   width: 150px;
   padding: 15px;
-  border-radius: 5px;
   margin: 20px 0 10px;
-  border: solid 1px #eee;
+  border: solid 1px $dark;
   cursor: pointer;
-  background: #ddd;
+  background: $light;
   transition: all 0.2s ease-in-out;
-  color: #333;
+  color: $dark;
   font-weight: bolder;
   justify-content: center;
   align-items: center;
   font-size: 1em;
 
   &:hover {
-    background: #333;
-    color: #ccc;
+    background: $dark;
+    color: $main;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
   }
 
   &:disabled {
-    background: #eee;
+    background: $dark;
     cursor: not-allowed;
-    color: #ccc;
+    color: $main;
     &:hover {
-      background: #eee;
-      color: #ccc;
+      background: $dark;
+      color: $main;
       box-shadow: none;
     }
   }
@@ -118,12 +119,11 @@
   width: 60px;
   height: 60px;
   padding: 15px;
-  // border-radius: 50%;
   // margin: 20px 0 10px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  color: #ccc;
+  color: $main;
   font-weight: bolder;
   justify-content: center;
   align-items: center;
@@ -131,17 +131,17 @@
   background: transparent;
 
   &:hover {
-    color: #333;
+    color: $dark;
     // box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
   }
 
   &:disabled {
-    // background: #eee;
+    // background: $dark;
     cursor: not-allowed;
-    color: #eee;
+    color: $dark;
     &:hover {
-      // background: #eee;
-      color: #eee;
+      // background: $dark;
+      color: $dark;
       // box-shadow: none;
     }
   }
@@ -156,6 +156,6 @@
   margin: 10px 0;
   span {
     padding: 5px 15px;
-    color: #333;
+    color: $dark;
   }
 }
