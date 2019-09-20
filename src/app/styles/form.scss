@@ -58,7 +58,8 @@
   font-weight: bolder;
   justify-content: center;
   align-items: center;
-  font-size: 1em;
+  font-size: $font-size;
+  min-height: 60px;
 
   &:hover {
     background: $dark;
@@ -156,6 +157,5 @@
   margin: 10px 0;
   span {
     padding: 5px 15px;
-    color: $dark;
   }
 }

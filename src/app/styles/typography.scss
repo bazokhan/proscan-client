@@ -1,5 +1,7 @@
+@import 'app/styles/variables.scss';
+
 .h1 {
-  font-size: 1.4em;
+  font-size: $title-size;
   color: #333;
   padding: 10px;
 }
@@ -20,4 +22,10 @@
   font-size: 0.8em;
   font-weight: normal;
   padding: 10px;
+}
+
+.subtitle {
+  font-size: $font-size;
+  color: $light;
+  font-weight: 500;
 }

@@ -64,34 +64,32 @@ const Home = () => {
 
   return (
     <Main>
-      <div className="container">
-        <h1 className="h1">{`Welcome, ${
-          profile ? profile.username : 'Guest'
-        }`}</h1>
+      <div className={styles.container}>
         {profile && (
           <div className="toast-info">
             You currently have{' '}
             {profile.sessions ? profile.sessions.length : 'No'} sessions
           </div>
         )}
+        <h1 className={cx(styles.title, styles.full)}>{`Welcome, ${
+          profile ? profile.username : 'Guest'
+        }`}</h1>
+
         {profile ? (
-          <Link to="/sessions" className="link">
-            <div className="card-hover">
-              <div className="card-row">
-                <h2>My Sessions</h2>
-              </div>
-              <div className="card-row">
-                <p>Create, Edit, Preview and Start my sessions</p>
-              </div>
-            </div>
+          <Link
+            to="/sessions"
+            className={cx(styles.button, styles.full, styles.accent1)}
+          >
+            <h2>Manage your sessions</h2>
+            <p>Create, Edit, Preview and Start sessions</p>
           </Link>
         ) : null}
-        <Link to="/join" className="link">
-          <div className="card-hover">
-            <div className="card-row">
-              <h2>Join Session</h2>
-            </div>
-          </div>
+        <Link
+          to="/join"
+          className={cx(styles.button, styles.full, styles.main)}
+        >
+          <FaSearch />
+          <h2>Join Session</h2>
         </Link>
       </div>
     </Main>

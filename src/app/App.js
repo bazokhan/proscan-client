@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Header from 'layout/Header';
+import Header from 'layout/Header copy';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AuthContext from 'context/AuthContext';
 import { ToastContainer } from 'react-toastify';
@@ -9,12 +9,14 @@ import Main from 'layout/Main';
 import { CircularProgress } from '@material-ui/core';
 import routes from './routes';
 import AuthRoute from './routeTypes/AuthRoute/AuthRoute';
+import { authenticatedList, guestList, commonList } from './menu.routes';
 import useAuthToken from './hooks/useAuthToken';
 import './styles/form.scss';
 import './styles/typography.scss';
 import './styles/boxes.scss';
 import './styles/general.scss';
 import './styles/session.scss';
+import './styles/grid.scss';
 
 function App() {
   const contextValue = useAuthToken();
@@ -22,7 +24,11 @@ function App() {
     <AuthContext.Provider value={contextValue}>
       <CssBaseline />
       <BrowserRouter>
-        <Header />
+        <Header
+          authenticatedList={authenticatedList}
+          commonList={commonList}
+          guestList={guestList}
+        />
         <ToastContainer autoClose={4000} />
         <Suspense
           fallback={
@@ -37,6 +43,7 @@ function App() {
             <AuthRoute path="/sessions/create" component={routes.create} />
             <AuthRoute path="/sessions" component={routes.sessions} />
             <AuthRoute path="/profile" component={routes.profile} />
+            <AuthRoute path="/logout" component={routes.logout} />
             <Route path="/join" component={routes.join} />
             <Route path="/:sessionId" component={routes.joined} />
             <Route path="/" component={routes.home} />

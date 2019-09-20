@@ -6,6 +6,7 @@ const useAuthToken = () => {
   const client = useApolloClient();
   const [authToken, setAuthToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLogoutLoading, setLogoutLoading] = useState(false);
   useEffect(() => {
     const getToken = async () => {
       try {
@@ -20,8 +21,9 @@ const useAuthToken = () => {
     };
     getToken();
   }, [client]);
-  const logout = cb => {
-    client.writeQuery({
+  const logout = async cb => {
+    setLogoutLoading(true);
+    await client.writeQuery({
       query: tokenGql,
       data: {
         token: {
@@ -31,8 +33,9 @@ const useAuthToken = () => {
         }
       }
     });
-    client.resetStore();
     setAuthToken(null);
+    await client.resetStore();
+    setLogoutLoading(false);
     if (cb && typeof cb === 'function') {
       cb();
     }
@@ -46,7 +49,15 @@ const useAuthToken = () => {
     });
     setAuthToken(loginMutationResult.token);
   };
-  return { client, isLoading, authToken, setAuthToken, login, logout };
+  return {
+    client,
+    isLoading,
+    authToken,
+    setAuthToken,
+    login,
+    logout,
+    isLogoutLoading
+  };
 };
 
 export default useAuthToken;

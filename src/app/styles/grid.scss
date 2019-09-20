@@ -1,0 +1,15 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  align-items: center;
+
+  & .row-item {
+    margin: 10px 5px;
+  }
+
+  &.jst-left {
+    justify-content: flex-start;
+  }
+}

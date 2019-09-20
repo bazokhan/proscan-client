@@ -4,6 +4,7 @@ import { useMutation } from 'react-apollo';
 import { toast } from 'react-toastify';
 import Main from 'layout/Main';
 import AuthContext from 'context/AuthContext';
+import { FaRegEnvelope, FaUnlockAlt } from 'react-icons/fa';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import loginGql from './gql/login.gql';
 
@@ -19,11 +20,11 @@ const Login = ({ history }) => {
     e.preventDefault();
     try {
       setLoginLoading(true);
+      setError(null);
       await loginMutation({
         variables: { email, password },
         update: (_, { data }) => {
           toast.success('Login Successful');
-          setError(null);
           setLoginLoading(false);
           login(data.login);
         }
@@ -51,10 +52,19 @@ const Login = ({ history }) => {
 
   return (
     <Main>
+      {error && (
+        <div className="toast-error">
+          {error.message.replace('GraphQL error: ', '')}
+        </div>
+      )}
       <h1 className="h1">Login</h1>
+
       <form className="form main" onSubmit={handleLoginSubmit}>
         <label className="label" htmlFor="email">
-          <span>Email</span>
+          <div className="row jst-left">
+            <FaRegEnvelope className="row-item subtitle" />
+            <span className="row-item subtitle">Email</span>
+          </div>
           <input
             className="input"
             placeholder="email"
@@ -68,7 +78,10 @@ const Login = ({ history }) => {
           />
         </label>
         <label className="label" htmlFor="password">
-          <span>Password</span>
+          <div className="row jst-left">
+            <FaUnlockAlt className="row-item subtitle" />
+            <span className="row-item subtitle">password</span>
+          </div>
           <input
             className="input"
             placeholder="password"
@@ -84,11 +97,6 @@ const Login = ({ history }) => {
         <button className="button" type="submit" disabled={loginLoading}>
           {loginLoading ? <CircularProgress /> : 'Login'}
         </button>
-        {error && (
-          <div className="toast-error">
-            {error.message.replace('GraphQL error: ', '')}
-          </div>
-        )}
       </form>
     </Main>
   );
