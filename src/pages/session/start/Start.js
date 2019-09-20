@@ -7,7 +7,6 @@ import { useMutation } from 'react-apollo';
 import useSession from 'hooks/useSession';
 import { toast } from 'react-toastify';
 import Question from './Question';
-import Choice from './Choice';
 import changeStatusGql from './gql/changeStatus.gql';
 import nextQuestionGql from './gql/nextQuestion.gql';
 import prevQuestionGql from './gql/prevQuestion.gql';

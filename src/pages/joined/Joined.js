@@ -17,7 +17,6 @@ import Radio from '@material-ui/core/Radio';
 import useStyles from 'app/Theme';
 import { useSubscription, useQuery, useMutation } from 'react-apollo';
 import useGuestSession from 'app/hooks/useGuestSession';
-// import useGuestSession from 'app/hooks/useGuestSession';
 import Question from '../session/components/Question';
 import subToSessionGql from './gql/subToSession.gql';
 import activeSessionGql from './gql/activeSession.gql';
@@ -87,26 +86,6 @@ const Joined = ({ match }) => {
 
   const [answerQuestionMutation] = useMutation(answerQuestionGql);
 
-  // const {
-  //   guestId,
-  //   sessionId,
-  //   username,
-  //   client,
-  //   isLoading: guestLoading,
-  //   guestLogin,
-  //   guestLogout
-  // } = useGuestSession();
-
-  // console.log({
-  //   guestId,
-  //   sessionId,
-  //   username,
-  //   client,
-  //   isLoading: guestLoading,
-  //   guestLogin,
-  //   guestLogout
-  // });
-
   const handleChoiceChange = (questionId, value) => {
     setAnswers({ ...answers, [questionId]: value });
   };
@@ -156,9 +135,6 @@ const Joined = ({ match }) => {
                               headers: {
                                 guestID: guestId
                               }
-                            },
-                            update: (_, data) => {
-                              console.log(data);
                             }
                           });
                         }}
@@ -182,14 +158,6 @@ const Joined = ({ match }) => {
           </>
         )
       )}
-      {/* <Button
-        disabled={questionIndex < questions.length - 1}
-        onClick={() => {
-          console.log({ answers });
-        }}
-      >
-        Submit
-      </Button> */}
       <RouteButton to="/join">Exit This Session</RouteButton>
     </Main>
   );
