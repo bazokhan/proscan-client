@@ -7,7 +7,6 @@ import {
   CardContent,
   CardHeader,
   Typography
-  // Button
 } from 'layout/material-ui/core';
 import RouteButton from 'layout/RouteButton';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,25 +15,20 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import useStyles from 'app/Theme';
-import { useSubscription, useQuery } from 'react-apollo';
-// import useRealSession from 'hooks/useSession';
+import { useSubscription, useQuery, useMutation } from 'react-apollo';
 import useGuestSession from 'app/hooks/useGuestSession';
+// import useGuestSession from 'app/hooks/useGuestSession';
 import Question from '../session/components/Question';
-// import useSession from './hooks/useSession';
 import subToSessionGql from './gql/subToSession.gql';
 import activeSessionGql from './gql/activeSession.gql';
+import answerQuestionGql from './gql/answerQuestion.gql';
 
 const Joined = ({ match }) => {
   const classes = useStyles();
-  // const contextValue = useSession(match.params.sessionId);
-  // const { session } = contextValue;
   const [questions, setQuestions] = useState([]);
   const [activeQuestion, setActiveQuestion] = useState(null);
   const [answers, setAnswers] = useState({});
-  // const [isLoading, setLoading] = useState(false);
-  // const [questionIndex, setQuestionIndex] = useState(0);
-
-  // const { session: initialSession } = useRealSession(match.params.sessionId);
+  const { guestId, isLoading } = useGuestSession();
 
   const {
     data: sessionData,
@@ -65,11 +59,7 @@ const Joined = ({ match }) => {
     }
   }, [sessionData]);
 
-  const {
-    data: subData,
-    // loading: subLoading,
-    error: subError
-  } = useSubscription(subToSessionGql, {
+  const { data: subData, error: subError } = useSubscription(subToSessionGql, {
     variables: {
       publicId: match.params.sessionId
     },
@@ -89,60 +79,46 @@ const Joined = ({ match }) => {
         }
       } = subData;
       const question = questions.find(({ id }) => aq === id);
-      console.log(question, questions);
       if (question) {
-        console.log('Changing');
         setActiveQuestion(question);
       }
     }
   }, [subData]);
 
-  // useEffect(() => {
-  //   console.log(subData);
-  //   console.log(activeQuestion);
-  // }, [subData, activeQuestion]);
+  const [answerQuestionMutation] = useMutation(answerQuestionGql);
 
-  const {
-    guestId,
-    sessionId,
-    username,
-    client,
-    isLoading: guestLoading,
-    guestLogin,
-    guestLogout
-  } = useGuestSession();
+  // const {
+  //   guestId,
+  //   sessionId,
+  //   username,
+  //   client,
+  //   isLoading: guestLoading,
+  //   guestLogin,
+  //   guestLogout
+  // } = useGuestSession();
 
-  console.log({
-    guestId,
-    sessionId,
-    username,
-    client,
-    isLoading: guestLoading,
-    guestLogin,
-    guestLogout
-  });
+  // console.log({
+  //   guestId,
+  //   sessionId,
+  //   username,
+  //   client,
+  //   isLoading: guestLoading,
+  //   guestLogin,
+  //   guestLogout
+  // });
 
   const handleChoiceChange = (questionId, value) => {
     setAnswers({ ...answers, [questionId]: value });
   };
 
-  // useEffect(() => {
-  //   if (session && question) {
-  //     setQuestionIndex(session.questions.findIndex(q => q.id === question.id));
-  //   }
-  // }, [session, question]);
-
-  // if (sessionLoading || subLoading)
-  //   return (
-  //     <Main>
-  //       <CircularProgress />
-  //     </Main>
-  //   );
-
   if (sessionError || subError)
     return (
       <Main>
-        <div>Error!</div>
+        <div className="toast-error">
+          Error,{' '}
+          {sessionError && sessionError.message.replace('GraphQL error: ', '')}.{' '}
+          {subError && subError.message.replace('GraphQL error: ', '')}
+        </div>
       </Main>
     );
 
@@ -166,21 +142,39 @@ const Joined = ({ match }) => {
                         <FormLabel component="legend">Pick Only One</FormLabel>
                       }
                     />
-                    <RadioGroup
-                      value={answers[activeQuestion.id] || ''}
-                      onChange={e =>
-                        handleChoiceChange(activeQuestion.id, e.target.value)
-                      }
-                    >
-                      {activeQuestion.choices.map(choice => (
-                        <FormControlLabel
-                          key={choice.id}
-                          value={choice.id}
-                          control={<Radio />}
-                          label={choice.body}
-                        />
-                      ))}
-                    </RadioGroup>
+                    {guestId && !isLoading ? (
+                      <RadioGroup
+                        value={answers[activeQuestion.id] || ''}
+                        onChange={e => {
+                          handleChoiceChange(activeQuestion.id, e.target.value);
+                          answerQuestionMutation({
+                            variables: {
+                              questionID: activeQuestion.id,
+                              chooseID: e.target.value
+                            },
+                            context: {
+                              headers: {
+                                guestID: guestId
+                              }
+                            },
+                            update: (_, data) => {
+                              console.log(data);
+                            }
+                          });
+                        }}
+                      >
+                        {activeQuestion.choices.map(choice => (
+                          <FormControlLabel
+                            key={choice.id}
+                            value={choice.id}
+                            control={<Radio />}
+                            label={choice.body}
+                          />
+                        ))}
+                      </RadioGroup>
+                    ) : (
+                      <div>Loading</div>
+                    )}
                   </FormControl>
                 </CardContent>
               </Card>

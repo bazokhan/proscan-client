@@ -6,11 +6,12 @@ import { CircularProgress, Button } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import useSession from 'hooks/useSession';
 import { toast } from 'react-toastify';
-import Question from '../components/Question';
-import Choice from '../components/Choice';
+import Question from './Question';
+import Choice from './Choice';
 import changeStatusGql from './gql/changeStatus.gql';
 import nextQuestionGql from './gql/nextQuestion.gql';
 import prevQuestionGql from './gql/prevQuestion.gql';
+// import subToSessionGql from './gql/subToSession.gql';
 
 const Start = ({ match }) => {
   const [question, setQuestion] = useState(null);
@@ -89,14 +90,7 @@ const Start = ({ match }) => {
     toast.error('Question could not be changed.. try again..');
   }
 
-  if (loading)
-    return (
-      <Main>
-        <CircularProgress />
-      </Main>
-    );
-
-  if (!question)
+  if (loading || !question)
     return (
       <Main>
         <CircularProgress />
@@ -108,6 +102,9 @@ const Start = ({ match }) => {
       <div className="container">
         <h1 className="h1">Sessions ID: {session.publicId}</h1>
         <div className={session.status}>{session.status}</div>
+        <div className={session.status}>
+          Participants: {(session.guests && session.guests.length) || 0}
+        </div>
         {session.status === 'ACTIVE' && (
           <div className="card">
             <div className="card-row">
@@ -124,20 +121,7 @@ const Start = ({ match }) => {
                 Next
               </Button>
             </div>
-            {question && (
-              <Question
-                label={`Question ${question.id} : `}
-                question={question}
-              >
-                {question.choices.map((choice, choiceIndex) => (
-                  <Choice
-                    label={`${choiceIndex + 1} - `}
-                    key={choice.id}
-                    choice={choice}
-                  />
-                ))}
-              </Question>
-            )}
+            {question && <Question question={question} />}
             <button type="button" className="button" onClick={pauseSession}>
               Pause
             </button>
