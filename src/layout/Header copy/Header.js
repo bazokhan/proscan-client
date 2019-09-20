@@ -8,7 +8,7 @@ import styles from './Header.module.scss';
 
 const Sidebar = ({ commonList, guestList, authenticatedList }) => {
   const [isExpanded, setExpanded] = useState(false);
-  const { isLoading, authToken, logout } = useContext(AuthContext);
+  const { isLoading, authToken } = useContext(AuthContext);
   const toggleExpanded = () => setExpanded(!isExpanded);
   return (
     <nav className={styles.container}>
