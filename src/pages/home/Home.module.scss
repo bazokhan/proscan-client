@@ -1,1 +1,77 @@
+@import 'app/styles/variables.scss';
+$font-size: 20px;
+$title-size: 25px;
+$button-height: 20vh;
+$icon-size: 35px;
 
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 600px;
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+
+  .title {
+    width: calc(50% - 20px);
+    margin: 10px;
+    color: $dark;
+    text-decoration: none;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: $title-size;
+    font-weight: 500;
+  }
+
+  .button {
+    width: calc(50% - 20px);
+    margin: 10px;
+    color: $light;
+    text-decoration: none;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: $button-height;
+
+    &:hover {
+      box-shadow: 0 1px 3px 0 $dark;
+    }
+
+    h2 {
+      font-size: $font-size;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    svg {
+      width: $icon-size;
+      height: $icon-size;
+    }
+  }
+
+  .full {
+    width: 100%;
+  }
+
+  .info {
+    background: $info;
+  }
+
+  .accent1 {
+    background: $accent1;
+  }
+
+  .main {
+    background: $main;
+  }
+}
