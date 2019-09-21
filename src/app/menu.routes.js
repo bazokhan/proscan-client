@@ -1,20 +1,33 @@
 import React from 'react';
-import { FaBaseballBall } from 'react-icons/fa';
+import {
+  FaBaseballBall,
+  FaSignOutAlt,
+  FaHome,
+  FaSearch,
+  FaUserAlt,
+  FaFolderOpen,
+  FaFolderPlus
+} from 'react-icons/fa';
 
 const authenticatedList = [
   {
     text: 'Manage sessions',
-    iconComponent: <FaBaseballBall />,
+    iconComponent: <FaFolderOpen />,
     route: '/sessions'
   },
   {
+    text: 'Create a new session',
+    iconComponent: <FaFolderPlus />,
+    route: '/sessions/create'
+  },
+  {
     text: 'Profile',
-    iconComponent: <FaBaseballBall />,
+    iconComponent: <FaUserAlt />,
     route: '/profile'
   },
   {
     text: 'Logout',
-    iconComponent: <FaBaseballBall />,
+    iconComponent: <FaSignOutAlt />,
     route: '/logout'
   }
 ];
@@ -33,12 +46,12 @@ const guestList = [
 const commonList = [
   {
     text: 'Home',
-    iconComponent: <FaBaseballBall />,
+    iconComponent: <FaHome />,
     route: '/'
   },
   {
     text: 'Join a session',
-    iconComponent: <FaBaseballBall />,
+    iconComponent: <FaSearch />,
     route: '/join'
   }
 ];

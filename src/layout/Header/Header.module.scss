@@ -85,7 +85,10 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      margin: 5px 15px 15px;
+      margin: 15px;
+      color: $light;
+      font-weight: 500;
+      font-size: 16px;
 
       img,
       svg {

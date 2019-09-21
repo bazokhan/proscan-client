@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Header from 'layout/Header copy';
+import Header from 'layout/Header';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AuthContext from 'context/AuthContext';
 import { ToastContainer } from 'react-toastify';

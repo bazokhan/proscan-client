@@ -1,182 +1,89 @@
-import React, { useState, useContext, Fragment } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
+import { NavLink, Link } from 'react-router-dom';
 import AuthContext from 'context/AuthContext';
-import { Link, Button } from '@material-ui/core';
-import { RouterLink } from 'layout/material-ui/core';
-import useRouter from 'use-react-router';
-import useStyles from './Header.styles';
+import { FaBars } from 'react-icons/fa';
+import styles from './Header.module.scss';
 
-const Header = () => {
-  const { history } = useRouter();
-  const { isLoading, authToken, logout } = useContext(AuthContext);
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const handleLogout = () => {
-    logout(() => history.push('/'));
-    handleMenuClose();
-  };
-
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-    </Menu>
-  );
-
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      {authToken && (
-        <MenuItem variant="text" color="inherit">
-          <Link
-            to="/sessions"
-            color="inherit"
-            onClick={handleMenuClose}
-            component={RouterLink}
-          >
-            My Sessions
-          </Link>
-        </MenuItem>
-      )}
-      {authToken && (
-        <MenuItem variant="text" color="inherit">
-          <Link
-            to="/"
-            color="inherit"
-            onClick={handleMenuClose}
-            component={RouterLink}
-          >
-            Profile
-          </Link>
-        </MenuItem>
-      )}
-      {authToken && <MenuItem onClick={handleLogout}>Log Out</MenuItem>}
-      {!authToken && (
-        <MenuItem variant="text" color="inherit">
-          <Link to="/login" color="inherit" component={RouterLink}>
-            Login
-          </Link>
-        </MenuItem>
-      )}
-      {!authToken && (
-        <MenuItem variant="text" color="inherit">
-          <Link to="/signup" color="inherit" component={RouterLink}>
-            Signup
-          </Link>
-        </MenuItem>
-      )}
-    </Menu>
-  );
-
-  if (isLoading) return null;
-
+const Sidebar = ({ commonList, guestList, authenticatedList }) => {
+  const [isExpanded, setExpanded] = useState(false);
+  const { isLoading, authToken } = useContext(AuthContext);
+  const toggleExpanded = () => setExpanded(!isExpanded);
   return (
-    <div className={classes.grow}>
-      <AppBar position="static" color="default">
-        <Toolbar>
-          <Link to="/" color="inherit" component={RouterLink}>
-            <Typography
-              className={classes.title}
-              variant="h6"
-              noWrap
-              color="primary"
+    <nav className={styles.container}>
+      <div className={styles.navbar}>
+        <button
+          type="button"
+          onClick={toggleExpanded}
+          className={styles.basicButton}
+        >
+          <FaBars />
+        </button>
+        <Link to="/" className={cx(styles.logo, 'link subtitle')}>
+          QuizBank
+        </Link>
+      </div>
+      {!isLoading && (
+        <div
+          className={cx(styles.bottom, {
+            [styles.isExpanded]: isExpanded
+          })}
+        >
+          {commonList.map(({ iconComponent, route, text }) => (
+            <NavLink
+              key={route}
+              exact
+              to={route}
+              className={styles.iconMain}
+              onClick={toggleExpanded}
             >
-              QuizBank
-            </Typography>
-          </Link>
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <Button variant="contained" color="secondary">
-              <Link to="/join" color="inherit" component={RouterLink}>
-                Join A Session
-              </Link>
-            </Button>
-            {authToken ? (
-              <Fragment>
-                <Button variant="text" color="inherit">
-                  <Link to="/sessions" color="inherit" component={RouterLink}>
-                    My Sessions
-                  </Link>
-                </Button>
-                <IconButton
-                  edge="end"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <Button variant="text" color="inherit">
-                  <Link to="/login" color="inherit" component={RouterLink}>
-                    Login
-                  </Link>
-                </Button>
-                <Button variant="text" color="inherit">
-                  <Link to="/signup" color="inherit" component={RouterLink}>
-                    Signup
-                  </Link>
-                </Button>
-              </Fragment>
-            )}
-          </div>
-          <div className={classes.sectionMobile}>
-            <Button variant="contained" color="secondary">
-              <Link to="/join" color="inherit" component={RouterLink}>
-                Join A Session
-              </Link>
-            </Button>
-            <IconButton onClick={handleMobileMenuOpen} color="inherit">
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-      {renderMenu}
-      {renderMobileMenu}
-    </div>
+              {iconComponent}
+              <span>{text}</span>
+            </NavLink>
+          ))}
+          {authToken &&
+            authenticatedList.map(({ iconComponent, route, text }) => (
+              <NavLink
+                key={route}
+                exact
+                to={route}
+                className={styles.iconMain}
+                onClick={toggleExpanded}
+              >
+                {iconComponent}
+                <span>{text}</span>
+              </NavLink>
+            ))}
+          {!authToken &&
+            guestList.map(({ iconComponent, route, text }) => (
+              <NavLink
+                key={route}
+                exact
+                to={route}
+                className={styles.iconMain}
+                onClick={toggleExpanded}
+              >
+                {iconComponent}
+                <span>{text}</span>
+              </NavLink>
+            ))}
+        </div>
+      )}
+    </nav>
   );
 };
 
-export default Header;
+Sidebar.propTypes = {
+  commonList: PropTypes.array,
+  guestList: PropTypes.array,
+  authenticatedList: PropTypes.array
+};
+
+Sidebar.defaultProps = {
+  commonList: [],
+  guestList: [],
+  authenticatedList: []
+};
+
+export default Sidebar;
