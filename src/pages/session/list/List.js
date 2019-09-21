@@ -1,8 +1,11 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
+import cx from 'class-names';
 import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
 import { CircularProgress } from '@material-ui/core';
 import { useQuery } from 'react-apollo';
+import { FaPlus } from 'react-icons/fa';
 import userSessionsGql from './gql/userSessions.gql';
 import styles from './List.module.scss';
 
@@ -30,16 +33,27 @@ const List = () => {
 
   return (
     <Main>
-      <div className="container">
-        <Link to="/sessions/create" className="link-full">
-          <button type="button" className="button">
-            Create New Session
-          </button>
-        </Link>
-        <h1 className="h1">My Sessions</h1>
-
-        {userSessions && userSessions.length ? (
-          userSessions.map(session => (
+      <h1 className="h1">Manage your sessions</h1>
+      <Link to="/sessions/create" className={styles.fab}>
+        <FaPlus /> Create New Session
+      </Link>
+      {userSessions && userSessions.length ? (
+        userSessions.map(session => {
+          const activeQuestion = session.questions
+            ? session.questions.find(q => q.id === session.activeQuestion)
+            : () => {};
+          const activeQuestionIndex = session.questions
+            ? session.questions.findIndex(q => q === activeQuestion)
+            : -1;
+          const indexString =
+            activeQuestionIndex > -1
+              ? activeQuestionIndex + 1 === 1
+                ? '1st'
+                : activeQuestionIndex + 1 === 2
+                ? '2nd'
+                : `${activeQuestionIndex + 1}th`
+              : 'None';
+          return (
             <Link
               to={`/sessions/${session.publicId}`}
               key={session.publicId}
@@ -47,28 +61,34 @@ const List = () => {
             >
               <div className="card-hover" key={session.publicId}>
                 <div className="card-row">
-                  <div className={styles.sessionName}>
-                    Session ID: {session.publicId}
+                  <div className={styles.sessionName}>{session.publicId}</div>
+                  <div className={session.status}>{session.status}</div>
+                </div>
+                <div className="row">
+                  <div className={cx(styles.button, 'accent1')}>
+                    <span className="title center-text">
+                      {session.questions ? session.questions.length : 'unknown'}
+                    </span>
+                    <span className="subtitle center-text">Questions</span>
                   </div>
-                  <div className={session.status}>Status: {session.status}</div>
-                </div>
-                <div className="toast">
-                  No. of questions:{' '}
-                  {session.questions ? session.questions.length : 'unknown'}
-                </div>
-                <div className="toast">
-                  Author: {session.author ? session.author.username : 'unknown'}
-                </div>
-                <div className="toast">
-                  Active Question: {session.activeQuestion || 'None'}
+                  {/* <div className={cx(styles.button, 'main subtitle')}>
+                    Author:{' '}
+                    {session.author ? session.author.username : 'unknown'}
+                  </div> */}
+                  <div className={cx(styles.button, 'main')}>
+                    <span className="subtitle center-text">
+                      Active Question
+                    </span>
+                    <span className="title center-text">{indexString}</span>
+                  </div>
                 </div>
               </div>
             </Link>
-          ))
-        ) : (
-          <div className="toast-error">You have no sessions yet</div>
-        )}
-      </div>
+          );
+        })
+      ) : (
+        <div className="toast-error">You have no sessions yet</div>
+      )}
     </Main>
   );
 };

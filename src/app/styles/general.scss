@@ -24,6 +24,14 @@ h6 {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .link {
   text-decoration: none;
 }

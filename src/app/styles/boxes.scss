@@ -23,10 +23,30 @@
   background-color: $light;
   transition: all 0.2s ease-in-out;
   margin: 10px 0;
+}
 
-  .main {
-    background: $main;
-  }
+.main {
+  background: $main;
+}
+
+.accent1 {
+  background: $accent1;
+}
+
+.accent2 {
+  background: $accent2;
+}
+
+.success {
+  background: $success;
+}
+
+.info {
+  background: $info;
+}
+
+.error {
+  background: $error;
 }
 
 .card-hover {
@@ -34,12 +54,12 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  border: solid 1px $main;
-  width: 100%;
+  max-width: 100%;
   color: $dark;
   background-color: $light;
   transition: all 0.2s ease-in-out;
-  margin: 10px 0;
+  margin: 10px;
+  box-shadow: 0 3px 1px 0 $dark-shadow;
 
   &:hover {
     color: $light;

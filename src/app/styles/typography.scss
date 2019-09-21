@@ -24,8 +24,35 @@
   padding: 10px;
 }
 
+.title {
+  width: calc(50% - 20px);
+  margin: 10px;
+  color: $dark;
+  text-decoration: none;
+  box-sizing: border-box;
+  // padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $title-size;
+  color: $light;
+  font-weight: 900;
+}
+
 .subtitle {
   font-size: $font-size;
   color: $light;
   font-weight: 500;
+}
+
+.left-text {
+  text-align: left;
+}
+
+.right-text {
+  text-align: right;
+}
+
+.center-text {
+  text-align: center;
 }

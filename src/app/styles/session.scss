@@ -1,6 +1,7 @@
+@import 'app/styles/variables.scss';
 .ACTIVE {
-  background-color: #74a18e;
-  color: #fff;
+  background-color: $success;
+  color: $light;
   border-radius: 5px;
   padding: 10px;
   display: flex;
@@ -9,8 +10,8 @@
 }
 
 .ENDED {
-  background-color: #cf8691;
-  color: #fff;
+  background-color: $error;
+  color: $light;
   border-radius: 5px;
   padding: 10px;
   display: flex;
@@ -19,8 +20,8 @@
 }
 
 .PENDING {
-  background-color: #818fb5;
-  color: #fff;
+  background-color: $info;
+  color: $light;
   border-radius: 5px;
   padding: 10px;
   display: flex;
@@ -29,8 +30,8 @@
 }
 
 .PAUSED {
-  background-color: #cf8691;
-  color: #fff;
+  background-color: $accent2;
+  color: $light;
   border-radius: 5px;
   padding: 10px;
   display: flex;
