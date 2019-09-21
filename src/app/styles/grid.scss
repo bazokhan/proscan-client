@@ -3,10 +3,17 @@
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
-  align-items: stretch;
+  align-items: center;
 
   & .row-item {
-    margin: 10px 5px;
+    // margin: 10px 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &.margin-right {
+      margin-right: 10px;
+    }
   }
 
   &.jst-left {

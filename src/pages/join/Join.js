@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useMutation, useQuery } from 'react-apollo';
 import Main from 'layout/Main';
 import { toast } from 'react-toastify';
+import { FaSearch, FaPen } from 'react-icons/fa';
 import { CircularProgress } from '@material-ui/core';
 import useGuestSession from 'app/hooks/useGuestSession';
 import joinSessionGql from './gql/joinSession.gql';
@@ -12,7 +13,7 @@ const Join = ({ history }) => {
   const [sessions, setSessions] = useState([]);
   const [session, setSession] = useState(null);
   const [publicId, setPublicId] = useState(null);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(null);
   const [notFound, setNotFound] = useState(false);
 
   const { data, error, loading } = useQuery(activeSessionsGql, {
@@ -70,12 +71,32 @@ const Join = ({ history }) => {
 
   return (
     <Main>
-      <h1 className="h1">Join A Session</h1>
+      {session && (
+        <>
+          <div className="toast-success">Session Found ...</div>{' '}
+          <div className="card info">
+            <div className="card-row title">{session.publicId}</div>
+            <div className="card-row subtitle">
+              Author:{' '}
+              {session.author
+                ? session.author.username || session.author.email
+                : 'Unknown Author'}
+            </div>
+          </div>
+        </>
+      )}
+      {notFound && (
+        <div className="toast-error">Session Not Found.. Try Again!</div>
+      )}
+      {!session && <h1 className="h1">Join A Session</h1>}
       <form onSubmit={handleSubmit} className="form">
         {!session && (
           <>
             <label className="label" htmlFor="sessionId">
-              <span>Search for an active session..</span>
+              <div className="row jst-left">
+                <FaSearch className="row-item subtitle-dark" />
+                <span className="row-item subtitle-dark">Search..</span>
+              </div>
               <input
                 name="sessionId"
                 type="text"
@@ -93,23 +114,15 @@ const Join = ({ history }) => {
             >
               {loading ? <CircularProgress /> : 'Search'}
             </button>
-            {notFound && (
-              <div className="toast-error">Session Not Found.. Try Again!</div>
-            )}
           </>
         )}
         {session && (
           <>
-            <div className="card">
-              <div className="toast-success">Session Found ...</div>
-              <div className="card-row">Session ID: {session.publicId}</div>
-              <div className="card-row">
-                Author:{' '}
-                {session.author ? session.author.username : 'Unknown Author'}
-              </div>
-            </div>
             <label className="label" htmlFor="username">
-              <span>Enter a username to join..</span>
+              <div className="row jst-left">
+                <FaPen className="row-item subtitle-dark" />
+                <span className="row-item subtitle-dark">Enter a username</span>
+              </div>
               <input
                 name="username"
                 type="text"

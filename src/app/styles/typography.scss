@@ -2,7 +2,7 @@
 
 .h1 {
   font-size: $title-size;
-  color: #333;
+  color: $dark;
   padding: 10px;
 }
 
@@ -43,6 +43,14 @@
   font-size: $font-size;
   color: $light;
   font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.subtitle-dark {
+  font-size: $font-size;
+  color: $dark;
+  font-weight: 500;
+  margin-bottom: 5px;
 }
 
 .left-text {

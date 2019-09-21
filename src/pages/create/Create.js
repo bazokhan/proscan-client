@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useMutation } from 'react-apollo';
 import Main from 'layout/Main';
 import { toast } from 'react-toastify';
+import { FaPen } from 'react-icons/fa';
 import createSessionGql from './gql/createSession.gql';
 
 const Create = ({ history }) => {
@@ -45,7 +46,10 @@ const Create = ({ history }) => {
       <h1 className="h1">Create A New Session</h1>
       <form className="form" onSubmit={handleSubmit}>
         <label htmlFor="publicId" className="label">
-          <span>Public ID</span>
+          <div className="row jst-left">
+            <FaPen className="row-item subtitle-dark" />
+            <span className="row-item subtitle-dark">Public ID</span>
+          </div>
           <input
             name="publicId"
             type="text"

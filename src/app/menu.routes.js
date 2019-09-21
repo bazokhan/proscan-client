@@ -1,12 +1,13 @@
 import React from 'react';
 import {
-  FaBaseballBall,
   FaSignOutAlt,
   FaHome,
   FaSearch,
   FaUserAlt,
   FaFolderOpen,
-  FaFolderPlus
+  FaFolderPlus,
+  FaUserPlus,
+  FaSignInAlt
 } from 'react-icons/fa';
 
 const authenticatedList = [
@@ -34,12 +35,12 @@ const authenticatedList = [
 const guestList = [
   {
     text: 'Login',
-    iconComponent: <FaBaseballBall />,
+    iconComponent: <FaSignInAlt />,
     route: '/login'
   },
   {
     text: 'Signup',
-    iconComponent: <FaBaseballBall />,
+    iconComponent: <FaUserPlus />,
     route: '/signup'
   }
 ];

@@ -1,27 +1,20 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import useStyles from 'app/Theme';
+import cx from 'class-names';
+import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
-import {
-  Link,
-  CircularProgress,
-  Card,
-  CardHeader,
-  CardContent,
-  Button,
-  Avatar,
-  Typography
-} from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import { useQuery } from 'react-apollo';
-import userSessionsGql from './gql/userSessions.gql';
+import { FaUserTag, FaAt, FaFolderOpen, FaSignOutAlt } from 'react-icons/fa';
+import profileGql from 'pages/home/gql/profile.gql';
+import styles from './Profile.module.scss';
 
 const Profile = () => {
-  const classes = useStyles();
+  const {
+    data: { profile },
+    loading,
+    error
+  } = useQuery(profileGql);
 
-  const { data } = useQuery(userSessionsGql, {
-    fetchPolicy: 'cache-and-network'
-  });
-  const { userSessions, loading, error } = data;
   if (error) {
     return <div>Error, {error.message}</div>;
   }
@@ -32,45 +25,36 @@ const Profile = () => {
       </Main>
     );
   }
-  if (!userSessions || !userSessions.length) {
-    return <div>You have no sessions yet</div>;
-  }
 
   return (
     <Main>
-      <Typography component="h1" variant="h6">
-        My Sessions
-      </Typography>
-      <Button variant="text">
-        <Link to="/" component={RouterLink}>
-          Home
-        </Link>
-      </Button>
-      <Button variant="text">
-        <Link to="/sessions/create" component={RouterLink}>
-          Create New Session
-        </Link>
-      </Button>
-      {userSessions.map(session => (
-        <Card className={classes.card} key={session.publicId}>
-          <Link to={`/sessions/${session.publicId}`} component={RouterLink}>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="Session" className={classes.avatar}>
-                  M
-                </Avatar>
-              }
-              title={session.publicId}
-              subheader={session.status}
-            />
-            <CardContent>
-              <Typography variant="body2" color="textSecondary">
-                Go To Session
-              </Typography>
-            </CardContent>
-          </Link>
-        </Card>
-      ))}
+      <h1 className="h1">Profile</h1>
+      <div className="box info">
+        <div className="row jst-left">
+          <div className="row-item margin-right subtitle">
+            <FaUserTag />
+          </div>
+          <h1 className="row-item subtitle">{profile.username}</h1>
+        </div>
+        <div className="row jst-left">
+          <div className="row-item margin-right subtitle">
+            <FaAt />
+          </div>
+          <h1 className="row-item subtitle">{profile.email}</h1>
+        </div>
+        <div className="row jst-left">
+          <div className="row-item margin-right subtitle">
+            <FaFolderOpen />
+          </div>
+          <h1 className="row-item subtitle">
+            {profile.sessions ? profile.sessions.length : 0} sessions
+          </h1>
+        </div>
+      </div>
+      <Link to="/logout" className={cx(styles.button, styles.full, 'accent2')}>
+        <FaSignOutAlt />
+        <h2>Logout</h2>
+      </Link>
     </Main>
   );
 };
