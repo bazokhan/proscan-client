@@ -128,7 +128,7 @@ const Join = ({ history }) => {
                 type="text"
                 className="input"
                 placeholder="Username"
-                value={username}
+                value={username || ''}
                 onChange={e => setUsername(e.target.value)}
               />
             </label>

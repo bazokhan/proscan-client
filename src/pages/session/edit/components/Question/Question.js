@@ -1,43 +1,78 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import DeleteIcon from '@material-ui/icons/Delete';
-import DropZone from 'layout/DropZone';
-import styles from './Question.module.scss';
+import { useMutation } from 'react-apollo';
+import uuid from 'uuid/v4';
+import { FaTrashAlt, FaCheck, FaPlus } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import DropZone from '../DropZone';
+import Choice from '../Choice';
+import multipleUploadGql from './gql/multipleUpload.gql';
 
-const Question = ({
-  question,
-  children,
-  handleQuestionBodyChange,
-  handleUploadImages,
-  handleDeleteQuestion
-}) => {
-  const [hasImages, setHasImages] = useState(
-    !!question.images && question.images.length > 0
-  );
+// import singleUploadGql from './gql/singleUpload.gql';
 
-  const handleBodyChange = e =>
-    handleQuestionBodyChange(question, e.target.value);
-  const handleDelete = () => handleDeleteQuestion(question);
+const Question = ({ question, handleDeleteQuestion, handleUpdateQuestion }) => {
+  const [body, setBody] = useState(question.body);
+  const [choices, setChoices] = useState(question.choices);
+  const [hasImages, setHasImages] = useState(question.imageUrls.length > 0);
+
+  const [mutipleUploadMutation] = useMutation(multipleUploadGql);
+  const handleDropZoneSubmit = async files => {
+    mutipleUploadMutation({
+      variables: { files },
+      update: (_, { data: { multipleUpload } }) => {
+        toast.success('Images uploaded successfully');
+        handleUpdateQuestion(question.id, {
+          body,
+          imageUrls: [
+            ...question.imageUrls,
+            ...multipleUpload.map(upload => upload.url)
+          ],
+          choices: choices.map(({ id, body: choiceBody, correct }) => ({
+            id,
+            body: choiceBody,
+            correct
+          }))
+        });
+      }
+    });
+  };
+
+  const handleCreateChoice = () => {
+    setChoices([
+      ...choices,
+      { id: uuid().slice(0, 10), body: '', correct: false }
+    ]);
+  };
+
+  const handleDeleteChoice = choiceId => {
+    setChoices(choices.filter(choice => choice.id !== choiceId));
+  };
+
+  const updateChoice = (id, choiceBody, correct) => {
+    setChoices(
+      choices.map(choice => {
+        if (choice.id === id) {
+          return { id: choice.id, body: choiceBody, correct };
+        }
+        return choice;
+      })
+    );
+  };
 
   return (
-    <>
-      <button type="button" className="button-fab" onClick={handleDelete}>
-        <DeleteIcon />
+    <div>
+      <button
+        type="button"
+        className="button-fab"
+        onClick={() => handleDeleteQuestion(question.id)}
+      >
+        <FaTrashAlt />
       </button>
-      <p style={{ color: 'black' }}>{question.id}</p>
-      <textarea
-        type="text"
-        className="textarea"
-        placeholder="Enter question text"
-        name={`bodyof${question.id}`}
-        onChange={handleBodyChange}
-        value={question.body}
-      />
-      <label htmlFor="hasImages" className={styles.toastInfo}>
+
+      <label htmlFor="hasImages">
         <input
           type="checkbox"
           name="hasImages"
-          className={styles.checkbox}
           checked={hasImages}
           onChange={() => setHasImages(!hasImages)}
         />
@@ -45,25 +80,58 @@ const Question = ({
       </label>
       {hasImages && (
         <DropZone
-          handleSubmit={images => handleUploadImages(question, images)}
-          images={question.images || []}
+          handleSubmit={handleDropZoneSubmit}
+          images={question.imageUrls}
         />
       )}
-      {children}
-    </>
+
+      <textarea
+        type="text"
+        className="textarea"
+        placeholder="Enter question text"
+        name={`bodyof${question.id}`}
+        onChange={e => setBody(e.target.value)}
+        value={body}
+      />
+
+      <button type="button" className="button-fab" onClick={handleCreateChoice}>
+        <FaPlus />
+      </button>
+      {choices.map(choice => (
+        <Choice
+          key={choice.id}
+          choice={choice}
+          handleDeleteChoice={handleDeleteChoice}
+          handleUpdateChoice={(choiceBody, correct) =>
+            updateChoice(choice.id, choiceBody, correct)
+          }
+        />
+      ))}
+      <button
+        type="button"
+        className="button-fab"
+        onClick={() =>
+          handleUpdateQuestion(question.id, {
+            body,
+            imageUrls: question.imageUrls,
+            choices: choices.map(({ id, body: choiceBody, correct }) => ({
+              id,
+              body: choiceBody,
+              correct
+            }))
+          })
+        }
+      >
+        <FaCheck />
+      </button>
+    </div>
   );
 };
 
 Question.propTypes = {
-  children: PropTypes.node,
-  question: PropTypes.object.isRequired,
-  handleQuestionBodyChange: PropTypes.func.isRequired,
-  handleUploadImages: PropTypes.func.isRequired,
-  handleDeleteQuestion: PropTypes.func.isRequired
-};
-
-Question.defaultProps = {
-  children: null
+  handleDeleteQuestion: PropTypes.func.isRequired,
+  handleUpdateQuestion: PropTypes.func.isRequired,
+  question: PropTypes.object.isRequired
 };
 
 export default Question;

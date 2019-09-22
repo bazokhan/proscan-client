@@ -11,6 +11,7 @@
     "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
     "apollo-link-ws": "^1.0.19",
+    "apollo-upload-client": "^11.0.0",
     "class-names": "^1.0.0",
     "graphql": "^14.3.0",
     "graphql-tag": "^2.10.1",

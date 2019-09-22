@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
-import { ClearIcon } from 'layout/material-ui/icons';
+// import { ClearIcon } from 'layout/material-ui/icons';
 
 const DropZone = ({ handleSubmit, images }) => {
-  const [files, setFiles] = useState(images);
+  const [imageUrls, setImageUrls] = useState(images);
+  const [files, setFiles] = useState([]);
   const [editMode, setEditMode] = useState(true);
 
-  const handleDeleteImage = fileName => {
-    setFiles(files.filter(file => file.name !== fileName));
-  };
+  // const handleDeleteImage = fileName => {
+  //   setFiles(files.filter(file => file.name !== fileName));
+  // };
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -17,26 +18,23 @@ const DropZone = ({ handleSubmit, images }) => {
       const filteredAcceptedFiles = acceptedFiles.filter(newFile =>
         files.every(oldFile => oldFile.name !== newFile.name)
       );
-      setFiles([
-        ...files,
-        ...filteredAcceptedFiles.map(file =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file)
-          })
-        )
+      setFiles([...files, ...filteredAcceptedFiles]);
+      setImageUrls([
+        ...imageUrls,
+        ...filteredAcceptedFiles.map(file => URL.createObjectURL(file))
       ]);
     }
   });
 
-  const thumbs = files.map(file => (
-    <div>
-      <img src={file.preview} alt={file.name} />
+  const thumbs = imageUrls.map(image => (
+    <div key={image}>
+      <img src={image} alt={image} />
 
-      {editMode && (
+      {/* {editMode && (
         <button type="button" onClick={() => handleDeleteImage(file.name)}>
           <ClearIcon />
         </button>
-      )}
+      )} */}
     </div>
   ));
 
@@ -64,7 +62,10 @@ const DropZone = ({ handleSubmit, images }) => {
           <button
             type="button"
             disabled={!files.length}
-            onClick={() => setFiles([])}
+            onClick={() => {
+              setFiles([]);
+              setImageUrls([]);
+            }}
           >
             Clear
           </button>
