@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'class-names';
 import { useDropzone } from 'react-dropzone';
-// import { ClearIcon } from 'layout/material-ui/icons';
+import { FaTrashAlt, FaUpload } from 'react-icons/fa';
+import styles from './DropZone.module.scss';
 
 const DropZone = ({ handleSubmit, images }) => {
   const [imageUrls, setImageUrls] = useState(images);
   const [files, setFiles] = useState([]);
-  const [editMode, setEditMode] = useState(true);
-
-  // const handleDeleteImage = fileName => {
-  //   setFiles(files.filter(file => file.name !== fileName));
-  // };
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -27,14 +24,12 @@ const DropZone = ({ handleSubmit, images }) => {
   });
 
   const thumbs = imageUrls.map(image => (
-    <div key={image}>
-      <img src={image} alt={image} />
-
-      {/* {editMode && (
-        <button type="button" onClick={() => handleDeleteImage(file.name)}>
-          <ClearIcon />
-        </button>
-      )} */}
+    <div
+      key={image}
+      className={styles.thumbnail}
+      style={{ backgroundImage: `url(${image})` }}
+    >
+      {/* <img src={image} alt={image} /> */}
     </div>
   ));
 
@@ -47,48 +42,39 @@ const DropZone = ({ handleSubmit, images }) => {
   );
 
   return (
-    <div>
-      {editMode && (
-        <div {...getRootProps()}>
-          <input {...getInputProps()} />
-          <p>
-            Drag &apos;n&apos; drop some files here, or click to select files
-          </p>
-        </div>
-      )}
-      <div>{thumbs}</div>
-      {editMode ? (
-        <>
-          <button
-            type="button"
-            disabled={!files.length}
-            onClick={() => {
-              setFiles([]);
-              setImageUrls([]);
-            }}
-          >
-            Clear
-          </button>
-          <button
-            type="button"
-            disabled={!files.length}
-            onClick={() => {
-              handleSubmit(files);
-              setEditMode(false);
-            }}
-          >
-            Upload
-          </button>
-        </>
-      ) : (
+    <div className={styles.container}>
+      <div {...getRootProps()} className={styles.dropZone}>
+        <input {...getInputProps()} />
+        <p className={styles.dropZone}>
+          Drag &apos;n&apos; drop some files here, or click to select files
+        </p>
+      </div>
+
+      <div className={styles.thumbsContainer}>{thumbs}</div>
+
+      <div className={styles.actionButtons}>
         <button
           type="button"
           disabled={!files.length}
-          onClick={() => setEditMode(true)}
+          onClick={() => {
+            setFiles([]);
+            setImageUrls([]);
+          }}
+          className={cx(styles.buttonFab, styles.delete)}
         >
-          Edit
+          <FaTrashAlt />
         </button>
-      )}
+        <button
+          type="button"
+          disabled={!files.length}
+          onClick={() => {
+            handleSubmit(files);
+          }}
+          className={styles.buttonFab}
+        >
+          <FaUpload />
+        </button>
+      </div>
     </div>
   );
 };

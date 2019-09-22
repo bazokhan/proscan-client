@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'class-names';
 import { useMutation } from 'react-apollo';
 import uuid from 'uuid/v4';
-import { FaTrashAlt, FaCheck, FaPlus } from 'react-icons/fa';
+import { FaTrashAlt, FaCheck, FaPlus, FaCameraRetro } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import DropZone from '../DropZone';
 import Choice from '../Choice';
 import multipleUploadGql from './gql/multipleUpload.gql';
-
-// import singleUploadGql from './gql/singleUpload.gql';
+import styles from './Question.module.scss';
 
 const Question = ({ question, handleDeleteQuestion, handleUpdateQuestion }) => {
   const [body, setBody] = useState(question.body);
   const [choices, setChoices] = useState(question.choices);
-  const [hasImages, setHasImages] = useState(question.imageUrls.length > 0);
+  const [hasImages, setHasImages] = useState(false);
 
   const [mutipleUploadMutation] = useMutation(multipleUploadGql);
   const handleDropZoneSubmit = async files => {
@@ -60,24 +60,59 @@ const Question = ({ question, handleDeleteQuestion, handleUpdateQuestion }) => {
   };
 
   return (
-    <div>
-      <button
-        type="button"
-        className="button-fab"
-        onClick={() => handleDeleteQuestion(question.id)}
-      >
-        <FaTrashAlt />
-      </button>
+    <div className={styles.container}>
+      <div className={styles.actionButtons}>
+        <button
+          type="button"
+          className={cx(styles.buttonFab, styles.delete)}
+          onClick={() => handleDeleteQuestion(question.id)}
+        >
+          <FaTrashAlt />
+        </button>
 
-      <label htmlFor="hasImages">
-        <input
-          type="checkbox"
-          name="hasImages"
-          checked={hasImages}
-          onChange={() => setHasImages(!hasImages)}
-        />
-        <span>This Question Has {hasImages ? '' : 'No'} Images.</span>
-      </label>
+        <label
+          htmlFor={`${question.id}-hasImages`}
+          className={cx(styles.buttonFab, {
+            [styles.inactive]: !hasImages
+          })}
+        >
+          <input
+            type="checkbox"
+            id={`${question.id}-hasImages`}
+            checked={hasImages}
+            onChange={() => setHasImages(!hasImages)}
+          />
+          <FaCameraRetro />
+        </label>
+
+        <button
+          type="button"
+          className={styles.buttonFab}
+          onClick={handleCreateChoice}
+        >
+          <FaPlus />
+        </button>
+
+        <button
+          type="button"
+          className={styles.buttonFab}
+          onClick={() =>
+            handleUpdateQuestion(question.id, {
+              body,
+              imageUrls: question.imageUrls,
+              choices: choices.map(({ id, body: choiceBody, correct }) => ({
+                id,
+                body: choiceBody,
+                correct
+              }))
+            })
+          }
+          disabled={choices === question.choices && body === question.body}
+        >
+          <FaCheck />
+        </button>
+      </div>
+
       {hasImages && (
         <DropZone
           handleSubmit={handleDropZoneSubmit}
@@ -85,45 +120,38 @@ const Question = ({ question, handleDeleteQuestion, handleUpdateQuestion }) => {
         />
       )}
 
-      <textarea
-        type="text"
-        className="textarea"
-        placeholder="Enter question text"
-        name={`bodyof${question.id}`}
-        onChange={e => setBody(e.target.value)}
-        value={body}
-      />
+      {!hasImages && (
+        <>
+          <textarea
+            type="text"
+            className={styles.questionBody}
+            placeholder="Enter question text"
+            name={`bodyof${question.id}`}
+            onChange={e => setBody(e.target.value)}
+            value={body}
+          />
 
-      <button type="button" className="button-fab" onClick={handleCreateChoice}>
-        <FaPlus />
-      </button>
-      {choices.map(choice => (
-        <Choice
-          key={choice.id}
-          choice={choice}
-          handleDeleteChoice={handleDeleteChoice}
-          handleUpdateChoice={(choiceBody, correct) =>
-            updateChoice(choice.id, choiceBody, correct)
-          }
-        />
-      ))}
-      <button
-        type="button"
-        className="button-fab"
-        onClick={() =>
-          handleUpdateQuestion(question.id, {
-            body,
-            imageUrls: question.imageUrls,
-            choices: choices.map(({ id, body: choiceBody, correct }) => ({
-              id,
-              body: choiceBody,
-              correct
-            }))
-          })
-        }
-      >
-        <FaCheck />
-      </button>
+          <div className={styles.thumbsContainer}>
+            {question.imageUrls.map(image => (
+              <div
+                key={image}
+                className={styles.thumbnail}
+                style={{ backgroundImage: `url(${image})` }}
+              />
+            ))}
+          </div>
+          {choices.map(choice => (
+            <Choice
+              key={choice.id}
+              choice={choice}
+              handleDeleteChoice={handleDeleteChoice}
+              handleUpdateChoice={(choiceBody, correct) =>
+                updateChoice(choice.id, choiceBody, correct)
+              }
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };

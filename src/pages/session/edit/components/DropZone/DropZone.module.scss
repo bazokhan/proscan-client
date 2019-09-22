@@ -1,12 +1,39 @@
 @import 'app/styles/variables.scss';
 
 .container {
-//   border: solid 1px $dark;
+  padding: 10px;
+  position: relative;
+}
+
+.dropZone {
+  border: dashed 1px $dark;
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100;
+}
+
+.thumbsContainer {
+  width: 100%;
+  margin: 5px;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  //   margin-bottom: 30px;
+}
+
+.thumbnail {
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-origin: center;
+  border-radius: 10px;
+  border: solid 2px $main;
+  margin: 10px 10px 10px 0;
 }
 
 .buttonFab {
@@ -19,12 +46,20 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  color: $error;
+  color: $dark;
   font-weight: bolder;
   justify-content: center;
   align-items: center;
   font-size: 1em;
   background: transparent;
+
+  &.delete {
+    color: $error;
+
+    &:hover {
+      color: $accent2;
+    }
+  }
 
   & input[type='checkbox'] {
     display: none;
@@ -39,10 +74,6 @@
     color: $main;
   }
 
-  &.correct {
-    color: $success;
-  }
-
   &:disabled {
     cursor: not-allowed;
     color: $light;
@@ -52,18 +83,10 @@
   }
 }
 
-.choiceBody {
-  flex-grow: 1;
-  border: none;
-  border-bottom: solid 1px $dark;
-  font-family: inherit;
-  box-sizing: border-box;
+.actionButtons {
   display: flex;
-  margin: 5px 10px;
-  width: 100%;
-  padding: 5px;
-  font-size: inherit;
-  // line-height: 1.4em;
-  //   height: 100px;
-  // background: $light;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
 }
