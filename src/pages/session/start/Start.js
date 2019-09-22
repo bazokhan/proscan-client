@@ -89,7 +89,7 @@ const Start = ({ match }) => {
     toast.error('Question could not be changed.. try again..');
   }
 
-  if (loading || !question)
+  if (loading || !session)
     return (
       <Main>
         <CircularProgress />
@@ -120,7 +120,9 @@ const Start = ({ match }) => {
                 Next
               </Button>
             </div>
-            {question && <Question question={question} />}
+            {question && (
+              <Question question={question} participants={session.guests} />
+            )}
             <button type="button" className="button" onClick={pauseSession}>
               Pause
             </button>

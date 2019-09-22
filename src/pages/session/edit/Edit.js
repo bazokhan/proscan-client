@@ -10,6 +10,7 @@ import Question from './components/Question';
 import createQuestionGql from './gql/createQuestion.gql';
 import deleteQuestionGql from './gql/deleteQuestion.gql';
 import updateQuestionGql from './gql/updateQuestion.gql';
+import styles from './Edit.module.scss';
 
 const Edit = ({ match }) => {
   const {
@@ -92,10 +93,10 @@ const Edit = ({ match }) => {
         <div>
           <button
             type="button"
-            className="button-fab"
+            className={styles.actionButton}
             onClick={handleCreateQuestion}
           >
-            <FaRegPlusSquare />
+            <FaRegPlusSquare /> Create new question
           </button>
           {questions.map(question => (
             <Question

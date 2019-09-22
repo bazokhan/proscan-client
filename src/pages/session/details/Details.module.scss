@@ -1,0 +1,82 @@
+@import 'app/styles/variables.scss';
+
+.actionButtons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: stretch;
+  background: $dark;
+
+  @media (max-width: 600px) {
+    justify-content: space-between;
+  }
+
+  & svg {
+    &:first-of-type {
+      margin-right: 10px;
+    }
+
+    &:last-of-type {
+      margin-left: 10px;
+    }
+
+    width: 16px;
+    height: 16px;
+  }
+
+  a {
+    text-decoration: none;
+    border-right: solid 1px $light;
+    transition: all 0.2s;
+    background: none;
+    padding: 5px;
+
+    @media (max-width: 600px) {
+      width: 30%;
+    }
+
+    &:last-of-type {
+      border-right: none;
+    }
+
+    &:hover {
+      text-decoration: none;
+      background: $main;
+    }
+  }
+
+  button {
+    box-sizing: border-box;
+    border: none;
+    margin: 0;
+    color: $light;
+    font-size: $font-size;
+    padding: 5px 20px;
+    transition: all 0.2s;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    @media (max-width: 600px) {
+      padding: 5px;
+    }
+
+    &:hover {
+      background: $main;
+      color: $dark;
+    }
+
+    &:disabled {
+      color: $info;
+      cursor: not-allowed;
+
+      &:hover {
+        color: $info;
+      }
+    }
+  }
+}

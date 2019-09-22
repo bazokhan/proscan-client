@@ -5,8 +5,9 @@ import Main from 'layout/Main';
 import { CircularProgress } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import useSession from 'hooks/useSession';
+import { FaEdit, FaPlay } from 'react-icons/fa';
 import Question from '../components/Question';
-import Choice from '../components/Choice';
+import styles from './Details.module.scss';
 
 const Details = ({ match }) => {
   const { publicId, questions, error, loading } = useSession(
@@ -38,38 +39,26 @@ const Details = ({ match }) => {
         <div className="toast-info">
           This session has {questions ? questions.length : 'no'} questions
         </div>
-        <div className="card-row">
-          <Link to={`/sessions/${publicId}/edit`} className="link">
-            <button className="button-small" type="button">
-              Edit
+        <div className={styles.actionButtons}>
+          <Link to={`/sessions/${publicId}/edit`}>
+            <button type="button">
+              <FaEdit /> Edit
             </button>
           </Link>
-          <Link to={`/sessions/${publicId}/preview`} className="link">
-            <button
-              className="button-small"
-              type="button"
-              disabled={!questions || !questions.length}
-            >
+          <Link to={`/sessions/${publicId}/preview`}>
+            <button type="button" disabled={!questions || !questions.length}>
               Preview
             </button>
           </Link>
-          <Link to={`/sessions/${publicId}/start`} className="link">
-            <button
-              className="button-small"
-              type="button"
-              disabled={!questions || !questions.length}
-            >
-              Start &nbsp; &gt;
+          <Link to={`/sessions/${publicId}/start`}>
+            <button type="button" disabled={!questions || !questions.length}>
+              Start <FaPlay />
             </button>
           </Link>
         </div>
         {questions.map(question => (
           <div className="card" key={question.id}>
-            <Question question={question}>
-              {question.choices.map(choice => (
-                <Choice key={choice.id} choice={choice} />
-              ))}
-            </Question>
+            <Question question={question} />
           </div>
         ))}
       </div>

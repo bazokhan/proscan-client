@@ -17,7 +17,7 @@ import Radio from '@material-ui/core/Radio';
 import useStyles from 'app/Theme';
 import { useSubscription, useQuery, useMutation } from 'react-apollo';
 import useGuestSession from 'app/hooks/useGuestSession';
-import Question from '../session/components/Question';
+import Question from './components/Question';
 import subToSessionGql from './gql/subToSession.gql';
 import activeSessionGql from './gql/activeSession.gql';
 import answerQuestionGql from './gql/answerQuestion.gql';

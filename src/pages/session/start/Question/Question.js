@@ -5,7 +5,7 @@ import { useSubscription } from 'react-apollo';
 import PieChart from 'react-minimal-pie-chart';
 import subToQuestionGql from '../gql/subToQuestion.gql';
 
-const Question = ({ question, children }) => {
+const Question = ({ question, children, participants }) => {
   const colors = [
     '#1abc9c',
     '#3498db',
@@ -42,20 +42,23 @@ const Question = ({ question, children }) => {
         <h3 className="h3">{question.body}</h3>
         {question.images && <ImagePreviews images={question.images} />}
       </div>
-      <div style={{ width: '200px', height: '200px' }}>
-        <PieChart
-          label
-          labelStyle={{
-            ...defaultLabelStyle
-          }}
-          animate
-          data={choices.map(({ body, chosenBy }, i) => ({
-            title: body,
-            value: chosenBy.length,
-            color: colors[i]
-          }))}
-        />
-      </div>
+      {participants.length > 0 &&
+        choices.find(choice => choice.chosenBy && choice.chosenBy.length) && (
+          <div style={{ width: '200px', height: '200px' }}>
+            <PieChart
+              label
+              labelStyle={{
+                ...defaultLabelStyle
+              }}
+              animate
+              data={choices.map(({ body, chosenBy }, i) => ({
+                title: body,
+                value: chosenBy.length,
+                color: colors[i]
+              }))}
+            />
+          </div>
+        )}
 
       {choices.map((choice, i) => (
         <div className="toast" key={choice.id}>
@@ -81,11 +84,13 @@ const Question = ({ question, children }) => {
 
 Question.propTypes = {
   children: PropTypes.node,
-  question: PropTypes.object.isRequired
+  question: PropTypes.object.isRequired,
+  participants: PropTypes.array
 };
 
 Question.defaultProps = {
-  children: null
+  children: null,
+  participants: []
 };
 
 export default Question;
