@@ -25,7 +25,8 @@
     "react-scripts": "3.0.1",
     "react-toastify": "^5.3.2",
     "subscriptions-transport-ws": "^0.9.16",
-    "use-react-router": "^1.0.7"
+    "use-react-router": "^1.0.7",
+    "uuid": "^3.3.3"
   },
   "author": "Mohamed Elbaz",
   "license": "ISC",

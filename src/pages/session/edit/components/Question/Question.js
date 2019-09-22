@@ -24,6 +24,7 @@ const Question = ({
       <button type="button" className="button-fab" onClick={handleDelete}>
         <DeleteIcon />
       </button>
+      <p style={{ color: 'black' }}>{question.id}</p>
       <textarea
         type="text"
         className="textarea"
