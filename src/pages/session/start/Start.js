@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'class-names';
 import { Link } from 'react-router-dom';
 import Main from 'layout/Main';
-import { CircularProgress, Button } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import useSession from 'hooks/useSession';
 import { toast } from 'react-toastify';
+import { FaPlay, FaStop, FaPause, FaBackward, FaForward } from 'react-icons/fa';
+import styles from './Start.module.scss';
 import Question from './Question';
 import changeStatusGql from './gql/changeStatus.gql';
 import nextQuestionGql from './gql/nextQuestion.gql';
 import prevQuestionGql from './gql/prevQuestion.gql';
+
 // import subToSessionGql from './gql/subToSession.gql';
 
 const Start = ({ match }) => {
@@ -89,6 +93,56 @@ const Start = ({ match }) => {
     toast.error('Question could not be changed.. try again..');
   }
 
+  const activeButtons = session && session.status === 'ACTIVE' && (
+    <>
+      <button type="button" className={styles.fab} onClick={pauseSession}>
+        <FaPause />
+      </button>
+      <button type="button" className={styles.fab} onClick={endSession}>
+        <FaStop />
+      </button>
+      <button
+        type="button"
+        className={styles.fab}
+        onClick={prevQuestionMutation}
+        disabled={nextLoading || prevLoading}
+      >
+        <FaBackward />
+      </button>
+      <button
+        type="button"
+        className={styles.fab}
+        onClick={nextQuestionMutation}
+        disabled={nextLoading || prevLoading}
+      >
+        <FaForward />
+      </button>
+    </>
+  );
+
+  const endedButtons = session && session.status === 'ENDED' && (
+    <button type="button" className={styles.fab} onClick={startSession}>
+      <FaPlay />
+    </button>
+  );
+
+  const pendingButtons = session && session.status === 'PENDING' && (
+    <button type="button" className={styles.fab} onClick={startSession}>
+      <FaPlay />
+    </button>
+  );
+
+  const pausedButtons = session && session.status === 'PAUSED' && (
+    <>
+      <button type="button" className={styles.fab} onClick={startSession}>
+        <FaPlay />
+      </button>
+      <button type="button" className={styles.fab} onClick={endSession}>
+        <FaStop />
+      </button>
+    </>
+  );
+
   if (loading || !session)
     return (
       <Main>
@@ -100,58 +154,25 @@ const Start = ({ match }) => {
     <Main>
       <div className="container">
         <h1 className="h1">Sessions ID: {session.publicId}</h1>
-        <div className={session.status}>{session.status}</div>
-        <div className={session.status}>
-          Participants: {(session.guests && session.guests.length) || 0}
+        <div className={styles.actionBar}>
+          <div className={styles.status}>
+            <div className={cx(session.status, styles.indicator)} />
+            <p>
+              Participants: {(session.guests && session.guests.length) || 0}
+            </p>
+          </div>
+          {activeButtons}
+          {pendingButtons}
+          {pausedButtons}
+          {endedButtons}
         </div>
         {session.status === 'ACTIVE' && (
           <div className="card">
-            <div className="card-row">
-              <Button
-                onClick={prevQuestionMutation}
-                disabled={nextLoading || prevLoading}
-              >
-                Previous
-              </Button>
-              <Button
-                onClick={nextQuestionMutation}
-                disabled={nextLoading || prevLoading}
-              >
-                Next
-              </Button>
-            </div>
             {question && (
               <Question question={question} participants={session.guests} />
             )}
-            <button type="button" className="button" onClick={pauseSession}>
-              Pause
-            </button>
-            <button type="button" className="button" onClick={endSession}>
-              Stop
-            </button>
           </div>
         )}
-        {session.status === 'PAUSED' && (
-          <>
-            <button type="button" className="button" onClick={startSession}>
-              Resume
-            </button>
-            <button type="button" className="button" onClick={endSession}>
-              Stop
-            </button>
-          </>
-        )}
-        {session.status === 'ENDED' && (
-          <button type="button" className="button" onClick={startSession}>
-            Start
-          </button>
-        )}
-        {session.status === 'PENDING' && (
-          <button type="button" className="button" onClick={startSession}>
-            Start
-          </button>
-        )}
-
         <Link to={`/sessions/${session.publicId}`} className="link-outlined">
           Return to session overview
         </Link>

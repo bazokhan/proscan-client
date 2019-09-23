@@ -4,8 +4,28 @@ import ImagePreviews from 'layout/ImagePreviews';
 import { useSubscription } from 'react-apollo';
 import PieChart from 'react-minimal-pie-chart';
 import subToQuestionGql from '../gql/subToQuestion.gql';
+import styles from './Question.module.scss';
 
-const Question = ({ question, children, participants }) => {
+const Choice = ({ choice, color }) => (
+  <div className={styles.choiceContainer}>
+    <div className={styles.choiceIndicator} style={{ background: color }} />
+    <p className={styles.choiceBody}>{choice.body}</p>
+    <div className={styles.choiceInfo}>
+      Chosen By: {(choice.chosenBy && choice.chosenBy.length) || 0} participants
+    </div>
+  </div>
+);
+
+Choice.propTypes = {
+  choice: PropTypes.object.isRequired,
+  color: PropTypes.string
+};
+
+Choice.defaultProps = {
+  color: '#000'
+};
+
+const Question = ({ question, participants }) => {
   const colors = [
     '#1abc9c',
     '#3498db',
@@ -37,59 +57,44 @@ const Question = ({ question, children, participants }) => {
   });
 
   return (
-    <>
-      <div className="toast">
+    <div className={styles.questionContainer}>
+      <div className={styles.sidebar}>S</div>
+      <div className={styles.main}>
         <h3 className="h3">{question.body}</h3>
         {question.images && <ImagePreviews images={question.images} />}
-      </div>
-      {participants.length > 0 &&
-        choices.find(choice => choice.chosenBy && choice.chosenBy.length) && (
-          <div style={{ width: '200px', height: '200px' }}>
-            <PieChart
-              label
-              labelStyle={{
-                ...defaultLabelStyle
-              }}
-              animate
-              data={choices.map(({ body, chosenBy }, i) => ({
-                title: body,
-                value: chosenBy.length,
-                color: colors[i]
-              }))}
-            />
-          </div>
-        )}
 
-      {choices.map((choice, i) => (
-        <div className="toast" key={choice.id}>
-          <div
-            style={{
-              width: '10px',
-              height: '10px',
-              background: colors[i],
-              display: 'inline-block'
-            }}
-          />
-          <p className="p">{choice.body}</p>
-          <div className={`toast-${choice.correct ? 'success' : 'error'}`}>
-            Chosen By: {(choice.chosenBy && choice.chosenBy.length) || 0}{' '}
-            participants
-          </div>
-          {children}
-        </div>
-      ))}
-    </>
+        {participants.length > 0 &&
+          choices.find(choice => choice.chosenBy && choice.chosenBy.length) && (
+            <div style={{ width: '200px', height: '200px' }}>
+              <PieChart
+                label
+                labelStyle={{
+                  ...defaultLabelStyle
+                }}
+                animate
+                data={choices.map(({ body, chosenBy }, i) => ({
+                  title: body,
+                  value: chosenBy.length,
+                  color: colors[i]
+                }))}
+              />
+            </div>
+          )}
+
+        {choices.map((choice, i) => (
+          <Choice key={choice.id} choice={choice} color={colors[i]} />
+        ))}
+      </div>
+    </div>
   );
 };
 
 Question.propTypes = {
-  children: PropTypes.node,
   question: PropTypes.object.isRequired,
   participants: PropTypes.array
 };
 
 Question.defaultProps = {
-  children: null,
   participants: []
 };
 

@@ -1,0 +1,52 @@
+@import 'app/styles/variables.scss';
+
+.actionBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  background: $dark;
+
+  .fab {
+    width: 48px;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 10px;
+    background: none;
+    border: none;
+    color: $main;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $main;
+      color: $dark;
+    }
+  }
+
+  .status {
+    margin-right: auto;
+    margin-left: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      margin-right: 10px;
+      padding: 0;
+    }
+
+    p {
+      color: $light;
+      font-weight: 500;
+    }
+  }
+}

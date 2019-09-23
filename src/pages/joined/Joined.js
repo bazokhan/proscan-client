@@ -110,8 +110,7 @@ const Joined = ({ match }) => {
         <CircularProgress />
       ) : (
         activeQuestion && (
-          <>
-            <Typography color="primary">Question Title:</Typography>
+          <div className="container">
             <Question question={activeQuestion}>
               <Card className={classes.form}>
                 <CardContent>
@@ -155,7 +154,7 @@ const Joined = ({ match }) => {
                 </CardContent>
               </Card>
             </Question>
-          </>
+          </div>
         )
       )}
       <RouteButton to="/join">Exit This Session</RouteButton>

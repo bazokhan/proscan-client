@@ -1,0 +1,50 @@
+@import 'app/styles/variables.scss';
+
+.choiceContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 10px;
+  border-bottom: solid 1px $dark;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .choiceIndicator {
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+  }
+
+  .choiceBody {
+    color: $dark;
+    flex-grow: 1;
+    font-size: 16px;
+  }
+
+  .choiceInfo {
+    color: $info;
+    font-weight: 500;
+  }
+}
+
+.questionContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  border: solid 1px red;
+
+  .sidebar {
+    width: 60px;
+    border: solid 1px purple;
+  }
+
+  .main {
+    flex-grow: 1;
+    border: solid 1px green;
+  }
+}
