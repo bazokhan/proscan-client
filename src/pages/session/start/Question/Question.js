@@ -61,7 +61,7 @@ const Question = ({ question, participants }) => {
       <div className={styles.sidebar}>S</div>
       <div className={styles.main}>
         <h3 className="h3">{question.body}</h3>
-        {question.images && <ImagePreviews images={question.images} />}
+        {question.imageUrls && <ImagePreviews images={question.imageUrls} />}
 
         {participants.length > 0 &&
           choices.find(choice => choice.chosenBy && choice.chosenBy.length) && (

@@ -1,48 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(theme => ({
-  thumb: {
-    height: theme.spacing(10) * 2,
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: '#EEE'
-  },
-  img: {
-    display: 'block',
-    width: 'auto',
-    height: '100%'
-  }
-}));
+import { FaArrowCircleRight, FaArrowCircleLeft } from 'react-icons/fa';
+import styles from './ImagePreviews.module.scss';
 
 const ImagePreviews = ({ images }) => {
-  const classes = useStyles();
-
-  const thumbs = images.map(file => (
-    <Grid item xs={12} md={6} key={file.name}>
-      <div src={file.preview} className={classes.thumb}>
-        <img src={file.preview} alt={file.name} className={classes.img} />
-      </div>
-    </Grid>
-  ));
-
+  const [imageIndex, setImageIndex] = useState(0);
+  const nextImage = () => {
+    setImageIndex(Math.min(imageIndex + 1, images.length - 1));
+  };
+  const prevImage = () => {
+    setImageIndex(Math.max(imageIndex - 1, 0));
+  };
   return (
-    <Grid container direction="column" align="stretch" item xs={12}>
-      <Grid item xs={12} container spacing={2}>
-        {thumbs}
-      </Grid>
-    </Grid>
+    <div className={styles.container}>
+      <div className={styles.actionBar}>
+        <button type="button" onClick={prevImage} className={styles.right}>
+          <FaArrowCircleRight />
+        </button>
+        <button type="button" onClick={nextImage} className={styles.left}>
+          <FaArrowCircleLeft />
+        </button>
+      </div>
+      <div className={styles.image}>
+        <img src={images[imageIndex]} alt={images[imageIndex]} />
+      </div>
+    </div>
   );
 };
 
 ImagePreviews.propTypes = {
-  images: PropTypes.array
-};
-
-ImagePreviews.defaultProps = {
-  images: []
+  images: PropTypes.array.isRequired
 };
 
 export default ImagePreviews;
