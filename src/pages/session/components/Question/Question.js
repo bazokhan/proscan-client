@@ -5,17 +5,19 @@ import styles from './Question.module.scss';
 
 const Question = ({ question }) => (
   <div className={styles.container}>
-    {question.imageUrls.map(url => (
-      <a
-        key={url}
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.preview}
-      >
-        <img src={url} alt={question.body} />
-      </a>
-    ))}
+    <div className={styles.images}>
+      {question.imageUrls.map(url => (
+        <a
+          key={url}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.preview}
+        >
+          <img src={url} alt={question.body} />
+        </a>
+      ))}
+    </div>
     <h3 className="h3">{question.body}</h3>
 
     {question.choices.map(choice => (

@@ -14,10 +14,10 @@ const ImagePreviews = ({ images }) => {
   return (
     <div className={styles.container}>
       <div className={styles.actionBar}>
-        <button type="button" onClick={prevImage} className={styles.right}>
+        <button type="button" onClick={nextImage} className={styles.right}>
           <FaArrowCircleRight />
         </button>
-        <button type="button" onClick={nextImage} className={styles.left}>
+        <button type="button" onClick={prevImage} className={styles.left}>
           <FaArrowCircleLeft />
         </button>
       </div>

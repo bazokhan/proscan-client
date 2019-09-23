@@ -27,7 +27,41 @@
 
   .choiceInfo {
     color: $info;
-    font-weight: 500;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+    }
+  }
+}
+
+.pieContainer {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  h3 {
+    margin-top: 10px;
+  }
+
+  p {
+    color: $main;
+    font-size: $font-size;
+    font-weight: 900;
   }
 }
 
@@ -36,15 +70,47 @@
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
-  border: solid 1px red;
 
   .sidebar {
     width: 60px;
-    border: solid 1px purple;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    border-right: solid 1px $dark;
+    background: $dark;
+
+    button {
+      background: none;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: $font-size;
+      color: $light;
+      margin-bottom: 10px;
+      border: none;
+      box-sizing: border-box;
+      height: 60px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $main;
+        color: $light;
+      }
+
+      &.active {
+        color: $main;
+
+        &:hover {
+          background: $dark;
+        }
+      }
+    }
   }
 
   .main {
     flex-grow: 1;
-    border: solid 1px green;
   }
 }

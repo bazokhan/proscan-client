@@ -7,7 +7,15 @@ import { CircularProgress } from '@material-ui/core';
 import { useMutation } from 'react-apollo';
 import useSession from 'hooks/useSession';
 import { toast } from 'react-toastify';
-import { FaPlay, FaStop, FaPause, FaBackward, FaForward } from 'react-icons/fa';
+import {
+  FaPlay,
+  FaStop,
+  FaPause,
+  FaStepBackward,
+  FaStepForward,
+  FaUsersCog,
+  FaLevelUpAlt
+} from 'react-icons/fa';
 import styles from './Start.module.scss';
 import Question from './Question';
 import changeStatusGql from './gql/changeStatus.gql';
@@ -107,7 +115,7 @@ const Start = ({ match }) => {
         onClick={prevQuestionMutation}
         disabled={nextLoading || prevLoading}
       >
-        <FaBackward />
+        <FaStepBackward />
       </button>
       <button
         type="button"
@@ -115,7 +123,7 @@ const Start = ({ match }) => {
         onClick={nextQuestionMutation}
         disabled={nextLoading || prevLoading}
       >
-        <FaForward />
+        <FaStepForward />
       </button>
     </>
   );
@@ -156,26 +164,29 @@ const Start = ({ match }) => {
         <h1 className="h1">Sessions ID: {session.publicId}</h1>
         <div className={styles.actionBar}>
           <div className={styles.status}>
+            <Link
+              to={`/sessions/${session.publicId}`}
+              className={styles.fabLink}
+            >
+              <FaLevelUpAlt />
+            </Link>
             <div className={cx(session.status, styles.indicator)} />
-            <p>
-              Participants: {(session.guests && session.guests.length) || 0}
-            </p>
+            <FaUsersCog />{' '}
+            <p>{(session.guests && session.guests.length) || 0}</p>
           </div>
           {activeButtons}
           {pendingButtons}
           {pausedButtons}
           {endedButtons}
         </div>
-        {session.status === 'ACTIVE' && (
-          <div className="card">
-            {question && (
-              <Question question={question} participants={session.guests} />
-            )}
-          </div>
+        {session.status === 'ACTIVE' && question && (
+          <Question
+            question={question}
+            index={`${questions.findIndex(({ id }) => question.id === id) +
+              1}.`}
+            participants={session.guests}
+          />
         )}
-        <Link to={`/sessions/${session.publicId}`} className="link-outlined">
-          Return to session overview
-        </Link>
       </div>
     </Main>
   );
