@@ -51,7 +51,12 @@ const render = async () => {
   const wsLink = new WebSocketLink({
     uri: webSocketUri,
     options: {
-      reconnect: true
+      reconnect: true,
+      connectionParams: {
+        headers: {
+          Authorization: `Bearer ${getToken()}`
+        }
+      }
     }
   });
 
