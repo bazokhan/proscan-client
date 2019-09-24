@@ -70,5 +70,8 @@
     "hooks": {
       "pre-push": "yarn lint"
     }
+  },
+  "engines": {
+    "node": "10.16"
   }
 }
