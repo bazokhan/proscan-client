@@ -1,0 +1,40 @@
+@import 'app/styles/variables.scss';
+.ACTIVE {
+  background-color: $success;
+  color: $light;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.ENDED {
+  background-color: $error;
+  color: $light;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.PENDING {
+  background-color: $info;
+  color: $light;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}
+
+.PAUSED {
+  background-color: $accent2;
+  color: $light;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+}

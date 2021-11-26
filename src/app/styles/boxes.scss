@@ -1,0 +1,119 @@
+@import 'app/styles/variables.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  width: 600px;
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  color: $dark;
+  // background-color: $main;
+  color: $light;
+  transition: all 0.2s ease-in-out;
+  margin: 10px 0;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  max-width: 100%;
+  color: $dark;
+  // background-color: $main;
+  color: $light;
+  transition: all 0.2s ease-in-out;
+  padding: 10px;
+  margin: 10px;
+}
+
+.main {
+  background: $main;
+}
+
+.accent1 {
+  background: $accent1;
+}
+
+.accent2 {
+  background: $accent2;
+}
+
+.success {
+  background: $success;
+}
+
+.info {
+  background: $info;
+}
+
+.error {
+  background: $error;
+}
+
+.card-hover {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  max-width: 100%;
+  color: $dark;
+  background-color: $light;
+  transition: all 0.2s ease-in-out;
+  margin: 10px;
+  box-shadow: 0 3px 1px 0 $dark-shadow;
+
+  &:hover {
+    color: $light;
+    background-color: $dark;
+  }
+}
+
+.card-row {
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toast {
+  background-color: inherit;
+  color: inherit;
+  padding: 10px 15px;
+  width: 100%;
+}
+
+.toast-info {
+  background-color: $info;
+  color: $light;
+  padding: 15px;
+  width: 100%;
+}
+
+.toast-error {
+  background-color: $error;
+  color: $light;
+  padding: 15px;
+  width: 100%;
+}
+
+.toast-success {
+  background-color: $success;
+  color: $light;
+  padding: 15px;
+  width: 100%;
+}

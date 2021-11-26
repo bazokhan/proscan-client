@@ -1,0 +1,124 @@
+@import 'app/styles/variables.scss';
+
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: stretch;
+  // margin-left: -10px;
+  box-sizing: border-box;
+  // position: absolute;
+  // left: 0;
+  background: $main;
+  z-index: 1000;
+  width: 100%;
+  margin: 0;
+
+  .navbar {
+    height: 63px;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid $light;
+    padding: 15px;
+
+    .basicButton {
+      background: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
+      width: 30px;
+      height: 30px;
+      margin-left: 10px;
+      color: $light;
+
+      &:hover {
+        background: none;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+      }
+
+      svg {
+        fill: $light;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+
+    .logo {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+
+      img {
+        width: 88px;
+        height: auto;
+      }
+    }
+  }
+
+  .bottom {
+    height: 0;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    padding: 0;
+    overflow: hidden;
+
+    &.isExpanded {
+      height: calc(100vh - 63px);
+      overflow: auto;
+    }
+
+    .iconMain {
+      padding: 2px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin: 15px;
+      color: $light;
+      font-weight: 500;
+      font-size: 16px;
+
+      img,
+      svg {
+        width: 28px;
+        height: 28px;
+        margin-right: 10px;
+      }
+
+      span {
+        color: var(--main-text);
+        font-size: 1.2em;
+      }
+
+      &:last-of-type {
+        border-bottom: solid 1px var(--secondary-background);
+        padding-bottom: 15px;
+      }
+    }
+
+    .iconSecondary {
+      padding: 2px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin: 5px 15px 15px;
+
+      &:last-of-type {
+        border-bottom: solid 1px var(--secondary-background);
+        padding-bottom: 15px;
+      }
+    }
+  }
+}

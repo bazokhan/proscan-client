@@ -1,0 +1,50 @@
+@import 'app/styles/variables.scss';
+
+.container {
+  border-bottom: solid 1px $dark;
+  padding: 0 20px;
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
+
+.preview {
+  display: block;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5px;
+  margin-bottom: 10px;
+
+  &:hover {
+    &::before {
+      display: none;
+    }
+  }
+
+  &::before {
+    content: 'view';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.56);
+    color: $main;
+    font-size: $font-size;
+    pointer-events: all;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  img,
+  svg {
+    width: 100%;
+  }
+}

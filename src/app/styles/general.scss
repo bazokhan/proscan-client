@@ -1,0 +1,54 @@
+*,
+html,
+body,
+div,
+input,
+button,
+a,
+ul,
+ol,
+li,
+textarea,
+span,
+main,
+section,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link-full {
+  text-decoration: none;
+  width: 100%;
+}
+
+.link-outlined {
+  text-decoration: none;
+  padding: 10px;
+  border: solid 1px black;
+  text-align: center;
+
+  &:hover {
+    background: #eee;
+  }
+}

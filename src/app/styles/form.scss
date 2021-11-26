@@ -1,0 +1,163 @@
+@import 'app/styles/variables.scss';
+
+.form {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 10px;
+  padding: 10px;
+  max-width: 600px;
+
+  @media (max-width: 700px) {
+    max-width: 100%;
+  }
+}
+
+.main {
+  background: $main;
+}
+
+.input {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  border: solid 1px $dark;
+  font-size: 1em;
+}
+
+.textarea {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  border: solid 1px $dark;
+  font-size: 1.2em;
+  resize: none;
+  line-height: 1.4em;
+  height: 150px;
+  background: $light;
+
+  &:hover {
+    box-shadow: 0 1px $main;
+  }
+}
+
+.button {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  margin: 20px 0 10px;
+  border: solid 1px $dark;
+  cursor: pointer;
+  background: $main;
+  transition: all 0.2s ease-in-out;
+  color: $dark;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-size;
+  min-height: 60px;
+
+  &:hover {
+    background: $dark;
+    color: $main;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &:disabled {
+    background: $light;
+    cursor: not-allowed;
+    color: $dark;
+    &:hover {
+      background: $light;
+      color: $dark;
+      box-shadow: none;
+    }
+  }
+}
+
+.button-small {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  width: 150px;
+  padding: 15px;
+  margin: 20px 0 10px;
+  border: solid 1px $dark;
+  cursor: pointer;
+
+  transition: all 0.2s ease-in-out;
+
+  background: $dark;
+  color: $main;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+
+  &:hover {
+    background: $light;
+    color: $dark;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: $light;
+    color: $dark;
+    &:hover {
+      background: $light;
+      color: $dark;
+      box-shadow: none;
+    }
+  }
+}
+
+.button-fab {
+  box-sizing: border-box;
+  display: flex;
+  width: 60px;
+  height: 60px;
+  padding: 15px;
+  // margin: 20px 0 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: $main;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  background: transparent;
+
+  &:hover {
+    color: $dark;
+    // box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &:disabled {
+    // background: $dark;
+    cursor: not-allowed;
+    color: $dark;
+    &:hover {
+      // background: $dark;
+      color: $dark;
+      // box-shadow: none;
+    }
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin: 10px 0;
+  span {
+    padding: 5px 15px;
+  }
+}

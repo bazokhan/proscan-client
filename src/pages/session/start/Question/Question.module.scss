@@ -1,0 +1,116 @@
+@import 'app/styles/variables.scss';
+
+.choiceContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 10px;
+  border-bottom: solid 1px $dark;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  .choiceIndicator {
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+  }
+
+  .choiceBody {
+    color: $dark;
+    flex-grow: 1;
+    font-size: 16px;
+  }
+
+  .choiceInfo {
+    color: $info;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+    }
+  }
+}
+
+.pieContainer {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+
+  h3 {
+    margin-top: 10px;
+  }
+
+  p {
+    color: $main;
+    font-size: $font-size;
+    font-weight: 900;
+  }
+}
+
+.questionContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+
+  .sidebar {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    border-right: solid 1px $dark;
+    background: $dark;
+
+    button {
+      background: none;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: $font-size;
+      color: $light;
+      margin-bottom: 10px;
+      border: none;
+      box-sizing: border-box;
+      height: 60px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $main;
+        color: $light;
+      }
+
+      &.active {
+        color: $main;
+
+        &:hover {
+          background: $dark;
+        }
+      }
+    }
+  }
+
+  .main {
+    flex-grow: 1;
+  }
+}

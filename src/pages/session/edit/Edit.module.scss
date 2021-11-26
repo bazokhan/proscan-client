@@ -1,0 +1,26 @@
+@import 'app/styles/variables.scss';
+
+.actionButton {
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 10px;
+  background: $dark;
+  color: $light;
+  margin: 20px 0 20px auto;
+  display: flex;
+  align-items: center;
+
+  svg {
+    fill: $light;
+    margin-right: 10px;
+  }
+
+  &:hover {
+    color: $main;
+
+    svg {
+        fill: $main;
+      }
+  }
+}

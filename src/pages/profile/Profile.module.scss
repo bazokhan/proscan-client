@@ -1,0 +1,32 @@
+@import 'app/styles/variables.scss';
+.button {
+  margin: 10px;
+  color: $light;
+  text-decoration: none;
+  box-sizing: border-box;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: $button-height;
+
+  &:hover {
+    box-shadow: 0 1px 3px 0 $dark;
+  }
+
+  h2 {
+    font-size: $font-size;
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  svg {
+    width: $icon-size;
+    height: $icon-size;
+  }
+}
+
+.full {
+  max-width: 100%;
+}

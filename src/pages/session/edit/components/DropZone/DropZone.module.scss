@@ -1,0 +1,92 @@
+@import 'app/styles/variables.scss';
+
+.container {
+  padding: 10px;
+  position: relative;
+}
+
+.dropZone {
+  border: dashed 1px $dark;
+  padding: 10px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100;
+}
+
+.thumbsContainer {
+  width: 100%;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.thumbnail {
+  width: 150px;
+  height: 150px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-origin: center;
+  border-radius: 10px;
+  border: solid 2px $main;
+  margin: 10px 10px 10px 0;
+}
+
+.buttonFab {
+  box-sizing: border-box;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: $dark;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  background: transparent;
+
+  &.delete {
+    color: $error;
+
+    &:hover {
+      color: $accent2;
+    }
+  }
+
+  & input[type='checkbox'] {
+    display: none;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    color: $main;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: $light;
+    &:hover {
+      color: $light;
+    }
+  }
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}

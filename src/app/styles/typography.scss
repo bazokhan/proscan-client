@@ -1,0 +1,66 @@
+@import 'app/styles/variables.scss';
+
+.h1 {
+  font-size: $title-size;
+  color: $dark;
+  padding: 10px;
+}
+
+.h2 {
+  font-size: 1.2em;
+  color: #333;
+  padding: 10px;
+}
+
+.h3 {
+  font-size: 1em;
+  color: #333;
+  padding: 10px;
+}
+
+.p {
+  font-size: 0.8em;
+  font-weight: normal;
+  padding: 10px;
+}
+
+.title {
+  width: calc(50% - 20px);
+  margin: 10px;
+  color: $dark;
+  text-decoration: none;
+  box-sizing: border-box;
+  // padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $title-size;
+  color: $light;
+  font-weight: 900;
+}
+
+.subtitle {
+  font-size: $font-size;
+  color: $light;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.subtitle-dark {
+  font-size: $font-size;
+  color: $dark;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.left-text {
+  text-align: left;
+}
+
+.right-text {
+  text-align: right;
+}
+
+.center-text {
+  text-align: center;
+}
