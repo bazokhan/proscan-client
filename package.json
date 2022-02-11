@@ -15,7 +15,7 @@
     "class-names": "^1.0.0",
     "graphql": "^14.3.0",
     "graphql-tag": "^2.10.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react": "^16.8.6",
     "react-apollo": "^3.0.0",
     "react-dom": "^16.8.6",
